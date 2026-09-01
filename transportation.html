@@ -1138,6 +1138,20 @@ a:hover { text-decoration: underline; }
 [data-theme="light"] .lmc-kpi { background: #f9fafb; }
 [data-theme="light"] .lmc-title { color: #111827; }
 [data-theme="light"] .lmc-detail-val { color: #111827; }
+/* ===== VERTICAL BANNERS ===== */
+.vban-wrap { position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 1000; display: flex; justify-content: space-between; align-items: stretch; }
+.vban { pointer-events: auto; display: flex; flex-direction: column; align-items: center; text-decoration: none; position: relative; width: 72px; overflow: hidden; transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
+.vban:hover { width: 220px; }
+.vban img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.7) saturate(0.8); transition: filter 0.4s ease; }
+.vban:hover img { filter: brightness(0.9) saturate(1.1); }
+.vban-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 4px; font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #fff; text-align: center; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 60%, transparent 100%); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; opacity: 0; transition: opacity 0.3s ease; }
+.vban:hover .vban-label { opacity: 1; }
+.vban-left { border-right: 1px solid rgba(255,255,255,0.06); }
+.vban-right { border-left: 1px solid rgba(255,255,255,0.06); }
+@media (max-width: 1400px) { .vban { width: 48px; } .vban:hover { width: 160px; } .vban-label { font-size: 7px; } }
+@media (max-width: 1024px) { .vban-wrap { display: none; } }
+[data-theme="light"] .vban-left { border-right-color: rgba(0,0,0,0.06); }
+[data-theme="light"] .vban-right { border-left-color: rgba(0,0,0,0.06); }
 
 </style>
 </head><body>
@@ -1383,6 +1397,16 @@ a:hover { text-decoration: underline; }
   </div>
 </section>
 </main>
+<div class='vban-wrap' id='vban-wrap'>
+  <a class='vban vban-left' href='MARKET_ASSESSMENT.md' target='_blank' title='Cascadia Intelligence Vision &#8212; Read Market Assessment'>
+    <img src='images/banners/banner-left-cascadia-intelligence.png' alt='Cascadia Intelligence Vision' loading='lazy' />
+    <div class='vban-label'>Cascadia Intelligence</div>
+  </a>
+  <a class='vban vban-right' href='MARKET_ASSESSMENT.md' target='_blank' title='Cross-Border Economic Bridge &#8212; Read Market Assessment'>
+    <img src='images/banners/banner-right-cross-border-intel.png' alt='Cross-Border Economic Bridge' loading='lazy' />
+    <div class='vban-label'>Cross-Border Bridge</div>
+  </a>
+</div>
 <footer class="bvs-site-footer"><div class="footer-ribbon"></div><div class="container" style="padding-top:48px;">
   <div class="footer-grid">
     <!-- About -->

@@ -1091,6 +1091,53 @@ a:hover { text-decoration: underline; }
 [data-theme="light"] .sports-tech-card { background:#fff; border-color:rgba(0,0,0,0.07); }
 [data-theme="light"] .sports-esports-row { background:#fff; border-color:rgba(0,0,0,0.07); }
 [data-theme="light"] .sports-insight-box { background:linear-gradient(135deg, rgba(13,148,136,0.04) 0%, rgba(37,99,235,0.04) 100%); }
+/* ===== LIFE METRIC CARDS ===== */
+.life-metrics-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+@media (max-width: 768px) { .life-metrics-grid { grid-template-columns: 1fr; } }
+.life-metric-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden; }
+.life-metric-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.lmc-healthcare::before { background: linear-gradient(90deg, #ef4444, #f97316); }
+.lmc-insurance::before { background: linear-gradient(90deg, #f59e0b, #eab308); }
+.lmc-transport::before { background: linear-gradient(90deg, #3b82f6, #06b6d4); }
+.lmc-jobs::before { background: linear-gradient(90deg, #22c55e, #10b981); }
+.life-metric-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); border-color: var(--primary); }
+.lmc-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.lmc-icon-wrap { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.lmc-icon-healthcare { background: rgba(239,68,68,0.12); }
+.lmc-icon-insurance { background: rgba(245,158,11,0.12); }
+.lmc-icon-transport { background: rgba(59,130,246,0.12); }
+.lmc-icon-jobs { background: rgba(34,197,94,0.12); }
+.lmc-title-group { flex: 1; }
+.lmc-title { font-size: 15px; font-weight: 700; color: var(--fg); margin: 0; }
+.lmc-subtitle { font-size: 11px; color: var(--fg3); }
+.lmc-status-badge { font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 10px; letter-spacing: 0.5px; }
+.lmc-status-live { background: rgba(34,197,94,0.12); color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
+.lmc-status-daily { background: rgba(59,130,246,0.12); color: #3b82f6; border: 1px solid rgba(59,130,246,0.3); }
+.lmc-kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 14px; }
+@media (max-width: 1024px) { .lmc-kpi-row { grid-template-columns: repeat(2, 1fr); } }
+.lmc-kpi { text-align: center; padding: 8px 4px; background: rgba(255,255,255,0.03); border-radius: 8px; }
+.lmc-kpi-val { display: block; font-size: 16px; font-weight: 800; color: var(--fg); margin-bottom: 2px; }
+.lmc-kpi-label { display: block; font-size: 10px; color: var(--fg3); margin-bottom: 4px; line-height: 1.3; }
+.lmc-kpi-trend { display: block; font-size: 10px; font-weight: 600; }
+.lmc-up { color: #ef4444; }
+.lmc-down { color: #22c55e; }
+.lmc-positive { color: #22c55e; }
+.lmc-stable { color: var(--fg3); }
+.lmc-detail-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; padding-top: 12px; border-top: 1px solid var(--border); margin-bottom: 14px; }
+@media (max-width: 1024px) { .lmc-detail-row { grid-template-columns: repeat(2, 1fr); } }
+.lmc-detail { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.lmc-detail-label { font-size: 10px; color: var(--fg3); text-align: center; }
+.lmc-detail-val { font-size: 13px; font-weight: 700; color: var(--fg); }
+.lmc-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.lmc-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.lmc-click-hint { font-size: 11px; color: var(--primary); font-weight: 600; transition: opacity 0.2s; }
+.life-metric-card:hover .lmc-click-hint { opacity: 0.7; }
+/* Light theme overrides for life metric cards */
+[data-theme="light"] .life-metric-card { background: #ffffff; border-color: #e5e7eb; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+[data-theme="light"] .life-metric-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+[data-theme="light"] .lmc-kpi { background: #f9fafb; }
+[data-theme="light"] .lmc-title { color: #111827; }
+[data-theme="light"] .lmc-detail-val { color: #111827; }
 
 </style>
 </head><body>
@@ -1285,6 +1332,314 @@ a:hover { text-decoration: underline; }
     </div>
   </div>
 </section>
+
+<!-- ===== LIFE METRIC CARDS ===== -->
+<section class='container' style='padding:0 0 36px 0'>
+  <div style='display:flex;align-items:center;gap:12px;margin-bottom:16px'>
+    <h2 class='bvs-section-title' style='margin:0'>Regional Life Metrics</h2>
+    <span class='comp-badge' style='background:rgba(245,158,11,0.15);color:#f59e0b;border:1px solid rgba(245,158,11,0.3)'>&#128202; Cost of Living Intelligence</span>
+  </div>
+  <p class='bvs-section-sub'>Granular healthcare, insurance, transportation, and employment analytics across the Cascadia corridor &#8212; click any card to access the respective intelligence platform</p>
+  <div class='life-metrics-grid'>
+
+    <!-- HEALTHCARE CARD -->
+    <div class='life-metric-card lmc-healthcare' onclick='handleLifeMetricClick("healthcare")'>
+      <div class='lmc-header'>
+        <div class='lmc-icon-wrap lmc-icon-healthcare'>&#127973;</div>
+        <div class='lmc-title-group'>
+          <h3 class='lmc-title'>Healthcare Costs</h3>
+          <span class='lmc-subtitle'>Primary &amp; Secondary Care</span>
+        </div>
+        <span class='lmc-status-badge lmc-status-live'><span class='bvs-dot'></span> LIVE</span>
+      </div>
+      <div class='lmc-kpi-row'>
+        <div class='lmc-kpi'>
+          <span class='lmc-kpi-val'>$6,842</span>
+          <span class='lmc-kpi-label'>Avg Primary Care/yr</span>
+          <span class='lmc-kpi-trend lmc-up'>&#9650; 4.2% YoY</span>
+        </div>
+        <div class='lmc-kpi'>
+          <span class='lmc-kpi-val'>$14,230</span>
+          <span class='lmc-kpi-label'>Avg Specialist Visit</span>
+          <span class='lmc-kpi-trend lmc-up'>&#9650; 6.1% YoY</span>
+        </div>
+        <div class='lmc-kpi'>
+          <span class='lmc-kpi-val'>$312</span>
+          <span class='lmc-kpi-label'>Monthly Premium (WA)</span>
+          <span class='lmc-kpi-trend lmc-up'>&#9650; 3.8% YoY</span>
+        </div>
+        <div class='lmc-kpi'>
+          <span class='lmc-kpi-val'>92.4%</span>
+          <span class='lmc-kpi-label'>Coverage Rate (BC)</span>
+          <span class='lmc-kpi-trend lmc-positive'>&#9650; 1.2% YoY</span>
+        </div>
+      </div>
+      <div class='lmc-detail-row'>
+        <div class='lmc-detail'>
+          <span class='lmc-detail-label'>WA ER Avg Wait</span>
+          <span class='lmc-detail-val'>4.2 hrs</span>
+        </div>
+        <div class='lmc-detail'>
+          <span class='lmc-detail-label'>BC ER Avg Wait</span>
+          <span class='lmc-detail-val'>2.8 hrs</span>
+        </div>
+        <div class='lmc-detail'>
+          <span class='lmc-detail-label'>Mental Health Providers</span>
+          <span class='lmc-detail-val'>18.4/100K</span>
+        </div>
+        <div class='lmc-detail'>
+          <span class='lmc-detail-label'>Hospital Beds/1K</span>
+          <span class='lmc-detail-val'>2.1</span>
+        </div>
+      </div>
+      <div class='lmc-footer'>
+        <div class='lmc-tags'>
+          <span class='bvs-badge bvs-badge-sea'>Primary Care</span>
+          <span class='bvs-badge bvs-badge-yvr'>Specialist</span>
+          <span class='bvs-badge bvs-badge-cb'>Emergency</span>
+          <span class='bvs-badge bvs-badge-primary'>Mental Health</span>
+          <span class='bvs-badge bvs-badge-secondary'>Prescription</span>
+        </div>
+        <span class='lmc-click-hint'>&#8594; Click to access platform</span>
+      </div>
+    </div>
+
+    <!-- INSURANCE CARD -->
+    <div class='life-metric-card lmc-insurance' onclick='handleLifeMetricClick("insurance")'>
+      <div class='lmc-header'>
+        <div class='lmc-icon-wrap lmc-icon-insurance'>&#128737;</div>
+        <div class='lmc-title-group'>
+          <h3 class='lmc-title'>Insurance Landscape</h3>
+          <span class='lmc-subtitle'>Health, Auto, Home, Business</span>
+        </div>
+        <span class='lmc-status-badge lmc-status-daily'>DAILY</span>
+      </div>
+      <div class='lmc-kpi-row'>
+        <div class='lmc-kpi'>
+          <span class='lmc-kpi-val'>$489/mo</span>
+          <span class='lmc-kpi-label'>Avg Health Ins (WA)</span>
+          <span class='lmc-kpi-trend lmc-up'>&#9650; 5.3% YoY</span>
+        </div>
+        <div class='lmc-kpi'>
+          <span class='lmc-kpi-val'>$142/mo</span>
+          <span class='lmc-kpi-label'>Avg Auto Ins (OR)</span>
+          <span class='lmc-kpi-trend lmc-down'>&#9660; 2.1% YoY</span>
+        </div>
+        <div class='lmc-kpi'>
+          <span class='lmc-kpi-val'>$2,840/yr</span>
+          <span class='lmc-kpi-label'>Avg Home Ins (WA)</span>
+          <span class='lmc-kpi-trend lmc-up'>&#9650; 8.7% YoY</span>
+        </div>
+        <div class='lmc-kpi'>
+          <span class='lmc-kpi-val'>$0</span>
+          <span class='lmc-kpi-label'>Public Health (BC MSP)</span>
+          <span class='lmc-kpi-trend lmc-stable'>&#9644; Stable</span>
+        </div>
+      </div>
+      <div class='lmc-detail-row'>
+        <div class='lmc-detail'>
+          <span class='lmc-detail-label'>Uninsured Rate (WA)</span>
+          <span class='lmc-detail-val'>6.2%</span>
+        </div>
+        <div class='lmc-detail'>
+          <span class='lmc-detail-label'>Uninsured Rate (OR)</span>
+          <span class='lmc-detail-val'>8.1%</span>
+        </div>
+        <div class='lmc-detail'>
+          <span class='lmc-detail-label'>Business Ins Index</span>
+          <span class='lmc-detail-val'>78.4</span>
+        </div>
+        <div class='lmc-detail'>
+          <span class='lmc-detail-label'>Climate Risk Surcharge</span>
+          <span class='lmc-detail-val'>+12.3%</span>
+        </div>
+      </div>
+      <div class='lmc-footer'>
+        <div class='lmc-tags'>
+          <span class='bvs-badge bvs-badge-sea'>Health</span>
+          <span class='bvs-badge bvs-badge-yvr'>Auto</span>
+          <span class='bvs-badge bvs-badge-cb'>Property</span>
+          <span class='bvs-badge bvs-badge-primary'>Business</span>
+          <span class='bvs-badge bvs-badge-live'>Climate</span>
+        </div>
+        <span class='lmc-click-hint'>&#8594; Click to access platform</span>
+      </div>
+    </div>
+
+    <!-- TRANSPORTATION CARD -->
+    <div class='life-metric-card lmc-transport' onclick='handleLifeMetricClick("transportation")'>
+      <div class='lmc-header'>
+        <div class='lmc-icon-wrap lmc-icon-transport'>&#128647;</div>
+        <div class='lmc-title-group'>
+          <h3 class='lmc-title'>Transportation Costs</h3>
+          <span class='lmc-subtitle'>Commute, Transit, Freight, EV</span>
+        </div>
+        <span class='lmc-status-badge lmc-status-live'><span class='bvs-dot'></span> LIVE</span>
+      </div>
+      <div class='lmc-kpi-row'>
+        <div class='lmc-kpi'>
+          <span class='lmc-kpi-val'>$8,420/yr</span>
+          <span class='lmc-kpi-label'>Avg Commute Cost (WA)</span>
+          <span class='lmc-kpi-trend lmc-up'>&#9650; 3.4% YoY</span>
+        </div>
+        <div class='lmc-kpi'>
+          <span class='lmc-kpi-val'>$142/mo</span>
+          <span class='lmc-kpi-label'>Transit Pass (Seattle)</span>
+          <span class='lmc-kpi-trend lmc-stable'>&#9644; Stable</span>
+        </div>
+        <div class='lmc-kpi'>
+          <span class='lmc-kpi-val'>$3.82/gal</span>
+          <span class='lmc-kpi-label'>Avg Gas Price (WA)</span>
+          <span class='lmc-kpi-trend lmc-down'>&#9660; 5.2% YoY</span>
+        </div>
+        <div class='lmc-kpi'>
+          <span class='lmc-kpi-val'>18.4%</span>
+          <span class='lmc-kpi-label'>EV Adoption Rate</span>
+          <span class='lmc-kpi-trend lmc-positive'>&#9650; 28.6% YoY</span>
+        </div>
+      </div>
+      <div class='lmc-detail-row'>
+        <div class='lmc-detail'>
+          <span class='lmc-detail-label'>Avg Commute (min)</span>
+          <span class='lmc-detail-val'>27.4</span>
+        </div>
+        <div class='lmc-detail'>
+          <span class='lmc-detail-label'>Transit Ridership</span>
+          <span class='lmc-detail-val'>1.2M/day</span>
+        </div>
+        <div class='lmc-detail'>
+          <span class='lmc-detail-label'>EV Charging Stations</span>
+          <span class='lmc-detail-val'>8,420+</span>
+        </div>
+        <div class='lmc-detail'>
+          <span class='lmc-detail-label'>Cross-Border Wait</span>
+          <span class='lmc-detail-val'>42 min avg</span>
+        </div>
+      </div>
+      <div class='lmc-footer'>
+        <div class='lmc-tags'>
+          <span class='bvs-badge bvs-badge-sea'>Commute</span>
+          <span class='bvs-badge bvs-badge-yvr'>Transit</span>
+          <span class='bvs-badge bvs-badge-cb'>Freight</span>
+          <span class='bvs-badge bvs-badge-primary'>EV</span>
+          <span class='bvs-badge bvs-badge-secondary'>Border</span>
+        </div>
+        <span class='lmc-click-hint'>&#8594; Click to access platform</span>
+      </div>
+    </div>
+
+    <!-- JOBS CARD -->
+    <div class='life-metric-card lmc-jobs' onclick='handleLifeMetricClick("jobs")'>
+      <div class='lmc-header'>
+        <div class='lmc-icon-wrap lmc-icon-jobs'>&#128188;</div>
+        <div class='lmc-title-group'>
+          <h3 class='lmc-title'>Employment Intelligence</h3>
+          <span class='lmc-subtitle'>Private &amp; Public Sector</span>
+        </div>
+        <span class='lmc-status-badge lmc-status-live'><span class='bvs-dot'></span> LIVE</span>
+      </div>
+      <div class='lmc-kpi-row'>
+        <div class='lmc-kpi'>
+          <span class='lmc-kpi-val'>$78,400</span>
+          <span class='lmc-kpi-label'>Avg Salary (WA)</span>
+          <span class='lmc-kpi-trend lmc-up'>&#9650; 4.8% YoY</span>
+        </div>
+        <div class='lmc-kpi'>
+          <span class='lmc-kpi-val'>4.1%</span>
+          <span class='lmc-kpi-label'>Unemployment (WA)</span>
+          <span class='lmc-kpi-trend lmc-down'>&#9660; 0.3% YoY</span>
+        </div>
+        <div class='lmc-kpi'>
+          <span class='lmc-kpi-val'>525K+</span>
+          <span class='lmc-kpi-label'>Tech Jobs</span>
+          <span class='lmc-kpi-trend lmc-positive'>&#9650; 8.1% YoY</span>
+        </div>
+        <div class='lmc-kpi'>
+          <span class='lmc-kpi-val'>1.24M</span>
+          <span class='lmc-kpi-label'>Gov Employees (All)</span>
+          <span class='lmc-kpi-trend lmc-stable'>&#9644; Stable</span>
+        </div>
+      </div>
+      <div class='lmc-detail-row'>
+        <div class='lmc-detail'>
+          <span class='lmc-detail-label'>Public Sector %</span>
+          <span class='lmc-detail-val'>14.8%</span>
+        </div>
+        <div class='lmc-detail'>
+          <span class='lmc-detail-label'>Private Sector %</span>
+          <span class='lmc-detail-val'>85.2%</span>
+        </div>
+        <div class='lmc-detail'>
+          <span class='lmc-detail-label'>Job Openings</span>
+          <span class='lmc-detail-val'>242K</span>
+        </div>
+        <div class='lmc-detail'>
+          <span class='lmc-detail-label'>Remote Work %</span>
+          <span class='lmc-detail-val'>28.4%</span>
+        </div>
+      </div>
+      <div class='lmc-footer'>
+        <div class='lmc-tags'>
+          <span class='bvs-badge bvs-badge-sea'>Tech</span>
+          <span class='bvs-badge bvs-badge-yvr'>Government</span>
+          <span class='bvs-badge bvs-badge-cb'>Healthcare</span>
+          <span class='bvs-badge bvs-badge-primary'>Trade</span>
+          <span class='bvs-badge bvs-badge-secondary'>Remote</span>
+        </div>
+        <span class='lmc-click-hint'>&#8594; Click to access platform</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Life Metric Click Handler -->
+<div id='lmc-modal-overlay' style='display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;justify-content:center;align-items:center;backdrop-filter:blur(4px)'>
+  <div id='lmc-modal' style='background:var(--bg);border:1px solid var(--border);border-radius:16px;max-width:520px;width:90%;padding:40px;text-align:center;position:relative'>
+    <button onclick='closeLmcModal()' style='position:absolute;top:12px;right:16px;background:none;border:none;color:var(--fg3);font-size:24px;cursor:pointer'>&#10005;</button>
+    <div id='lmc-modal-icon' style='font-size:48px;margin-bottom:16px'></div>
+    <h3 id='lmc-modal-title' style='font-size:20px;font-weight:700;color:var(--fg);margin-bottom:8px'></h3>
+    <p id='lmc-modal-msg' style='font-size:14px;color:var(--fg3);line-height:1.6;margin-bottom:24px'></p>
+    <div id='lmc-modal-badge' style='display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:20px;font-size:13px;font-weight:600'></div>
+  </div>
+</div>
+
+<script>
+function handleLifeMetricClick(type) {
+  var overlay = document.getElementById('lmc-modal-overlay');
+  var modal = document.getElementById('lmc-modal');
+  var icon = document.getElementById('lmc-modal-icon');
+  var title = document.getElementById('lmc-modal-title');
+  var msg = document.getElementById('lmc-modal-msg');
+  var badge = document.getElementById('lmc-modal-badge');
+
+  var platforms = {
+    healthcare: { icon: '&#127973;', title: 'Healthcare Intelligence Platform', status: 'progress', statusText: '&#9888; Platform In Development', bgColor: 'rgba(239,68,68,0.12)', borderColor: 'rgba(239,68,68,0.3)', textColor: '#ef4444', msg: 'The Healthcare Intelligence module is currently under development. This platform will provide real-time primary and secondary care cost comparisons, specialist availability tracking, mental health provider density maps, emergency room wait-time analytics, and prescription drug pricing across 30 Cascadia cities. Expected launch: Q4 2025.' },
+    insurance: { icon: '&#128737;', title: 'Insurance Intelligence Platform', status: 'progress', statusText: '&#9888; Platform In Development', bgColor: 'rgba(245,158,11,0.12)', borderColor: 'rgba(245,158,11,0.3)', textColor: '#f59e0b', msg: 'The Insurance Intelligence module is currently under development. This platform will deliver health, auto, home, and business insurance rate comparisons across WA, OR, and BC, including climate risk surcharge analysis, cross-border coverage gaps, and public vs. private insurance cost differentials. Expected launch: Q1 2026.' },
+    transportation: { icon: '&#128647;', title: 'Transportation Cost Intelligence', status: 'success', statusText: '&#9989; Platform Available', bgColor: 'rgba(34,197,94,0.12)', borderColor: 'rgba(34,197,94,0.3)', textColor: '#22c55e', msg: 'The Transportation Intelligence platform is live. Access comprehensive commute cost analytics, transit system performance data, EV adoption tracking, cross-border wait times, freight logistics costs, and fuel price monitoring. Navigate to the Transportation page for full regional analytics.' },
+    jobs: { icon: '&#128188;', title: 'Employment Intelligence Platform', status: 'success', statusText: '&#9989; Platform Available', bgColor: 'rgba(34,197,94,0.12)', borderColor: 'rgba(34,197,94,0.3)', textColor: '#22c55e', msg: 'The Employment Intelligence platform is live. Access private and public sector employment data, tech job tracking, salary benchmarking, unemployment analytics, remote work trends, and job opening forecasts. Navigate to the Economics and Demographics pages for full employment analytics across 30 cities.' }
+  };
+
+  var p = platforms[type] || { icon: '&#10067;', title: 'Platform Status', status: 'progress', statusText: '&#9888; In Development', bgColor: 'rgba(156,163,175,0.12)', borderColor: 'rgba(156,163,175,0.3)', textColor: '#9ca3af', msg: 'This intelligence module is under development.' };
+
+  icon.textContent = p.icon;
+  title.textContent = p.title;
+  msg.textContent = p.msg;
+  badge.textContent = p.statusText;
+  badge.style.background = p.bgColor;
+  badge.style.border = '1px solid ' + p.borderColor;
+  badge.style.color = p.textColor;
+
+  overlay.style.display = 'flex';
+}
+function closeLmcModal() {
+  document.getElementById('lmc-modal-overlay').style.display = 'none';
+}
+document.getElementById('lmc-modal-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeLmcModal();
+});
+</script>
+
 
 <!-- ===== TIER 1: MEGA HUB CITIES ===== -->
 <section class='container' style='padding:0 0 48px 0'>

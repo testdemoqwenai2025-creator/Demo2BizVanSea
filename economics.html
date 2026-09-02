@@ -1867,148 +1867,6 @@ a:hover { text-decoration: underline; }
   </div>
 </section>
 
-<!-- CASCADIA INVESTOR READINESS SCORE (CIRS) -->
-<section class="container" style="padding:0 0 24px">
-  <div class="bvs-section-title">Cascadia Investor Readiness Score (CIRS)</div>
-  <div class="bvs-section-sub">A data-driven readiness score computed entirely from real economic indicators — no self-reported quiz, no vibes. Each city is min-max normalized against the Cascadia cohort, then scored across 5 weighted dimensions. Click any city to compute its score live.</div>
-
-  <div class="bvs-card" style="padding:24px;margin-bottom:16px">
-    <div class="bvs-card-header"><span style="color:var(--primary)">&#9889;</span> CIRS Engine — Live Computation</div>
-    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:16px">
-      <label style="font-size:12px;color:var(--fg3);text-transform:uppercase;letter-spacing:0.05em">Select City:</label>
-      <select id="cirs-city-select" style="background:var(--bg3);color:var(--fg);border:1px solid rgba(78,205,196,0.2);padding:8px 12px;border-radius:6px;font-size:13px;cursor:pointer;min-width:220px"></select>
-      <button id="cirs-compare-btn" style="background:var(--primary);color:var(--bg);border:none;padding:8px 16px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:0.05em">Compare with another city &rarr;</button>
-      <span style="flex:1"></span>
-      <span class="bvs-badge bvs-badge-primary">v1.0 · 10 anchor cities · 20 indicators</span>
-    </div>
-
-    <!-- City banner (CSS-gradient fallback from data palette) -->
-    <div id="cirs-banner" style="aspect-ratio:16/5;border-radius:8px;overflow:hidden;position:relative;background:linear-gradient(135deg,#2E4756,#6B8E9B);margin-bottom:16px;transition:background 0.4s">
-      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 70%, rgba(212,165,116,0.4) 0%, transparent 50%)"></div>
-      <div style="position:absolute;bottom:0;left:0;right:0;padding:16px 20px;background:linear-gradient(transparent,rgba(0,0,0,0.6))">
-        <div id="cirs-banner-name" style="color:white;font-size:24px;font-weight:800;text-shadow:0 2px 8px rgba(0,0,0,0.5)">Seattle</div>
-        <div id="cirs-banner-meta" style="color:rgba(255,255,255,0.75);font-size:11px;margin-top:2px">WA, US · 4.02M metro</div>
-      </div>
-      <div style="position:absolute;top:12px;right:12px;display:flex;gap:4px">
-        <span class="cirs-swatch" id="cirs-swatch-1" style="width:14px;height:14px;border-radius:3px;border:1px solid rgba(255,255,255,0.3);background:#2E4756"></span>
-        <span class="cirs-swatch" id="cirs-swatch-2" style="width:14px;height:14px;border-radius:3px;border:1px solid rgba(255,255,255,0.3);background:#6B8E9B"></span>
-        <span class="cirs-swatch" id="cirs-swatch-3" style="width:14px;height:14px;border-radius:3px;border:1px solid rgba(255,255,255,0.3);background:#D4A574"></span>
-      </div>
-    </div>
-
-    <!-- Score hero + dimensions -->
-    <div id="cirs-score-host">
-      <!-- populated by JS -->
-    </div>
-
-    <!-- Comparison host (populated on demand) -->
-    <div id="cirs-compare-host"></div>
-
-    <div style="margin-top:16px;padding:12px;background:var(--bg3);border-radius:6px;font-size:11px;color:var(--fg2);line-height:1.6">
-      <strong style="color:var(--primary)">Methodology:</strong> Each city's score is computed from 20 real economic indicators grouped into 5 weighted dimensions (20 pts each, 100 total). Indicators are min-max normalized across the 10-city Cascadia cohort, so scores reflect relative standing within the region — not absolutes. Data sources: BEA, US Census ACS, Statistics Canada, BLS QCEW, Colliers, IPEDS, USGS. <strong style="color:var(--primary)">Tier thresholds:</strong> Premier (80+) · Strong (60-79) · Developing (40-59) · Emerging (&lt;40).
-    </div>
-  </div>
-
-  <!-- Cohort leaderboard -->
-  <div class="bvs-card" style="padding:20px">
-    <div class="bvs-card-header"><span style="color:var(--primary)">&#128202;</span> Cascadia Cohort Leaderboard</div>
-    <div class="bvs-card-title" style="margin-bottom:12px">All 10 cities ranked by CIRS score</div>
-    <table class="bvs-table" id="cirs-leaderboard">
-      <tr><th>Rank</th><th>City</th><th>State/Prov</th><th>Country</th><th>Score</th><th>Tier</th><th>Top Dimension</th><th>Weakest Dimension</th></tr>
-      <!-- populated by JS -->
-    </table>
-  </div>
-</section>
-
-<style>
-  .cirs-score-hero {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 24px;
-    align-items: center;
-    padding: 20px;
-    background: var(--bg3);
-    border-radius: 8px;
-    margin-bottom: 16px;
-  }
-  .cirs-score-circle {
-    width: 160px; height: 160px;
-    border-radius: 50%;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    border: 5px solid;
-    background: var(--bg2);
-    position: relative;
-    margin: 0 auto;
-  }
-  .cirs-score-circle .num { font-size: 3rem; font-weight: 800; line-height: 1; color: var(--fg); }
-  .cirs-score-circle .max { font-size: 0.8rem; color: var(--fg3); }
-  .cirs-score-circle .tier {
-    position: absolute; bottom: -12px;
-    background: var(--bg2); padding: 3px 12px;
-    border-radius: 999px; font-size: 0.75rem;
-    font-weight: 700; border: 1px solid rgba(78,205,196,0.2);
-    white-space: nowrap;
-  }
-  .cirs-score-meta h3 { font-size: 1.4rem; margin-bottom: 0.3rem; color: var(--fg); }
-  .cirs-score-meta .tagline { color: var(--fg2); margin-bottom: 0.6rem; font-size: 0.85rem; }
-  .cirs-score-meta .blurb { font-size: 0.85rem; color: var(--fg2); line-height: 1.6; }
-
-  .cirs-dims-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 12px;
-  }
-  .cirs-dim-card {
-    background: var(--bg3);
-    border: 1px solid rgba(255,255,255,0.05);
-    border-radius: 6px;
-    padding: 14px;
-  }
-  .cirs-dim-card h4 {
-    font-size: 0.85rem; font-weight: 700; margin-bottom: 0.2rem;
-    display: flex; justify-content: space-between; align-items: center;
-    color: var(--fg);
-  }
-  .cirs-dim-card h4 .pts { color: var(--primary); font-weight: 800; }
-  .cirs-dim-card .blurb { font-size: 0.7rem; color: var(--fg3); margin-bottom: 0.6rem; line-height: 1.4; }
-  .cirs-dim-bar {
-    height: 6px; background: var(--bg2); border-radius: 3px;
-    overflow: hidden; margin-bottom: 0.6rem;
-  }
-  .cirs-dim-bar-fill {
-    height: 100%; background: linear-gradient(90deg, rgba(78,205,196,0.5), var(--primary));
-    transition: width 0.6s ease;
-  }
-  .cirs-indicators { list-style: none; }
-  .cirs-indicators li {
-    display: grid; grid-template-columns: 1fr auto auto;
-    gap: 0.4rem; padding: 0.3rem 0; font-size: 0.72rem;
-    border-bottom: 1px dashed rgba(255,255,255,0.05);
-    color: var(--fg2);
-  }
-  .cirs-indicators li:last-child { border-bottom: none; }
-  .cirs-indicators code { color: var(--primary); font-family: 'SF Mono', Monaco, monospace; font-size: 0.7rem; }
-  .cirs-indicators .pts { color: var(--fg3); font-size: 0.68rem; }
-
-  .cirs-compare-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-top: 12px; }
-  .cirs-compare-table th, .cirs-compare-table td {
-    padding: 0.5rem 0.7rem; text-align: left;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    color: var(--fg2);
-  }
-  .cirs-compare-table th { color: var(--fg3); font-weight: 600; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; }
-  .cirs-delta-pos { color: var(--primary); font-weight: 700; }
-  .cirs-delta-neg { color: var(--red); font-weight: 700; }
-  .cirs-delta-zero { color: var(--fg3); }
-  .cirs-leaderboard-row td { font-size: 0.82rem; }
-  .cirs-leaderboard-row:hover { background: rgba(78,205,196,0.05); }
-  .cirs-leaderboard-row.first td { color: var(--primary); font-weight: 700; }
-  @media (max-width: 768px) {
-    .cirs-score-hero { grid-template-columns: 1fr; text-align: center; }
-  }
-</style>
-<!-- /CIRS -->
 
 <!-- DEEP DIVE REPORTS -->
 <section class="container" style="padding:0 0 24px">
@@ -2247,6 +2105,150 @@ a:hover { text-decoration: underline; }
 <!-- /DD -->
 
 
+<!-- CASCADIA INVESTOR READINESS SCORE (CIRS) -->
+<section class="container" style="padding:0 0 24px">
+  <div class="bvs-section-title">Cascadia Investor Readiness Score (CIRS)</div>
+  <div class="bvs-section-sub">A data-driven readiness score computed entirely from real economic indicators — no self-reported quiz, no vibes. Each city is min-max normalized against the Cascadia cohort, then scored across 5 weighted dimensions. Click any city to compute its score live.</div>
+
+  <div class="bvs-card" style="padding:24px;margin-bottom:16px">
+    <div class="bvs-card-header"><span style="color:var(--primary)">&#9889;</span> CIRS Engine — Live Computation</div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:16px">
+      <label style="font-size:12px;color:var(--fg3);text-transform:uppercase;letter-spacing:0.05em">Select City:</label>
+      <select id="cirs-city-select" style="background:var(--bg3);color:var(--fg);border:1px solid rgba(78,205,196,0.2);padding:8px 12px;border-radius:6px;font-size:13px;cursor:pointer;min-width:220px"></select>
+      <button id="cirs-compare-btn" style="background:var(--primary);color:var(--bg);border:none;padding:8px 16px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:0.05em">Compare with another city &rarr;</button>
+      <span style="flex:1"></span>
+      <span class="bvs-badge bvs-badge-primary">v1.0 · 10 anchor cities · 20 indicators</span>
+    </div>
+
+    <!-- City banner (CSS-gradient fallback from data palette) -->
+    <div id="cirs-banner" style="aspect-ratio:16/5;border-radius:8px;overflow:hidden;position:relative;background:linear-gradient(135deg,#2E4756,#6B8E9B);margin-bottom:16px;transition:background 0.4s">
+      <img id="cirs-banner-img" src="banners/seattle.png" alt="Seattle through the mist" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block" onerror="this.style.display='none'">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 70%, rgba(212,165,116,0.4) 0%, transparent 50%);pointer-events:none"></div>
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:16px 20px;background:linear-gradient(transparent,rgba(0,0,0,0.6))">
+        <div id="cirs-banner-name" style="color:white;font-size:24px;font-weight:800;text-shadow:0 2px 8px rgba(0,0,0,0.5)">Seattle</div>
+        <div id="cirs-banner-meta" style="color:rgba(255,255,255,0.75);font-size:11px;margin-top:2px">WA, US · 4.02M metro</div>
+      </div>
+      <div style="position:absolute;top:12px;right:12px;display:flex;gap:4px">
+        <span class="cirs-swatch" id="cirs-swatch-1" style="width:14px;height:14px;border-radius:3px;border:1px solid rgba(255,255,255,0.3);background:#2E4756"></span>
+        <span class="cirs-swatch" id="cirs-swatch-2" style="width:14px;height:14px;border-radius:3px;border:1px solid rgba(255,255,255,0.3);background:#6B8E9B"></span>
+        <span class="cirs-swatch" id="cirs-swatch-3" style="width:14px;height:14px;border-radius:3px;border:1px solid rgba(255,255,255,0.3);background:#D4A574"></span>
+      </div>
+    </div>
+
+    <!-- Score hero + dimensions -->
+    <div id="cirs-score-host">
+      <!-- populated by JS -->
+    </div>
+
+    <!-- Comparison host (populated on demand) -->
+    <div id="cirs-compare-host"></div>
+
+    <div style="margin-top:16px;padding:12px;background:var(--bg3);border-radius:6px;font-size:11px;color:var(--fg2);line-height:1.6">
+      <strong style="color:var(--primary)">Methodology:</strong> Each city's score is computed from 20 real economic indicators grouped into 5 weighted dimensions (20 pts each, 100 total). Indicators are min-max normalized across the 10-city Cascadia cohort, so scores reflect relative standing within the region — not absolutes. Data sources: BEA, US Census ACS, Statistics Canada, BLS QCEW, Colliers, IPEDS, USGS. <strong style="color:var(--primary)">Tier thresholds:</strong> Premier (80+) · Strong (60-79) · Developing (40-59) · Emerging (&lt;40).
+    </div>
+  </div>
+
+  <!-- Cohort leaderboard -->
+  <div class="bvs-card" style="padding:20px">
+    <div class="bvs-card-header"><span style="color:var(--primary)">&#128202;</span> Cascadia Cohort Leaderboard</div>
+    <div class="bvs-card-title" style="margin-bottom:12px">All 10 cities ranked by CIRS score</div>
+    <table class="bvs-table" id="cirs-leaderboard">
+      <tr><th>Rank</th><th>City</th><th>State/Prov</th><th>Country</th><th>Score</th><th>Tier</th><th>Top Dimension</th><th>Weakest Dimension</th></tr>
+      <!-- populated by JS -->
+    </table>
+  </div>
+</section>
+
+<style>
+  .cirs-score-hero {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 24px;
+    align-items: center;
+    padding: 20px;
+    background: var(--bg3);
+    border-radius: 8px;
+    margin-bottom: 16px;
+  }
+  .cirs-score-circle {
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    border: 5px solid;
+    background: var(--bg2);
+    position: relative;
+    margin: 0 auto;
+  }
+  .cirs-score-circle .num { font-size: 3rem; font-weight: 800; line-height: 1; color: var(--fg); }
+  .cirs-score-circle .max { font-size: 0.8rem; color: var(--fg3); }
+  .cirs-score-circle .tier {
+    position: absolute; bottom: -12px;
+    background: var(--bg2); padding: 3px 12px;
+    border-radius: 999px; font-size: 0.75rem;
+    font-weight: 700; border: 1px solid rgba(78,205,196,0.2);
+    white-space: nowrap;
+  }
+  .cirs-score-meta h3 { font-size: 1.4rem; margin-bottom: 0.3rem; color: var(--fg); }
+  .cirs-score-meta .tagline { color: var(--fg2); margin-bottom: 0.6rem; font-size: 0.85rem; }
+  .cirs-score-meta .blurb { font-size: 0.85rem; color: var(--fg2); line-height: 1.6; }
+
+  .cirs-dims-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 12px;
+  }
+  .cirs-dim-card {
+    background: var(--bg3);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 6px;
+    padding: 14px;
+  }
+  .cirs-dim-card h4 {
+    font-size: 0.85rem; font-weight: 700; margin-bottom: 0.2rem;
+    display: flex; justify-content: space-between; align-items: center;
+    color: var(--fg);
+  }
+  .cirs-dim-card h4 .pts { color: var(--primary); font-weight: 800; }
+  .cirs-dim-card .blurb { font-size: 0.7rem; color: var(--fg3); margin-bottom: 0.6rem; line-height: 1.4; }
+  .cirs-dim-bar {
+    height: 6px; background: var(--bg2); border-radius: 3px;
+    overflow: hidden; margin-bottom: 0.6rem;
+  }
+  .cirs-dim-bar-fill {
+    height: 100%; background: linear-gradient(90deg, rgba(78,205,196,0.5), var(--primary));
+    transition: width 0.6s ease;
+  }
+  .cirs-indicators { list-style: none; }
+  .cirs-indicators li {
+    display: grid; grid-template-columns: 1fr auto auto;
+    gap: 0.4rem; padding: 0.3rem 0; font-size: 0.72rem;
+    border-bottom: 1px dashed rgba(255,255,255,0.05);
+    color: var(--fg2);
+  }
+  .cirs-indicators li:last-child { border-bottom: none; }
+  .cirs-indicators code { color: var(--primary); font-family: 'SF Mono', Monaco, monospace; font-size: 0.7rem; }
+  .cirs-indicators .pts { color: var(--fg3); font-size: 0.68rem; }
+
+  .cirs-compare-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-top: 12px; }
+  .cirs-compare-table th, .cirs-compare-table td {
+    padding: 0.5rem 0.7rem; text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: var(--fg2);
+  }
+  .cirs-compare-table th { color: var(--fg3); font-weight: 600; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .cirs-delta-pos { color: var(--primary); font-weight: 700; }
+  .cirs-delta-neg { color: var(--red); font-weight: 700; }
+  .cirs-delta-zero { color: var(--fg3); }
+  .cirs-leaderboard-row td { font-size: 0.82rem; }
+  .cirs-leaderboard-row:hover { background: rgba(78,205,196,0.05); }
+  .cirs-leaderboard-row.first td { color: var(--primary); font-weight: 700; }
+  @media (max-width: 768px) {
+    .cirs-score-hero { grid-template-columns: 1fr; text-align: center; }
+  }
+</style>
+<!-- /CIRS -->
+
 <!-- CASCADIA ECONOMICS AI OUTLOOK -->
 <section class="container" style="padding:0 0 48px">
   <div class="sports-insight-box">
@@ -2479,179 +2481,7 @@ a:hover { text-decoration: underline; }
 })();
 </script>
 <!-- CIRS scripts -->
-<script src="investor-readiness-score.js"></script>
 <script>
-/* CIRS SECTION SCRIPT */
-(function() {
-  'use strict';
-  var ALL_CITIES = [];
-  var DATA = null;
-
-  function loadData() {
-    return fetch('cities-data.json')
-      .then(function(r) { return r.json(); })
-      .then(function(d) {
-        DATA = d;
-        ALL_CITIES = d.cities;
-        populateCitySelect();
-        renderLeaderboard();
-        render(ALL_CITIES[0]);
-      });
-  }
-
-  function populateCitySelect() {
-    var sel = document.getElementById('cirs-city-select');
-    ALL_CITIES.forEach(function(c) {
-      var opt = document.createElement('option');
-      opt.value = c.id;
-      opt.textContent = c.name + ', ' + c.state + ' (' + c.country + ')';
-      sel.appendChild(opt);
-    });
-    sel.addEventListener('change', function(e) {
-      var city = ALL_CITIES.find(function(c) { return c.id === e.target.value; });
-      render(city);
-    });
-  }
-
-  function render(city) {
-    renderBanner(city);
-    renderScore(city);
-  }
-
-  function renderBanner(city) {
-    var b = city.ai_banner;
-    var banner = document.getElementById('cirs-banner');
-    banner.style.background = 'linear-gradient(135deg,' + b.palette_primary + ',' + b.palette_secondary + ')';
-    var radial = banner.querySelector('div');
-    if (radial) radial.style.background = 'radial-gradient(ellipse at 30% 70%,' + b.palette_accent + ' 0%, transparent 50%)';
-    document.getElementById('cirs-banner-name').textContent = city.name;
-    document.getElementById('cirs-banner-meta').textContent = city.state + ', ' + city.country + ' · ' + (city.population_metro/1000).toFixed(0) + 'k metro · ' + b.fog_haze_level + ' · ' + b.time_of_day;
-    document.getElementById('cirs-swatch-1').style.background = b.palette_primary;
-    document.getElementById('cirs-swatch-2').style.background = b.palette_secondary;
-    document.getElementById('cirs-swatch-3').style.background = b.palette_accent;
-  }
-
-  function renderScore(city) {
-    var score = window.CIRS.compute(city, ALL_CITIES);
-    var host = document.getElementById('cirs-score-host');
-
-    var dimsHtml = '';
-    Object.keys(score.dimensions).forEach(function(k) {
-      var d = score.dimensions[k];
-      var pct = (d.score / 20) * 100;
-      var indsHtml = '';
-      Object.keys(d.indicators).forEach(function(ik) {
-        var ind = d.indicators[ik];
-        indsHtml += '<li><span>' + ind.label + '</span><code>' + ind.rawValue + ' ' + ind.unit + '</code><span class="pts">+' + ind.contribution.toFixed(2) + '</span></li>';
-      });
-      dimsHtml += '<div class="cirs-dim-card">' +
-        '<h4>' + d.label + ' <span class="pts">' + d.score.toFixed(1) + '/20</span></h4>' +
-        '<p class="blurb">' + d.blurb + '</p>' +
-        '<div class="cirs-dim-bar"><div class="cirs-dim-bar-fill" style="width:' + pct + '%"></div></div>' +
-        '<ul class="cirs-indicators">' + indsHtml + '</ul>' +
-        '</div>';
-    });
-
-    var tierColors = { Premier: '#1B5E3F', Strong: '#2E7D5B', Developing: '#B07D2E', Emerging: '#9B3D3D' };
-    var tierColor = tierColors[score.tier] || 'var(--primary)';
-
-    host.innerHTML =
-      '<div class="cirs-score-hero">' +
-        '<div class="cirs-score-circle" style="border-color:' + tierColor + '">' +
-          '<div class="num">' + score.score + '</div>' +
-          '<div class="max">/ ' + score.maxScore + '</div>' +
-          '<div class="tier" style="color:' + tierColor + '">' + score.tier + '</div>' +
-        '</div>' +
-        '<div class="cirs-score-meta">' +
-          '<h3>' + city.name + ', ' + city.state + '</h3>' +
-          '<p class="tagline">' + city.notable_companies.slice(0, 4).join(' · ') + '</p>' +
-          '<p class="blurb">' + score.tierBlurb + '</p>' +
-        '</div>' +
-      '</div>' +
-      '<div class="cirs-dims-grid">' + dimsHtml + '</div>';
-  }
-
-  function renderLeaderboard() {
-    var scored = ALL_CITIES.map(function(c) {
-      return { city: c, score: window.CIRS.compute(c, ALL_CITIES) };
-    });
-    scored.sort(function(a, b) { return b.score.score - a.score.score; });
-
-    var tbody = document.getElementById('cirs-leaderboard');
-    while (tbody.rows.length > 1) tbody.deleteRow(1);
-
-    scored.forEach(function(item, idx) {
-      var c = item.city, s = item.score;
-      var topDim = null, weakDim = null;
-      var topScore = -1, weakScore = 999;
-      Object.keys(s.dimensions).forEach(function(k) {
-        var d = s.dimensions[k];
-        if (d.score > topScore) { topScore = d.score; topDim = d.label; }
-        if (d.score < weakScore) { weakScore = d.score; weakDim = d.label; }
-      });
-
-      var tierColors = { Premier: '#1B5E3F', Strong: '#2E7D5B', Developing: '#B07D2E', Emerging: '#9B3D3D' };
-      var tierColor = tierColors[s.tier] || 'var(--primary)';
-      var tierRgb = (s.tier==='Premier'||s.tier==='Strong') ? '78,205,196' : (s.tier==='Developing' ? '240,165,0' : '255,107,107');
-      var row = tbody.insertRow();
-      if (idx === 0) row.className = 'cirs-leaderboard-row first';
-      else row.className = 'cirs-leaderboard-row';
-      row.innerHTML =
-        '<td><span class="ai-score-sm ' + (idx < 3 ? 'score-high' : idx < 6 ? 'score-mid' : 'score-low') + '">' + (idx + 1) + '</span></td>' +
-        '<td style="font-weight:700;color:var(--fg)">' + c.name + '</td>' +
-        '<td>' + c.state + '</td>' +
-        '<td>' + c.country + '</td>' +
-        '<td style="color:' + tierColor + ';font-weight:800;font-size:14px">' + s.score.toFixed(1) + '</td>' +
-        '<td><span class="bvs-badge" style="background:rgba(' + tierRgb + ',0.15);color:' + tierColor + ';border:1px solid ' + tierColor + '">' + s.tier + '</span></td>' +
-        '<td style="color:var(--green);font-size:11px">' + topDim + ' <span style="color:var(--fg3)">(' + topScore.toFixed(1) + ')</span></td>' +
-        '<td style="color:var(--red);font-size:11px">' + weakDim + ' <span style="color:var(--fg3)">(' + weakScore.toFixed(1) + ')</span></td>';
-    });
-  }
-
-  function renderCompare() {
-    var sel = window.prompt('Compare with which city? (id: ' + ALL_CITIES.map(function(c){return c.id;}).join(', ') + ')', 'portland');
-    if (!sel) return;
-    var cityB = ALL_CITIES.find(function(c) { return c.id === sel; });
-    if (!cityB) { alert('City not found: ' + sel); return; }
-    var cityA = ALL_CITIES.find(function(c) { return c.id === document.getElementById('cirs-city-select').value; });
-    var cmp = window.CIRS.compare(cityA, cityB, ALL_CITIES);
-
-    var rows = '';
-    Object.keys(cmp.dimensions).forEach(function(k) {
-      var d = cmp.dimensions[k];
-      var cls = d.delta > 0.5 ? 'cirs-delta-pos' : d.delta < -0.5 ? 'cirs-delta-neg' : 'cirs-delta-zero';
-      var sign = d.delta > 0 ? '+' : '';
-      rows += '<tr><td>' + d.label + '</td><td>' + d.a.toFixed(1) + '</td><td>' + d.b.toFixed(1) + '</td><td class="' + cls + '">' + sign + d.delta.toFixed(1) + '</td></tr>';
-    });
-
-    document.getElementById('cirs-compare-host').innerHTML =
-      '<div class="bvs-card" style="margin-top:16px;padding:16px;background:var(--bg2)">' +
-        '<div class="bvs-card-header"><span style="color:var(--primary)">&#9878;</span> Side-by-Side Comparison</div>' +
-        '<p style="margin-bottom:12px;font-size:13px;color:var(--fg2)">' +
-          '<strong style="color:var(--fg)">' + cmp.city_a.name + ':</strong> ' + cmp.city_a.score + '/100 (' + cmp.city_a.tier + ')' +
-          ' &nbsp;vs&nbsp; ' +
-          '<strong style="color:var(--fg)">' + cmp.city_b.name + ':</strong> ' + cmp.city_b.score + '/100 (' + cmp.city_b.tier + ')' +
-          ' &nbsp;&rarr;&nbsp; <em style="color:var(--primary)">' + cmp.overall_winner + ' leads by ' + Math.abs(cmp.overall_delta).toFixed(1) + ' pts</em>' +
-        '</p>' +
-        '<table class="cirs-compare-table">' +
-          '<thead><tr><th>Dimension</th><th>' + cmp.city_a.name + '</th><th>' + cmp.city_b.name + '</th><th>&Delta;</th></tr></thead>' +
-          '<tbody>' + rows + '</tbody>' +
-        '</table>' +
-      '</div>';
-  }
-
-  document.getElementById('cirs-compare-btn').addEventListener('click', renderCompare);
-
-  function init() {
-    if (!window.CIRS) { setTimeout(init, 50); return; }
-    loadData().catch(function(err) {
-      document.getElementById('cirs-score-host').innerHTML =
-        '<p style="color:var(--red);font-size:13px">Failed to load CIRS data: ' + err.message + '</p>';
-    });
-  }
-  init();
-})();
-/* /CIRS */
 </script>
 <!-- DD scripts -->
 <script>
@@ -3063,5 +2893,186 @@ a:hover { text-decoration: underline; }
   init();
 })();
 /* /DD */
+</script>
+<!-- CIRS scripts -->
+<script src="investor-readiness-score.js"></script>
+<script>
+/* CIRS SECTION SCRIPT */
+(function() {
+  'use strict';
+  var ALL_CITIES = [];
+  var DATA = null;
+
+  function loadData() {
+    return fetch('cities-data.json')
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        DATA = d;
+        ALL_CITIES = d.cities;
+        populateCitySelect();
+        renderLeaderboard();
+        render(ALL_CITIES[0]);
+      });
+  }
+
+  function populateCitySelect() {
+    var sel = document.getElementById('cirs-city-select');
+    ALL_CITIES.forEach(function(c) {
+      var opt = document.createElement('option');
+      opt.value = c.id;
+      opt.textContent = c.name + ', ' + c.state + ' (' + c.country + ')';
+      sel.appendChild(opt);
+    });
+    sel.addEventListener('change', function(e) {
+      var city = ALL_CITIES.find(function(c) { return c.id === e.target.value; });
+      render(city);
+    });
+  }
+
+  function render(city) {
+    renderBanner(city);
+    renderScore(city);
+  }
+
+  function renderBanner(city) {
+    var b = city.ai_banner;
+    var banner = document.getElementById('cirs-banner');
+    banner.style.background = 'linear-gradient(135deg,' + b.palette_primary + ',' + b.palette_secondary + ')';
+    var img = document.getElementById('cirs-banner-img');
+    if (img) {
+      img.src = 'banners/' + city.id + '.png';
+      img.alt = city.name + ' through the mist';
+      img.style.display = 'block';
+    }
+    var radial = banner.querySelectorAll('div')[0];
+    if (radial) radial.style.background = 'radial-gradient(ellipse at 30% 70%,' + b.palette_accent + ' 0%, transparent 50%)';
+    document.getElementById('cirs-banner-name').textContent = city.name;
+    document.getElementById('cirs-banner-meta').textContent = city.state + ', ' + city.country + ' · ' + (city.population_metro/1000).toFixed(0) + 'k metro · ' + b.fog_haze_level + ' · ' + b.time_of_day;
+    document.getElementById('cirs-swatch-1').style.background = b.palette_primary;
+    document.getElementById('cirs-swatch-2').style.background = b.palette_secondary;
+    document.getElementById('cirs-swatch-3').style.background = b.palette_accent;
+  }
+
+  function renderScore(city) {
+    var score = window.CIRS.compute(city, ALL_CITIES);
+    var host = document.getElementById('cirs-score-host');
+
+    var dimsHtml = '';
+    Object.keys(score.dimensions).forEach(function(k) {
+      var d = score.dimensions[k];
+      var pct = (d.score / 20) * 100;
+      var indsHtml = '';
+      Object.keys(d.indicators).forEach(function(ik) {
+        var ind = d.indicators[ik];
+        indsHtml += '<li><span>' + ind.label + '</span><code>' + ind.rawValue + ' ' + ind.unit + '</code><span class="pts">+' + ind.contribution.toFixed(2) + '</span></li>';
+      });
+      dimsHtml += '<div class="cirs-dim-card">' +
+        '<h4>' + d.label + ' <span class="pts">' + d.score.toFixed(1) + '/20</span></h4>' +
+        '<p class="blurb">' + d.blurb + '</p>' +
+        '<div class="cirs-dim-bar"><div class="cirs-dim-bar-fill" style="width:' + pct + '%"></div></div>' +
+        '<ul class="cirs-indicators">' + indsHtml + '</ul>' +
+        '</div>';
+    });
+
+    var tierColors = { Premier: '#1B5E3F', Strong: '#2E7D5B', Developing: '#B07D2E', Emerging: '#9B3D3D' };
+    var tierColor = tierColors[score.tier] || 'var(--primary)';
+
+    host.innerHTML =
+      '<div class="cirs-score-hero">' +
+        '<div class="cirs-score-circle" style="border-color:' + tierColor + '">' +
+          '<div class="num">' + score.score + '</div>' +
+          '<div class="max">/ ' + score.maxScore + '</div>' +
+          '<div class="tier" style="color:' + tierColor + '">' + score.tier + '</div>' +
+        '</div>' +
+        '<div class="cirs-score-meta">' +
+          '<h3>' + city.name + ', ' + city.state + '</h3>' +
+          '<p class="tagline">' + city.notable_companies.slice(0, 4).join(' · ') + '</p>' +
+          '<p class="blurb">' + score.tierBlurb + '</p>' +
+        '</div>' +
+      '</div>' +
+      '<div class="cirs-dims-grid">' + dimsHtml + '</div>';
+  }
+
+  function renderLeaderboard() {
+    var scored = ALL_CITIES.map(function(c) {
+      return { city: c, score: window.CIRS.compute(c, ALL_CITIES) };
+    });
+    scored.sort(function(a, b) { return b.score.score - a.score.score; });
+
+    var tbody = document.getElementById('cirs-leaderboard');
+    while (tbody.rows.length > 1) tbody.deleteRow(1);
+
+    scored.forEach(function(item, idx) {
+      var c = item.city, s = item.score;
+      var topDim = null, weakDim = null;
+      var topScore = -1, weakScore = 999;
+      Object.keys(s.dimensions).forEach(function(k) {
+        var d = s.dimensions[k];
+        if (d.score > topScore) { topScore = d.score; topDim = d.label; }
+        if (d.score < weakScore) { weakScore = d.score; weakDim = d.label; }
+      });
+
+      var tierColors = { Premier: '#1B5E3F', Strong: '#2E7D5B', Developing: '#B07D2E', Emerging: '#9B3D3D' };
+      var tierColor = tierColors[s.tier] || 'var(--primary)';
+      var tierRgb = (s.tier==='Premier'||s.tier==='Strong') ? '78,205,196' : (s.tier==='Developing' ? '240,165,0' : '255,107,107');
+      var row = tbody.insertRow();
+      if (idx === 0) row.className = 'cirs-leaderboard-row first';
+      else row.className = 'cirs-leaderboard-row';
+      row.innerHTML =
+        '<td><span class="ai-score-sm ' + (idx < 3 ? 'score-high' : idx < 6 ? 'score-mid' : 'score-low') + '">' + (idx + 1) + '</span></td>' +
+        '<td style="font-weight:700;color:var(--fg)">' + c.name + '</td>' +
+        '<td>' + c.state + '</td>' +
+        '<td>' + c.country + '</td>' +
+        '<td style="color:' + tierColor + ';font-weight:800;font-size:14px">' + s.score.toFixed(1) + '</td>' +
+        '<td><span class="bvs-badge" style="background:rgba(' + tierRgb + ',0.15);color:' + tierColor + ';border:1px solid ' + tierColor + '">' + s.tier + '</span></td>' +
+        '<td style="color:var(--green);font-size:11px">' + topDim + ' <span style="color:var(--fg3)">(' + topScore.toFixed(1) + ')</span></td>' +
+        '<td style="color:var(--red);font-size:11px">' + weakDim + ' <span style="color:var(--fg3)">(' + weakScore.toFixed(1) + ')</span></td>';
+    });
+  }
+
+  function renderCompare() {
+    var sel = window.prompt('Compare with which city? (id: ' + ALL_CITIES.map(function(c){return c.id;}).join(', ') + ')', 'portland');
+    if (!sel) return;
+    var cityB = ALL_CITIES.find(function(c) { return c.id === sel; });
+    if (!cityB) { alert('City not found: ' + sel); return; }
+    var cityA = ALL_CITIES.find(function(c) { return c.id === document.getElementById('cirs-city-select').value; });
+    var cmp = window.CIRS.compare(cityA, cityB, ALL_CITIES);
+
+    var rows = '';
+    Object.keys(cmp.dimensions).forEach(function(k) {
+      var d = cmp.dimensions[k];
+      var cls = d.delta > 0.5 ? 'cirs-delta-pos' : d.delta < -0.5 ? 'cirs-delta-neg' : 'cirs-delta-zero';
+      var sign = d.delta > 0 ? '+' : '';
+      rows += '<tr><td>' + d.label + '</td><td>' + d.a.toFixed(1) + '</td><td>' + d.b.toFixed(1) + '</td><td class="' + cls + '">' + sign + d.delta.toFixed(1) + '</td></tr>';
+    });
+
+    document.getElementById('cirs-compare-host').innerHTML =
+      '<div class="bvs-card" style="margin-top:16px;padding:16px;background:var(--bg2)">' +
+        '<div class="bvs-card-header"><span style="color:var(--primary)">&#9878;</span> Side-by-Side Comparison</div>' +
+        '<p style="margin-bottom:12px;font-size:13px;color:var(--fg2)">' +
+          '<strong style="color:var(--fg)">' + cmp.city_a.name + ':</strong> ' + cmp.city_a.score + '/100 (' + cmp.city_a.tier + ')' +
+          ' &nbsp;vs&nbsp; ' +
+          '<strong style="color:var(--fg)">' + cmp.city_b.name + ':</strong> ' + cmp.city_b.score + '/100 (' + cmp.city_b.tier + ')' +
+          ' &nbsp;&rarr;&nbsp; <em style="color:var(--primary)">' + cmp.overall_winner + ' leads by ' + Math.abs(cmp.overall_delta).toFixed(1) + ' pts</em>' +
+        '</p>' +
+        '<table class="cirs-compare-table">' +
+          '<thead><tr><th>Dimension</th><th>' + cmp.city_a.name + '</th><th>' + cmp.city_b.name + '</th><th>&Delta;</th></tr></thead>' +
+          '<tbody>' + rows + '</tbody>' +
+        '</table>' +
+      '</div>';
+  }
+
+  document.getElementById('cirs-compare-btn').addEventListener('click', renderCompare);
+
+  function init() {
+    if (!window.CIRS) { setTimeout(init, 50); return; }
+    loadData().catch(function(err) {
+      document.getElementById('cirs-score-host').innerHTML =
+        '<p style="color:var(--red);font-size:13px">Failed to load CIRS data: ' + err.message + '</p>';
+    });
+  }
+  init();
+})();
+/* /CIRS */
 </script>
 </body></html>

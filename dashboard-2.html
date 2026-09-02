@@ -126,6 +126,10 @@ function toggleTheme() {
     <a class="nav-link" href="#city-arena">City Arena</a>
     <a class="nav-link" href="#policy-tracker">Policy Tracker</a>
     <a class="nav-link" href="#sentiment-index">Sentiment</a>
+    <a class="nav-link" href="#investor-score">Investor Score</a>
+    <a class="nav-link" href="#deep-dive">Reports</a>
+    <a class="nav-link" href="#export-studio">Export</a>
+    <a class="nav-link" href="#corridor-pulse">Corridor Pulse</a>
     <button id="theme-toggle" onclick="toggleTheme()" style="margin-left:8px;padding:6px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);cursor:pointer;font-size:14px;line-height:1;" title="Toggle light/dark mode">&#9790;</button>
   </div>
 </nav>
@@ -1095,8 +1099,16 @@ function toggleTheme() {
     <!-- Filter bar -->
     <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px">
       <span style="font-size:10px;font-weight:600;color:#666;line-height:28px;margin-right:4px">Filter:</span>
-      < b u t t o n   c l a s s = " b t n   p o l i c y - f i l t e r   b t n - a c t i v e "   d a t a - c a t = " a l l "   o n c l i c k = " f i l t e r P o l i c i e s ( ' a l l ' , t h i s ) " > A l l < / b u t t o n > < b u t t o n   c l a s s = " b t n   p o l i c y - f i l t e r "   d a t a - c a t = " e n v i r o n m e n t "   o n c l i c k = " f i l t e r P o l i c i e s ( ' e n v i r o n m e n t ' , t h i s ) " > E n v i r o n m e n t < / b u t t o n > < b u t t o n   c l a s s = " b t n   p o l i c y - f i l t e r "   d a t a - c a t = " t e c h "   o n c l i c k = " f i l t e r P o l i c i e s ( ' t e c h ' , t h i s ) " > T e c h n o l o g y < / b u t t o n > < b u t t o n   c l a s s = " b t n   p o l i c y - f i l t e r "   d a t a - c a t = " h o u s i n g "   o n c l i c k = " f i l t e r P o l i c i e s ( ' h o u s i n g ' , t h i s ) " > H o u s i n g < / b u t t o n > < b u t t o n   c l a s s = " b t n   p o l i c y - f i l t e r "   d a t a - c a t = " t r a d e "   o n c l i c k = " f i l t e r P o l i c i e s ( ' t r a d e ' , t h i s ) " > T r a d e < / b u t t o n > < b u t t o n   c l a s s = " b t n   p o l i c y - f i l t e r "   d a t a - c a t = " i m m i g r a t i o n "   o n c l i c k = " f i l t e r P o l i c i e s ( ' i m m i g r a t i o n ' , t h i s ) " > I m m i g r a t i o n < / b u t t o n > < b u t t o n   c l a s s = " b t n   p o l i c y - f i l t e r "   d a t a - c a t = " h e a l t h c a r e "   o n c l i c k = " f i l t e r P o l i c i e s ( ' h e a l t h c a r e ' , t h i s ) " > H e a l t h c a r e < / b u t t o n > < b u t t o n   c l a s s = " b t n   p o l i c y - f i l t e r "   d a t a - c a t = " t r a n s p o r t "   o n c l i c k = " f i l t e r P o l i c i e s ( ' t r a n s p o r t ' , t h i s ) " > T r a n s p o r t < / b u t t o n >
+      <button class="btn policy-filter btn-active" data-cat="all" onclick="filterPolicies('all',this)">All</button>
+      <button class="btn policy-filter" data-cat="environment" onclick="filterPolicies('environment',this)">Environment</button>
+      <button class="btn policy-filter" data-cat="tech" onclick="filterPolicies('tech',this)">Technology</button>
+      <button class="btn policy-filter" data-cat="housing" onclick="filterPolicies('housing',this)">Housing</button>
+      <button class="btn policy-filter" data-cat="trade" onclick="filterPolicies('trade',this)">Trade</button>
+      <button class="btn policy-filter" data-cat="immigration" onclick="filterPolicies('immigration',this)">Immigration</button>
+      <button class="btn policy-filter" data-cat="healthcare" onclick="filterPolicies('healthcare',this)">Healthcare</button>
+      <button class="btn policy-filter" data-cat="transport" onclick="filterPolicies('transport',this)">Transport</button>
     </div>
+    <div id="policy-cards"</div>
     <div id="policy-cards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:16px">
     </div>
   </div>
@@ -1277,6 +1289,246 @@ function toggleTheme() {
 <!-- ═══════════════════════════════════════════════════════════════════
      14. FOOTER
      ═══════════════════════════════════════════════════════════════════ -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     14. INVESTOR READINESS SCORE (COLLAPSIBLE)
+     ═══════════════════════════════════════════════════════════════════ -->
+<section id="investor-score" style="padding:0 16px 24px">
+  <div class="collapsible-header" onclick="toggleCollapsible(this)">
+    <div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="font-size:20px">📈</span>
+        <div>
+          <div style="font-size:16px;font-weight:700;color:#e8e8e8">Investor Readiness Score</div>
+          <div style="font-size:11px;color:#a0a0a0;margin-top:2px">Platform maturity score tracking feature completeness and market readiness</div>
+        </div>
+      </div>
+    </div>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="collapsible-body" style="padding-top:16px">
+    <!-- Score Ring + Summary -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-bottom:24px">
+      <div class="card" style="display:flex;align-items:center;gap:24px">
+        <svg width="120" height="120" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="10"/>
+          <path d="M 60 10 A 50 50 0 1 1 22.4 30.1" fill="none" stroke="#4ecdc4" stroke-width="10" stroke-linecap="round"/>
+          <text x="60" y="56" text-anchor="middle" fill="#4ecdc4" font-size="28" font-weight="800" font-family="Inter,system-ui,sans-serif">52</text>
+          <text x="60" y="74" text-anchor="middle" fill="#888" font-size="11" font-weight="600" font-family="Inter,system-ui,sans-serif">/ 100</text>
+        </svg>
+        <div>
+          <div style="font-size:10px;font-weight:600;color:#666;text-transform:uppercase;letter-spacing:0.05em">Overall Readiness</div>
+          <div style="font-size:24px;font-weight:800;color:#4ecdc4;margin:4px 0">52% &mdash; Growth Stage</div>
+          <div style="font-size:11px;color:#a0a0a0">7 of 14 milestones achieved. Target: 75 for Series A readiness.</div>
+          <div style="font-size:10px;color:#666;margin-top:8px">Last updated: Sept 2, 2026</div>
+        </div>
+      </div>
+      <div class="card">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:#f0a500;margin-bottom:12px">Next Priority Milestones</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:center;gap:12px;padding:8px;border-radius:6px;background:rgba(255,255,255,0.02)">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;background:rgba(78,205,196,0.15);color:#4ecdc4;font-size:11px;font-weight:700">+15</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:600;color:#e8e8e8">Live Data APIs</div><div style="font-size:10px;color:#666">Real-time feeds from StatsCan, BLS, port authorities</div></div>
+            <span class="badge" style="background:rgba(240,165,0,0.12);color:#f0a500;font-size:9px">In Progress</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:8px;border-radius:6px;background:rgba(255,255,255,0.02)">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;background:rgba(108,155,255,0.15);color:#6c9bff;font-size:11px;font-weight:700">+10</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:600;color:#e8e8e8">Real LLM Integration</div><div style="font-size:10px;color:#666">GPT-4 / Claude powered narratives and projections</div></div>
+            <span class="badge tag-muted" style="font-size:9px">Planned</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:8px;border-radius:6px;background:rgba(255,255,255,0.02)">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;background:rgba(240,165,0,0.15);color:#f0a500;font-size:11px;font-weight:700">+10</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:600;color:#e8e8e8">User Authentication</div><div style="font-size:10px;color:#666">SSO, role-based access, saved preferences</div></div>
+            <span class="badge tag-muted" style="font-size:9px">Planned</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Milestone Tracker Grid -->
+    <div class="card" style="overflow-x:auto">
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:#4ecdc4;margin-bottom:12px">Full Milestone Tracker</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px" id="milestone-grid">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     15. PREMIUM DEEP DIVE REPORTS (COLLAPSIBLE)
+     ═══════════════════════════════════════════════════════════════════ -->
+<section id="deep-dive" style="padding:0 16px 24px">
+  <div class="collapsible-header" onclick="toggleCollapsible(this)">
+    <div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="font-size:20px">📖</span>
+        <div>
+          <div style="font-size:16px;font-weight:700;color:#e8e8e8">Premium Deep Dive Reports</div>
+          <div style="font-size:11px;color:#a0a0a0;margin-top:2px">AI-authored intelligence reports on demand &mdash; Premium tier ($24/mo)</div>
+        </div>
+      </div>
+    </div>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="collapsible-body" style="padding-top:16px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px">
+      <div class="card card-hover" style="position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;right:0;padding:4px 12px;background:linear-gradient(135deg,#4ecdc4,#6c9bff);color:#0d1212;font-size:9px;font-weight:700;border-radius:0 0 0 8px">SAMPLE</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;margin-top:8px">
+          <span style="font-size:24px">⚡</span>
+          <div><div style="font-size:13px;font-weight:700;color:#e8e8e8">Q3 2026 Cascadia Energy Investment Outlook</div><div style="font-size:10px;color:#666">15 pages &bull; Environment + Economics + Government</div></div>
+        </div>
+        <p style="font-size:11px;line-height:1.6;color:#a0a0a0;margin-bottom:16px">Comprehensive analysis of clean energy investment flows across WA, OR, and BC including carbon credit market projections, HSR energy impact, and policy-driven opportunity mapping.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px">
+          <span class="tag">Clean Energy</span><span class="tag">Carbon Markets</span><span class="tag">Policy</span><span class="tag">Projections</span>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn" onclick="alert('Premium feature: Generate full 15-page PDF report with charts, projections, and policy recommendations.")" style="flex:1;background:rgba(78,205,196,0.12);color:#4ecdc4;border-color:rgba(78,205,196,0.3)">Generate Report</button>
+          <button class="btn" style="width:40px;text-align:center">📤</button>
+        </div>
+      </div>
+      <div class="card card-hover" style="position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;right:0;padding:4px 12px;background:linear-gradient(135deg,#f0a500,#ff6b6b);color:#0d1212;font-size:9px;font-weight:700;border-radius:0 0 0 8px">POPULAR</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;margin-top:8px">
+          <span style="font-size:24px">📊</span>
+          <div><div style="font-size:13px;font-weight:700;color:#e8e8e8">PNW Cross-Border Housing Deep Dive</div><div style="font-size:10px;color:#666">18 pages &bull; Housing + Demographics + Economics</div></div>
+        </div>
+        <p style="font-size:11px;line-height:1.6;color:#a0a0a0;margin-bottom:16px">Housing affordability crisis analysis with rent-vs-buy projections, development pipeline tracking, zoning reform impact modeling, and cross-border migration flow analysis.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px">
+          <span class="tag">Housing</span><span class="tag">Zoning</span><span class="tag">Migration</span><span class="tag">Affordability</span>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn" onclick="alert('Premium feature: Generate full 18-page PDF report with affordability models and zoning impact analysis.")" style="flex:1;background:rgba(78,205,196,0.12);color:#4ecdc4;border-color:rgba(78,205,196,0.3)">Generate Report</button>
+          <button class="btn" style="width:40px;text-align:center">📤</button>
+        </div>
+      </div>
+      <div class="card card-hover" style="position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;right:0;padding:4px 12px;background:linear-gradient(135deg,#6c9bff,#8b5cf6);color:#0d1212;font-size:9px;font-weight:700;border-radius:0 0 0 8px">NEW</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;margin-top:8px">
+          <span style="font-size:24px">🤖</span>
+          <div><div style="font-size:13px;font-weight:700;color:#e8e8e8">AI/ML Talent War: Cascadia vs Silicon Valley</div><div style="font-size:10px;color:#666">12 pages &bull; Technology + Education + Immigration</div></div>
+        </div>
+        <p style="font-size:11px;line-height:1.6;color:#a0a0a0;margin-bottom:16px">Competitive talent analysis comparing PNW tech hubs against Bay Area metrics: salary benchmarks, university pipeline output, visa fast-track impact, and retention risk scoring.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px">
+          <span class="tag">AI/ML</span><span class="tag">Talent</span><span class="tag">Salaries</span><span class="tag">Immigration</span>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn" onclick="alert('Premium feature: Generate full 12-page PDF competitive talent analysis report.")" style="flex:1;background:rgba(78,205,196,0.12);color:#4ecdc4;border-color:rgba(78,205,196,0.3)">Generate Report</button>
+          <button class="btn" style="width:40px;text-align:center">📤</button>
+        </div>
+      </div>
+      <div class="card card-hover">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+          <span style="font-size:24px">✈️</span>
+          <div><div style="font-size:13px;font-weight:700;color:#e8e8e8">Cascadia HSR Economic Impact Assessment</div><div style="font-size:10px;color:#666">20 pages &bull; Transport + Economics + Real Estate</div></div>
+        </div>
+        <p style="font-size:11px;line-height:1.6;color:#a0a0a0;margin-bottom:16px">High-speed rail corridor impact modeling: property value uplift, commuter flow redistribution, station-area development potential, and 10-year GDP multiplier analysis.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px">
+          <span class="tag">HSR</span><span class="tag">Real Estate</span><span class="tag">GDP</span><span class="tag">Commuter</span>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn" onclick="alert('Premium feature: Generate full 20-page PDF infrastructure impact assessment.')" style="flex:1;background:rgba(78,205,196,0.12);color:#4ecdc4;border-color:rgba(78,205,196,0.3)">Generate Report</button>
+          <button class="btn" style="width:40px;text-align:center">📤</button>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:20px;padding:16px;border-radius:8px;background:linear-gradient(135deg,rgba(78,205,196,0.06),rgba(108,155,255,0.04));border:1px solid rgba(78,205,196,0.15);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px">
+      <div>
+        <div style="font-size:13px;font-weight:700;color:#e8e8e8">Unlock All Reports with Premium</div>
+        <div style="font-size:11px;color:#a0a0a0">$24/month &bull; Unlimited AI-generated reports &bull; API access &bull; Priority support</div>
+      </div>
+      <button class="btn" style="padding:10px 20px;background:linear-gradient(135deg,#4ecdc4,#6c9bff);color:#0d1212;font-weight:700;border:none;font-size:12px">Start Free Trial</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     16. INTERACTIVE DATA EXPORT STUDIO (COLLAPSIBLE)
+     ═══════════════════════════════════════════════════════════════════ -->
+<section id="export-studio" style="padding:0 16px 24px">
+  <div class="collapsible-header" onclick="toggleCollapsible(this)">
+    <div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="font-size:20px">📥</span>
+        <div>
+          <div style="font-size:16px;font-weight:700;color:#e8e8e8">Interactive Data Export Studio</div>
+          <div style="font-size:11px;color:#a0a0a0;margin-top:2px">Select metrics, choose format, and export cross-page data as CSV/JSON/Excel</div>
+        </div>
+      </div>
+    </div>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="collapsible-body" style="padding-top:16px">
+    <div class="card" style="max-width:800px">
+      <!-- Metric Selection -->
+      <div style="margin-bottom:20px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:#4ecdc4;margin-bottom:12px">Select Metrics</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px" id="export-metrics">
+          <label style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:6px;border:1px solid rgba(255,255,255,0.08);background:rgba(78,205,196,0.08);cursor:pointer;font-size:11px;color:#e8e8e8"><input type="checkbox" value="gdp" checked style="accent-color:#4ecdc4"> GDP</label>
+          <label style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:6px;border:1px solid rgba(255,255,255,0.08);background:rgba(78,205,196,0.08);cursor:pointer;font-size:11px;color:#e8e8e8"><input type="checkbox" value="population" checked style="accent-color:#4ecdc4"> Population</label>
+          <label style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:6px;border:1px solid rgba(255,255,255,0.08);background:rgba(78,205,196,0.08);cursor:pointer;font-size:11px;color:#e8e8e8"><input type="checkbox" value="ai_score" checked style="accent-color:#4ecdc4"> AI Score</label>
+          <label style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:6px;border:1px solid rgba(255,255,255,0.08);background:rgba(78,205,196,0.08);cursor:pointer;font-size:11px;color:#e8e8e8"><input type="checkbox" value="growth" style="accent-color:#4ecdc4"> Growth Rate</label>
+          <label style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:6px;border:1px solid rgba(255,255,255,0.08);background:rgba(78,205,196,0.08);cursor:pointer;font-size:11px;color:#e8e8e8"><input type="checkbox" value="income" style="accent-color:#4ecdc4"> Median Income</label>
+          <label style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:6px;border:1px solid rgba(255,255,255,0.08);background:rgba(78,205,196,0.08);cursor:pointer;font-size:11px;color:#e8e8e8"><input type="checkbox" value="talent" style="accent-color:#4ecdc4"> Talent Density</label>
+          <label style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:6px;border:1px solid rgba(255,255,255,0.08);background:rgba(78,205,196,0.08);cursor:pointer;font-size:11px;color:#e8e8e8"><input type="checkbox" value="vc_access" style="accent-color:#4ecdc4"> VC Access</label>
+          <label style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:6px;border:1px solid rgba(255,255,255,0.08);background:rgba(78,205,196,0.08);cursor:pointer;font-size:11px;color:#e8e8e8"><input type="checkbox" value="green_energy" style="accent-color:#4ecdc4"> Green Energy</label>
+          <label style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:6px;border:1px solid rgba(255,255,255,0.08);background:rgba(78,205,196,0.08);cursor:pointer;font-size:11px;color:#e8e8e8"><input type="checkbox" value="housing" style="accent-color:#4ecdc4"> Housing Affordability</label>
+        </div>
+      </div>
+      <!-- Filters -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px">
+        <div>
+          <label style="display:block;font-size:10px;font-weight:600;color:#666;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em">Region</label>
+          <select id="export-region" style="width:100%"><option value="all">All Regions</option><option value="WA">Washington</option><option value="OR">Oregon</option><option value="BC">British Columbia</option><option value="AB">Alberta</option><option value="AK">Alaska</option></select>
+        </div>
+        <div>
+          <label style="display:block;font-size:10px;font-weight:600;color:#666;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em">Time Range</label>
+          <select id="export-time" style="width:100%"><option value="2026">2026 (Current)</option><option value="2025">2025</option><option value="2024">2024</option><option value="3yr">3-Year Trend</option><option value="5yr">5-Year Trend</option></select>
+        </div>
+        <div>
+          <label style="display:block;font-size:10px;font-weight:600;color:#666;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em">Format</label>
+          <select id="export-format" style="width:100%"><option value="csv">CSV (.csv)</option><option value="json">JSON (.json)</option><option value="xlsx">Excel (.xlsx)</option></select>
+        </div>
+      </div>
+      <!-- Preview Table -->
+      <div style="margin-bottom:20px;overflow-x:auto;max-height:240px;overflow-y:auto;border:1px solid rgba(255,255,255,0.06);border-radius:8px">
+        <table id="export-preview" style="width:100%;border-collapse:collapse;font-size:11px">
+          <thead style="position:sticky;top:0;z-index:1"><tr style="background:#1a2626"><th style="text-align:left;padding:8px 12px;color:#4ecdc4;font-weight:600;font-size:10px">City</th><th style="text-align:left;padding:8px 12px;color:#4ecdc4;font-weight:600;font-size:10px">Region</th><th style="text-align:right;padding:8px 12px;color:#4ecdc4;font-weight:600;font-size:10px">GDP</th><th style="text-align:right;padding:8px 12px;color:#4ecdc4;font-weight:600;font-size:10px">Population</th><th style="text-align:right;padding:8px 12px;color:#4ecdc4;font-weight:600;font-size:10px">AI Score</th></tr></thead>
+          <tbody id="export-tbody"></tbody>
+        </table>
+      </div>
+      <!-- Actions -->
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+        <button class="btn" onclick="exportData()" style="padding:10px 20px;background:rgba(78,205,196,0.12);color:#4ecdc4;border-color:rgba(78,205,196,0.3);font-weight:600">📤 Export Data</button>
+        <button class="btn" onclick="copyAPICurl()" style="padding:10px 20px;font-weight:600">🔗 Copy API cURL</button>
+        <span id="export-status" style="font-size:11px;color:#4ecdc4;display:none"></span>
+        <span style="margin-left:auto;font-size:10px;color:#666">API: <code style="background:rgba(255,255,255,0.05);padding:2px 6px;border-radius:4px;color:#4ecdc4">GET /api/v1/export?metrics=gdp,pop&amp;format=csv</code></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     17. ANIMATED CORRIDOR PULSE VISUALIZATION
+     ═══════════════════════════════════════════════════════════════════ -->
+<section id="corridor-pulse" style="padding:0 16px 32px">
+  <div style="margin-bottom:16px">
+    <h2 class="section-title">Cascadia Corridor Pulse</h2>
+    <p class="section-sub">Live animated visualization of trade, migration, capital, and energy flows across the Pacific Northwest corridor</p>
+  </div>
+  <div class="card" style="padding:0;overflow:hidden;position:relative">
+    <canvas id="pulse-canvas" style="width:100%;height:420px;display:block"></canvas>
+    <!-- Legend overlay -->
+    <div style="position:absolute;bottom:16px;left:16px;display:flex;flex-wrap:wrap;gap:12px;padding:10px 16px;background:rgba(13,18,18,0.85);backdrop-filter:blur(8px);border-radius:8px;border:1px solid rgba(255,255,255,0.08)">
+      <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:#a0a0a0"><span style="width:10px;height:3px;border-radius:2px;background:#4ecdc4;display:inline-block"></span>Trade Volume</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:#a0a0a0"><span style="width:10px;height:3px;border-radius:2px;background:#f0a500;display:inline-block"></span>Capital Flows</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:#a0a0a0"><span style="width:10px;height:3px;border-radius:2px;background:#6c9bff;display:inline-block"></span>Migration</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:#a0a0a0"><span style="width:10px;height:3px;border-radius:2px;background:#ff6b6b;display:inline-block"></span>Energy Transfers</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:#666;margin-left:8px">Nodes: 14 active cities</div>
+    </div>
+  </div>
+</section>
+
 <footer style="padding:40px 16px 24px;background:#111919;border-top:1px solid rgba(255,255,255,0.06)">
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:32px;max-width:1024px;margin:0 auto 32px">
     <div><div style="font-weight:700;font-size:14px;color:#e8e8e8;margin-bottom:12px">About</div><div style="font-size:11px;line-height:1.7;color:#666">AIBizVan360 is an AI-powered intelligence platform providing 360-degree analytics across the Cascadia corridor.</div></div>
@@ -1527,5 +1779,240 @@ document.addEventListener('DOMContentLoaded', () => {
     &#9664; Original Dashboard
   </a>
 </div>
+
+
+// ─── Investor Readiness Score ────────────────────────────────────
+const MILESTONES = [
+  { name: '30-City Data Engine', points: 10, status: 'done', category: 'Data' },
+  { name: '12-Dimension City Profiles', points: 8, status: 'done', category: 'Data' },
+  { name: 'Dashboard UI (Dark Theme)', points: 5, status: 'done', category: 'Product' },
+  { name: 'AI Intelligence Wire', points: 7, status: 'done', category: 'AI' },
+  { name: 'Government Policy Tracker', points: 8, status: 'done', category: 'Product' },
+  { name: 'Sentiment Analysis Engine', points: 7, status: 'done', category: 'AI' },
+  { name: 'City-vs-City Arena', points: 7, status: 'done', category: 'Product' },
+  { name: 'Live Data APIs', points: 15, status: 'progress', category: 'Infrastructure' },
+  { name: 'Real LLM Integration', points: 10, status: 'planned', category: 'AI' },
+  { name: 'User Authentication', points: 10, status: 'planned', category: 'Infrastructure' },
+  { name: 'Mobile Apps (iOS/Android)', points: 15, status: 'planned', category: 'Product' },
+  { name: 'Premium Reports Engine', points: 8, status: 'planned', category: 'Monetization' },
+  { name: 'Data Export Studio', points: 7, status: 'planned', category: 'Product' },
+  { name: 'Corridor Pulse Visualization', points: 6, status: 'planned', category: 'Product' },
+];
+
+function renderMilestones() {
+  const grid = document.getElementById('milestone-grid');
+  if (!grid) return;
+  const statusStyle = { done: { bg: 'rgba(16,185,129,0.12)', fg: '#10b981', label: 'Done' }, progress: { bg: 'rgba(245,158,11,0.12)', fg: '#f59e0b', label: 'In Progress' }, planned: { bg: 'rgba(255,255,255,0.04)', fg: '#666', label: 'Planned' } };
+  grid.innerHTML = MILESTONES.map(m => {
+    const s = statusStyle[m.status];
+    return '<div style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:6px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04)">' +
+      '<div style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;background:' + s.bg + ';color:' + s.fg + ';font-size:11px;font-weight:700;flex-shrink:0">+' + m.points + '</div>' +
+      '<div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:600;color:#e8e8e8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + m.name + '</div>' +
+      '<div style="font-size:9px;color:#666">' + m.category + '</div></div>' +
+      '<span class="badge" style="background:' + s.bg + ';color:' + s.fg + ';font-size:9px;font-weight:600">' + s.label + '</span></div>';
+  }).join('');
+}
+
+// ─── Data Export Studio ───────────────────────────────────────────
+const EXPORT_CITIES = [
+  { name: 'Seattle', region: 'WA', gdp: '$468B', pop: '4.02M', aiScore: 92, growth: '+3.2%', income: '$112K', talent: 92, vc: 95, green: 78, housing: 22 },
+  { name: 'Vancouver', region: 'BC', gdp: '$142B CAD', pop: '2.8M', aiScore: 89, growth: '+2.8%', income: '$78K CAD', talent: 85, vc: 62, green: 82, housing: 18 },
+  { name: 'Portland', region: 'OR', gdp: '$128B', pop: '2.5M', aiScore: 83, growth: '+2.4%', income: '$74K', talent: 72, vc: 55, green: 88, housing: 35 },
+  { name: 'Bellevue', region: 'WA', gdp: '$82B', pop: '1.52M', aiScore: 88, growth: '+5.8%', income: '$142K', talent: 88, vc: 85, green: 72, housing: 20 },
+  { name: 'Redmond', region: 'WA', gdp: '$68B', pop: '780K', aiScore: 85, growth: '+4.2%', income: '$128K', talent: 90, vc: 82, green: 70, housing: 22 },
+  { name: 'Victoria', region: 'BC', gdp: '$18B CAD', pop: '420K', aiScore: 78, growth: '+2.2%', income: '$62K CAD', talent: 60, vc: 35, green: 80, housing: 30 },
+  { name: 'Surrey', region: 'BC', gdp: '$14B CAD', pop: '620K', aiScore: 72, growth: '+3.8%', income: '$54K CAD', talent: 55, vc: 30, green: 65, housing: 40 },
+  { name: 'Kirkland', region: 'WA', gdp: '$24B', pop: '95K', aiScore: 82, growth: '+4.6%', income: '$118K', talent: 82, vc: 78, green: 68, housing: 25 },
+  { name: 'Tacoma', region: 'WA', gdp: '$28B', pop: '920K', aiScore: 71, growth: '+2.6%', income: '$68K', talent: 52, vc: 28, green: 60, housing: 48 },
+  { name: 'Bellingham', region: 'WA', gdp: '$9B', pop: '230K', aiScore: 69, growth: '+2.8%', income: '$56K', talent: 50, vc: 18, green: 72, housing: 42 },
+];
+
+function renderExportPreview() {
+  const tbody = document.getElementById('export-tbody');
+  if (!tbody) return;
+  const region = document.getElementById('export-region').value;
+  const filtered = region === 'all' ? EXPORT_CITIES : EXPORT_CITIES.filter(c => c.region === region);
+  tbody.innerHTML = filtered.map(c =>
+    '<tr style="border-bottom:1px solid rgba(255,255,255,0.04)"><td style="padding:6px 12px;color:#e8e8e8;font-weight:500">' + c.name + '</td><td style="padding:6px 12px;color:#a0a0a0">' + c.region + '</td><td style="padding:6px 12px;text-align:right;color:#e8e8e8">' + c.gdp + '</td><td style="padding:6px 12px;text-align:right;color:#e8e8e8">' + c.pop + '</td><td style="padding:6px 12px;text-align:right;font-weight:600;color:' + getScoreColor(c.aiScore) + '">' + c.aiScore + '</td></tr>'
+  ).join('');
+}
+
+function exportData() {
+  const format = document.getElementById('export-format').value;
+  const region = document.getElementById('export-region').value;
+  const filtered = region === 'all' ? EXPORT_CITIES : EXPORT_CITIES.filter(c => c.region === region);
+  let content, filename, mime;
+  if (format === 'json') {
+    content = JSON.stringify(filtered, null, 2);
+    filename = 'cascadia-data.json';
+    mime = 'application/json';
+  } else {
+    const header = 'City,Region,GDP,Population,AI Score,Growth,Income,Talent,VC Access,Green Energy,Housing
+';
+    const rows = filtered.map(c => [c.name,c.region,c.gdp,c.pop,c.aiScore,c.growth,c.income,c.talent,c.vc,c.green,c.housing].join(',')).join('
+');
+    content = header + rows;
+    filename = 'cascadia-data.csv';
+    mime = 'text/csv';
+  }
+  const blob = new Blob([content], { type: mime });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+  const status = document.getElementById('export-status');
+  status.textContent = 'Downloaded ' + filename + ' (' + filtered.length + ' cities)';
+  status.style.display = 'inline';
+  setTimeout(function() { status.style.display = 'none'; }, 3000);
+}
+
+function copyAPICurl() {
+  const metrics = Array.from(document.querySelectorAll('#export-metrics input:checked')).map(function(cb) { return cb.value; }).join(',');
+  const curl = "curl -H 'Authorization: Bearer YOUR_TOKEN' 'https://api.aibizvan360.com/v1/export?metrics=" + metrics + "&format=csv&region=all'";
+  navigator.clipboard.writeText(curl).then(function() {
+    var status = document.getElementById('export-status');
+    status.textContent = 'cURL copied to clipboard!';
+    status.style.display = 'inline';
+    setTimeout(function() { status.style.display = 'none'; }, 3000);
+  });
+}
+
+// ─── Corridor Pulse Canvas Animation ──────────────────────────────
+function initCorridorPulse() {
+  var canvas = document.getElementById('pulse-canvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+
+  function resize() {
+    var rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  var cities = [
+    { name: 'Vancouver', x: 0.12, y: 0.72, r: 8, pop: 2.63 },
+    { name: 'Victoria', x: 0.05, y: 0.55, r: 4, pop: 0.4 },
+    { name: 'Surrey', x: 0.15, y: 0.78, r: 4, pop: 0.57 },
+    { name: 'Bellingham', x: 0.28, y: 0.62, r: 3, pop: 0.23 },
+    { name: 'Seattle', x: 0.38, y: 0.42, r: 10, pop: 4.01 },
+    { name: 'Bellevue', x: 0.42, y: 0.38, r: 6, pop: 0.51 },
+    { name: 'Redmond', x: 0.45, y: 0.35, r: 4, pop: 0.08 },
+    { name: 'Tacoma', x: 0.35, y: 0.48, r: 4, pop: 0.93 },
+    { name: 'Everett', x: 0.42, y: 0.32, r: 4, pop: 0.54 },
+    { name: 'Spokane', x: 0.65, y: 0.28, r: 4, pop: 0.59 },
+    { name: 'Portland', x: 0.22, y: 0.88, r: 8, pop: 2.19 },
+    { name: 'Eugene', x: 0.18, y: 0.95, r: 3, pop: 0.38 },
+    { name: 'Olympia', x: 0.32, y: 0.55, r: 3, pop: 0.31 },
+    { name: 'Kelowna', x: 0.32, y: 0.72, r: 3, pop: 0.22 },
+  ];
+
+  var flows = [
+    { from: 0, to: 4, color: '#4ecdc4', volume: 0.8, label: 'Trade' },
+    { from: 4, to: 5, color: '#f0a500', volume: 0.6, label: 'Capital' },
+    { from: 4, to: 10, color: '#6c9bff', volume: 0.4, label: 'Migration' },
+    { from: 0, to: 10, color: '#4ecdc4', volume: 0.3, label: 'Trade' },
+    { from: 5, to: 6, color: '#f0a500', volume: 0.5, label: 'Capital' },
+    { from: 3, to: 4, color: '#6c9bff', volume: 0.35, label: 'Migration' },
+    { from: 4, to: 8, color: '#ff6b6b', volume: 0.3, label: 'Energy' },
+    { from: 0, to: 2, color: '#f0a500', volume: 0.25, label: 'Capital' },
+    { from: 4, to: 9, color: '#6c9bff', volume: 0.2, label: 'Migration' },
+    { from: 10, to: 11, color: '#4ecdc4', volume: 0.25, label: 'Trade' },
+    { from: 4, to: 7, color: '#ff6b6b', volume: 0.2, label: 'Energy' },
+    { from: 1, to: 0, color: '#6c9bff', volume: 0.15, label: 'Migration' },
+  ];
+
+  var particles = [];
+  var t = 0;
+
+  function spawnParticle(flow) {
+    var c1 = cities[flow.from], c2 = cities[flow.to];
+    particles.push({ fx: flow.from, tx: flow.to, p: 0, speed: 0.002 + Math.random() * 0.003, color: flow.color, size: 1.5 + Math.random() * 1.5 });
+  }
+
+  function draw() {
+    var w = canvas.width / dpr, h = canvas.height / dpr;
+    ctx.clearRect(0, 0, w, h);
+
+    // Background grid
+    ctx.strokeStyle = 'rgba(255,255,255,0.02)';
+    ctx.lineWidth = 0.5;
+    for (var gx = 0; gx < w; gx += 40) { ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke(); }
+    for (var gy = 0; gy < h; gy += 40) { ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke(); }
+
+    // Flow lines
+    flows.forEach(function(f) {
+      var c1 = cities[f.from], c2 = cities[f.to];
+      var x1 = c1.x * w, y1 = c1.y * h, x2 = c2.x * w, y2 = c2.y * h;
+      ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2);
+      ctx.strokeStyle = f.color; ctx.globalAlpha = 0.08; ctx.lineWidth = 1 + f.volume * 2; ctx.stroke();
+      ctx.globalAlpha = 1;
+    });
+
+    // Particles
+    particles.forEach(function(pt) {
+      var c1 = cities[pt.fx], c2 = cities[pt.tx];
+      var x = (c1.x + (c2.x - c1.x) * pt.p) * w;
+      var y = (c1.y + (c2.y - c1.y) * pt.p) * h;
+      ctx.beginPath(); ctx.arc(x, y, pt.size, 0, Math.PI * 2);
+      ctx.fillStyle = pt.color; ctx.globalAlpha = 0.8; ctx.fill();
+      // Trail
+      for (var tr = 1; tr <= 4; tr++) {
+        var tp = pt.p - tr * 0.012;
+        if (tp < 0) tp = 0;
+        var tx = (c1.x + (c2.x - c1.x) * tp) * w;
+        var ty = (c1.y + (c2.y - c1.y) * tp) * h;
+        ctx.beginPath(); ctx.arc(tx, ty, pt.size * (1 - tr * 0.2), 0, Math.PI * 2);
+        ctx.globalAlpha = 0.3 - tr * 0.06; ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    });
+
+    // City nodes
+    cities.forEach(function(c, i) {
+      var cx = c.x * w, cy = c.y * h;
+      // Pulse ring
+      var pulseR = c.r + 4 + Math.sin(t * 0.02 + i) * 3;
+      ctx.beginPath(); ctx.arc(cx, cy, pulseR, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(78,205,196,' + (0.15 + Math.sin(t * 0.02 + i) * 0.08) + ')';
+      ctx.lineWidth = 1; ctx.stroke();
+      // Outer glow
+      var grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, c.r * 2.5);
+      grad.addColorStop(0, 'rgba(78,205,196,0.15)');
+      grad.addColorStop(1, 'rgba(78,205,196,0)');
+      ctx.beginPath(); ctx.arc(cx, cy, c.r * 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = grad; ctx.fill();
+      // Core
+      ctx.beginPath(); ctx.arc(cx, cy, c.r, 0, Math.PI * 2);
+      var coreGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, c.r);
+      coreGrad.addColorStop(0, '#4ecdc4');
+      coreGrad.addColorStop(1, 'rgba(78,205,196,0.3)');
+      ctx.fillStyle = coreGrad; ctx.fill();
+      // Label
+      ctx.font = (c.r >= 6 ? '600 11px' : '500 9px') + ' Inter, system-ui, sans-serif';
+      ctx.textAlign = 'center'; ctx.fillStyle = '#e8e8e8';
+      ctx.fillText(c.name, cx, cy + c.r + 14);
+    });
+
+    // Spawn particles
+    if (t % 8 === 0) { flows.forEach(function(f) { if (Math.random() < f.volume) spawnParticle(f); }); }
+
+    // Update particles
+    particles = particles.filter(function(pt) { pt.p += pt.speed; return pt.p < 1; });
+    t++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+// ─── Init new features ───────────────────────────────────────────
+renderMilestones();
+renderExportPreview();
+var er = document.getElementById('export-region');
+if (er) er.addEventListener('change', renderExportPreview);
+initCorridorPulse();
+
 </body>
 </html>

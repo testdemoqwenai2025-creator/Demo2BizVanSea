@@ -43,6 +43,71 @@ select option { background:#1a2626; color:#e8e8e8; }
 .nav-link { font-size:12px; color:#a0a0a0; text-decoration:none; padding:6px 12px; border-radius:6px; transition:all 0.2s; cursor:pointer; }
 .nav-link:hover, .nav-link.active { color:#4ecdc4; background:rgba(78,205,196,0.1); }
 </style>
+
+<style id="light-theme-styles">
+html.light body { background: #f5f7f7; color: #1a1a2e; }
+html.light .nav-bar { background: rgba(255,255,255,0.92); border-bottom-color: rgba(0,0,0,0.08); }
+html.light .card { background: #ffffff; border-color: rgba(0,0,0,0.08); }
+html.light .card-hover:hover { border-color: rgba(78,205,196,0.3); }
+html.light .badge.tag-muted { background: rgba(0,0,0,0.04); color: #666; border-color: rgba(0,0,0,0.08); }
+html.light .tag { background: rgba(78,205,196,0.1); color: #0d9488; border-color: rgba(78,205,196,0.2); }
+html.light .section-title { color: #1a1a2e; }
+html.light .section-sub { color: #888; }
+html.light .pulse-dot { animation: none; opacity: 1; }
+html.light .collapsible-header { background: linear-gradient(135deg,rgba(78,205,196,0.1),rgba(108,155,255,0.06)); border-color: rgba(78,205,196,0.2); }
+html.light .collapsible-header:hover { background: linear-gradient(135deg,rgba(78,205,196,0.15),rgba(108,155,255,0.1)); }
+html.light .btn { background: rgba(0,0,0,0.03); color: #666; border-color: rgba(0,0,0,0.1); }
+html.light .btn:hover { background: rgba(78,205,196,0.1); color: #0d9488; border-color: rgba(78,205,196,0.3); }
+html.light .btn-active { background: rgba(78,205,196,0.12); color: #0d9488; border-color: rgba(78,205,196,0.3); }
+html.light select { background: #ffffff; color: #1a1a2e; border-color: rgba(0,0,0,0.15); }
+html.light select option { background: #fff; color: #1a1a2e; }
+html.light [style*="background:#162020"] { background: #ffffff !important; }
+html.light [style*="background:#111919"] { background: #f0f2f2 !important; }
+html.light [style*="background:#0d1212"] { background: #f5f7f7 !important; }
+html.light [style*="background:#1a2626"] { background: #f0f2f2 !important; }
+html.light [style*="color:#e8e8e8"] { color: #1a1a2e !important; }
+html.light [style*="color:#a0a0a0"] { color: #555 !important; }
+html.light [style*="color:#666"] { color: #888 !important; }
+html.light [style*="border:1px solid rgba(255,255,255,0.06)"] { border-color: rgba(0,0,0,0.08) !important; }
+html.light [style*="border-bottom:1px solid rgba(255,255,255,0.04)"] { border-bottom-color: rgba(0,0,0,0.06) !important; }
+html.light [style*="border-top:1px solid rgba(255,255,255,0.04)"] { border-top-color: rgba(0,0,0,0.06) !important; }
+html.light [style*="border-top:1px solid rgba(255,255,255,0.06)"] { border-top-color: rgba(0,0,0,0.08) !important; }
+html.light [style*="border-bottom:1px solid rgba(255,255,255,0.06)"] { border-bottom-color: rgba(0,0,0,0.08) !important; }
+html.light [style*="border-left:1px solid rgba(255,255,255,0.1)"] { border-left-color: rgba(0,0,0,0.1) !important; }
+html.light [style*="background:rgba(255,255,255,0.02)"] { background: rgba(0,0,0,0.02) !important; }
+html.light [style*="background:rgba(255,255,255,0.03)"] { background: rgba(0,0,0,0.03) !important; }
+html.light [style*="background:rgba(255,255,255,0.04)"] { background: rgba(0,0,0,0.04) !important; }
+html.light [style*="background:rgba(255,255,255,0.05)"] { background: rgba(0,0,0,0.04) !important; }
+html.light .ticker-track span[style*="color:#a0a0a0"] { color: #555 !important; }
+html.light .nav-link { color: #555; }
+html.light .nav-link:hover, html.light .nav-link.active { color: #0d9488; background: rgba(78,205,196,0.1); }
+html.light #theme-toggle { background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.1); }
+html.light #theme-toggle:hover { background: rgba(78,205,196,0.1); }
+html.light svg text { fill: #555 !important; }
+html.light svg [stroke="rgba(255,255,255,0.06)"] { stroke: rgba(0,0,0,0.06) !important; }
+html.light .collapsible-header .arrow { color: #0d9488; }
+html.light .collapsible-header div div div { color: #1a1a2e; }
+html.light .collapsible-header div div div[style*="color:#a0a0a0"] { color: #666 !important; }
+</style>
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  html.classList.toggle('light');
+  const isLight = html.classList.contains('light');
+  document.getElementById('theme-toggle').innerHTML = isLight ? '&#9728;' : '&#9790;';
+  document.getElementById('theme-toggle').title = isLight ? 'Switch to dark mode' : 'Switch to light mode';
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
+}
+(function() {
+  if (localStorage.getItem('theme') === 'light') {
+    document.documentElement.classList.add('light');
+    document.addEventListener('DOMContentLoaded', function() {
+      var btn = document.getElementById('theme-toggle');
+      if (btn) { btn.innerHTML = '&#9728;'; btn.title = 'Switch to dark mode'; }
+    });
+  }
+})();
+</script>
 </head>
 <body>
 
@@ -51,14 +116,17 @@ select option { background:#1a2626; color:#e8e8e8; }
      ═══════════════════════════════════════════════════════════════════ -->
 <nav class="nav-bar">
   <div style="display:flex;align-items:center;gap:12px">
-    <span style="font-weight:800;font-size:16px;color:#4ecdc4">AIBizVan360</span>
+    <a href="index.html" style="font-weight:800;font-size:16px;color:#4ecdc4;text-decoration:none">AIBizVan360</a>
     <span style="font-size:10px;color:#666;border-left:1px solid rgba(255,255,255,0.1);padding-left:12px">Intelligence Platform</span>
   </div>
-  <div style="display:flex;gap:4px">
-    <a class="nav-link active" href="#original-dashboard">Original Dashboard</a>
+  <div style="display:flex;align-items:center;gap:4px">
+    <a class="nav-link" href="index.html">Home</a>
+    <a class="nav-link" href="dashboard.html">Dashboard</a>
+    <a class="nav-link active" href="#original-dashboard">Dashboard 2</a>
     <a class="nav-link" href="#city-arena">City Arena</a>
     <a class="nav-link" href="#policy-tracker">Policy Tracker</a>
-    <a class="nav-link" href="#sentiment-index">Sentiment Index</a>
+    <a class="nav-link" href="#sentiment-index">Sentiment</a>
+    <button id="theme-toggle" onclick="toggleTheme()" style="margin-left:8px;padding:6px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);cursor:pointer;font-size:14px;line-height:1;" title="Toggle light/dark mode">&#9790;</button>
   </div>
 </nav>
 
@@ -1212,7 +1280,7 @@ select option { background:#1a2626; color:#e8e8e8; }
 <footer style="padding:40px 16px 24px;background:#111919;border-top:1px solid rgba(255,255,255,0.06)">
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:32px;max-width:1024px;margin:0 auto 32px">
     <div><div style="font-weight:700;font-size:14px;color:#e8e8e8;margin-bottom:12px">About</div><div style="font-size:11px;line-height:1.7;color:#666">AIBizVan360 is an AI-powered intelligence platform providing 360-degree analytics across the Cascadia corridor.</div></div>
-    <div><div style="font-weight:700;font-size:14px;color:#e8e8e8;margin-bottom:12px">Navigate</div><div style="margin-bottom:6px"><a href="#" style="font-size:11px;color:#4ecdc4;text-decoration:none">Dashboard</a></div><div style="margin-bottom:6px"><a href="#" style="font-size:11px;color:#4ecdc4;text-decoration:none">City Profiles</a></div><div style="margin-bottom:6px"><a href="#" style="font-size:11px;color:#4ecdc4;text-decoration:none">Sector Analysis</a></div><div style="margin-bottom:6px"><a href="#" style="font-size:11px;color:#4ecdc4;text-decoration:none">GDP Models</a></div><div style="margin-bottom:6px"><a href="#" style="font-size:11px;color:#4ecdc4;text-decoration:none">Intelligence Wire</a></div></div>
+    <div><div style="font-weight:700;font-size:14px;color:#e8e8e8;margin-bottom:12px">Navigate</div><div style="margin-bottom:6px"><a href="dashboard.html" style="font-size:11px;color:#4ecdc4;text-decoration:none">Dashboard</a></div><div style="margin-bottom:6px"><a href="#" style="font-size:11px;color:#4ecdc4;text-decoration:none">City Profiles</a></div><div style="margin-bottom:6px"><a href="#" style="font-size:11px;color:#4ecdc4;text-decoration:none">Sector Analysis</a></div><div style="margin-bottom:6px"><a href="#" style="font-size:11px;color:#4ecdc4;text-decoration:none">GDP Models</a></div><div style="margin-bottom:6px"><a href="#" style="font-size:11px;color:#4ecdc4;text-decoration:none">Intelligence Wire</a></div></div>
     <div><div style="font-weight:700;font-size:14px;color:#e8e8e8;margin-bottom:12px">Data Sources</div><div style="margin-bottom:6px;font-size:11px;color:#666">StatsCan</div><div style="margin-bottom:6px;font-size:11px;color:#666">US Census Bureau</div><div style="margin-bottom:6px;font-size:11px;color:#666">WA Open Data</div><div style="margin-bottom:6px;font-size:11px;color:#666">BC Open Data</div><div style="margin-bottom:6px;font-size:11px;color:#666">Bloomberg NEF</div></div>
     <div><div style="font-weight:700;font-size:14px;color:#e8e8e8;margin-bottom:12px">Legal</div><div style="margin-bottom:6px"><a href="#" style="font-size:11px;color:#4ecdc4;text-decoration:none">Privacy Policy</a></div><div style="margin-bottom:6px"><a href="#" style="font-size:11px;color:#4ecdc4;text-decoration:none">Terms of Service</a></div><div style="margin-bottom:6px"><a href="#" style="font-size:11px;color:#4ecdc4;text-decoration:none">Data Disclaimer</a></div><div style="margin-bottom:6px"><a href="#" style="font-size:11px;color:#4ecdc4;text-decoration:none">API Terms</a></div><div style="margin-bottom:6px"><a href="#" style="font-size:11px;color:#4ecdc4;text-decoration:none">Cookie Policy</a></div></div>
     <div><div style="font-weight:700;font-size:14px;color:#e8e8e8;margin-bottom:12px">About &amp; Contact</div><div style="margin-bottom:6px"><a href="#" style="font-size:11px;color:#4ecdc4;text-decoration:none">About the Platform</a></div><div style="margin-bottom:6px"><a href="#" style="font-size:11px;color:#4ecdc4;text-decoration:none">AI Methodology</a></div><div style="margin-bottom:6px"><a href="#" style="font-size:11px;color:#4ecdc4;text-decoration:none">Contact Us</a></div><div style="margin-bottom:6px"><a href="#" style="font-size:11px;color:#4ecdc4;text-decoration:none">API Access</a></div><div style="margin-bottom:6px"><a href="#" style="font-size:11px;color:#4ecdc4;text-decoration:none">Partnerships</a></div></div>

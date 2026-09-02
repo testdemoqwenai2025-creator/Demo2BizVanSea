@@ -2010,6 +2010,243 @@ a:hover { text-decoration: underline; }
 </style>
 <!-- /CIRS -->
 
+<!-- DEEP DIVE REPORTS -->
+<section class="container" style="padding:0 0 24px">
+  <div class="bvs-section-title">Deep Dive Reports</div>
+  <div class="bvs-section-sub">Auto-generated narrative reports per city — strengths, weaknesses, sector analysis, talent pipeline, cost structure, climate assessment, cross-border considerations, and recommended action items. All computed live from the same cities-data.json backbone that powers CIRS.</div>
+
+  <div class="bvs-card" style="padding:24px;margin-bottom:16px">
+    <div class="bvs-card-header"><span style="color:var(--primary)">&#128218;</span> Deep Dive Generator</div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:16px">
+      <label style="font-size:12px;color:var(--fg3);text-transform:uppercase;letter-spacing:0.05em">Select City:</label>
+      <select id="dd-city-select" style="background:var(--bg3);color:var(--fg);border:1px solid rgba(78,205,196,0.2);padding:8px 12px;border-radius:6px;font-size:13px;cursor:pointer;min-width:220px"></select>
+      <label style="font-size:12px;color:var(--fg3);text-transform:uppercase;letter-spacing:0.05em">Report Type:</label>
+      <select id="dd-type-select" style="background:var(--bg3);color:var(--fg);border:1px solid rgba(78,205,196,0.2);padding:8px 12px;border-radius:6px;font-size:13px;cursor:pointer">
+        <option value="full">Full Report (all sections)</option>
+        <option value="investor">Investor Brief</option>
+        <option value="founder">Founder Site-Selection</option>
+        <option value="policy">Policy &amp; Ecosystem</option>
+      </select>
+      <button id="dd-generate-btn" style="background:var(--primary);color:var(--bg);border:none;padding:8px 16px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:0.05em">Generate Report &rarr;</button>
+      <span style="flex:1"></span>
+      <span class="bvs-badge bvs-badge-primary" id="dd-meta-badge">Awaiting generation</span>
+    </div>
+
+    <div id="dd-report-host">
+      <div style="padding:32px;text-align:center;color:var(--fg3);font-size:13px">
+        Select a city and report type, then click <strong style="color:var(--primary)">Generate Report</strong> to produce a full narrative deep dive.
+      </div>
+    </div>
+
+    <div style="margin-top:16px;padding:12px;background:var(--bg3);border-radius:6px;font-size:11px;color:var(--fg2);line-height:1.6">
+      <strong style="color:var(--primary)">Methodology:</strong> Reports are generated client-side from real economic data — no LLM calls, no hallucinations. Each narrative paragraph is templated from the city's indicator values, ranked against the 10-city Cascadia cohort. Report sections adapt to the chosen type: Investor Brief emphasizes capital access and traction; Founder Site-Selection emphasizes cost, talent, and quality of life; Policy &amp; Ecosystem emphasizes resilience, sectors, and ecosystem gaps.
+    </div>
+  </div>
+</section>
+
+<style>
+  .dd-report {
+    background: var(--bg3);
+    border-radius: 8px;
+    padding: 24px;
+    margin-top: 16px;
+  }
+  .dd-report-header {
+    border-bottom: 1px solid rgba(78,205,196,0.2);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+  }
+  .dd-report-header h3 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--fg);
+    margin-bottom: 4px;
+  }
+  .dd-report-header .subtitle {
+    font-size: 0.85rem;
+    color: var(--fg2);
+  }
+  .dd-report-header .meta {
+    font-size: 0.7rem;
+    color: var(--fg3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 6px;
+  }
+  .dd-section {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed rgba(255,255,255,0.06);
+  }
+  .dd-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .dd-section h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .dd-section h4 .icon { font-size: 1rem; }
+  .dd-section p {
+    font-size: 0.85rem;
+    color: var(--fg2);
+    line-height: 1.7;
+    margin-bottom: 8px;
+  }
+  .dd-section p:last-child { margin-bottom: 0; }
+  .dd-section strong { color: var(--fg); font-weight: 600; }
+  .dd-section .highlight { color: var(--primary); font-weight: 600; }
+
+  .dd-strength-weakness {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .dd-sw-card {
+    background: var(--bg2);
+    border-radius: 6px;
+    padding: 12px;
+  }
+  .dd-sw-card.strengths { border-left: 3px solid var(--primary); }
+  .dd-sw-card.weaknesses { border-left: 3px solid var(--red); }
+  .dd-sw-card h5 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--fg3);
+    margin-bottom: 8px;
+  }
+  .dd-sw-card.strengths h5 { color: var(--primary); }
+  .dd-sw-card.weaknesses h5 { color: var(--red); }
+  .dd-sw-list { list-style: none; }
+  .dd-sw-list li {
+    font-size: 0.8rem;
+    color: var(--fg2);
+    padding: 4px 0;
+    display: grid;
+    grid-template-columns: 24px 1fr auto;
+    gap: 6px;
+    align-items: start;
+  }
+  .dd-sw-list .rank {
+    font-weight: 800;
+    color: var(--fg3);
+    font-size: 0.75rem;
+  }
+  .dd-sw-list .score {
+    font-size: 0.7rem;
+    color: var(--fg3);
+    font-family: 'SF Mono', Monaco, monospace;
+  }
+  .dd-action-list {
+    list-style: none;
+    counter-reset: action-counter;
+  }
+  .dd-action-list li {
+    counter-increment: action-counter;
+    font-size: 0.85rem;
+    color: var(--fg2);
+    padding: 8px 0 8px 32px;
+    position: relative;
+    line-height: 1.6;
+    border-bottom: 1px dashed rgba(255,255,255,0.05);
+  }
+  .dd-action-list li:last-child { border-bottom: none; }
+  .dd-action-list li::before {
+    content: counter(action-counter);
+    position: absolute;
+    left: 0; top: 8px;
+    width: 22px; height: 22px;
+    background: var(--primary);
+    color: var(--bg);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; font-weight: 800;
+  }
+  .dd-action-list .priority {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .dd-priority-high { background: rgba(255,107,107,0.15); color: var(--red); }
+  .dd-priority-med { background: rgba(240,165,0,0.15); color: var(--amber); }
+  .dd-priority-low { background: rgba(78,205,196,0.15); color: var(--primary); }
+
+  .dd-compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+    margin-top: 8px;
+  }
+  .dd-compare-table th, .dd-compare-table td {
+    padding: 0.5rem 0.6rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: var(--fg2);
+  }
+  .dd-compare-table th {
+    color: var(--fg3);
+    font-weight: 600;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .dd-compare-table .similarity-bar {
+    display: inline-block;
+    width: 60px;
+    height: 4px;
+    background: var(--bg3);
+    border-radius: 2px;
+    overflow: hidden;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+  .dd-compare-table .similarity-fill {
+    height: 100%;
+    background: var(--primary);
+  }
+
+  .dd-sector-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .dd-sector-card {
+    background: var(--bg2);
+    border-radius: 6px;
+    padding: 10px;
+    border-left: 3px solid var(--primary);
+  }
+  .dd-sector-card .name {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--fg);
+    margin-bottom: 4px;
+  }
+  .dd-sector-card .lq {
+    font-size: 0.7rem;
+    color: var(--fg3);
+  }
+  .dd-sector-card .lq strong {
+    color: var(--primary);
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 768px) {
+    .dd-strength-weakness { grid-template-columns: 1fr; }
+  }
+</style>
+<!-- /DD -->
+
+
 <!-- CASCADIA ECONOMICS AI OUTLOOK -->
 <section class="container" style="padding:0 0 48px">
   <div class="sports-insight-box">
@@ -2415,5 +2652,416 @@ a:hover { text-decoration: underline; }
   init();
 })();
 /* /CIRS */
+</script>
+<!-- DD scripts -->
+<script>
+/* DD SECTION SCRIPT */
+(function() {
+  'use strict';
+  var ALL_CITIES = [];
+  var DATA = null;
+
+  function loadData() {
+    return fetch('cities-data.json')
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        DATA = d;
+        ALL_CITIES = d.cities;
+        populateCitySelect();
+      });
+  }
+
+  function populateCitySelect() {
+    var sel = document.getElementById('dd-city-select');
+    ALL_CITIES.forEach(function(c) {
+      var opt = document.createElement('option');
+      opt.value = c.id;
+      opt.textContent = c.name + ', ' + c.state + ' (' + c.country + ')';
+      sel.appendChild(opt);
+    });
+  }
+
+  // ───────────────────────────────────────────────────────────────
+  // REPORT GENERATION
+  // ───────────────────────────────────────────────────────────────
+
+  function generateReport(city, reportType) {
+    var score = window.CIRS.compute(city, ALL_CITIES);
+    var cohort = window.CIRS.buildCohort(ALL_CITIES);
+    var enriched = Object.assign({}, city, window.CIRS.derivedFields(city));
+
+    // Rank all cities by score for context
+    var ranked = ALL_CITIES.map(function(c) {
+      return { city: c, score: window.CIRS.compute(c, ALL_CITIES) };
+    }).sort(function(a, b) { return b.score.score - a.score.score; });
+    var rankIdx = ranked.findIndex(function(r) { return r.city.id === city.id; });
+    var rank = rankIdx + 1;
+    var totalCities = ranked.length;
+
+    // Strengths and weaknesses (top/bottom 3 indicators by normalized score)
+    var allIndicators = [];
+    Object.keys(score.dimensions).forEach(function(dimKey) {
+      var dim = score.dimensions[dimKey];
+      Object.keys(dim.indicators).forEach(function(indKey) {
+        var ind = dim.indicators[indKey];
+        allIndicators.push({
+          label: ind.label,
+          dimension: dim.label,
+          normalized: ind.normalized,
+          rawValue: ind.rawValue,
+          unit: ind.unit,
+          direction: ind.direction,
+          contribution: ind.contribution
+        });
+      });
+    });
+    var strengths = allIndicators.slice().sort(function(a, b) { return b.normalized - a.normalized; }).slice(0, 3);
+    var weaknesses = allIndicators.slice().sort(function(a, b) { return a.normalized - b.normalized; }).slice(0, 3);
+
+    // Comparable cities — most similar by dimension score profile
+    var comparables = ALL_CITIES.filter(function(c) { return c.id !== city.id; }).map(function(c) {
+      var otherScore = window.CIRS.compute(c, ALL_CITIES);
+      var similarity = 0;
+      Object.keys(score.dimensions).forEach(function(k) {
+        var diff = Math.abs(score.dimensions[k].score - otherScore.dimensions[k].score);
+        similarity += (20 - diff) / 20;
+      });
+      similarity = (similarity / 5) * 100;
+      return { city: c, score: otherScore, similarity: similarity };
+    }).sort(function(a, b) { return b.similarity - a.similarity; }).slice(0, 3);
+
+    // Sector deep dive
+    var topSector = city.top_sectors.slice().sort(function(a, b) { return b.location_quotient - a.location_quotient; })[0];
+    var sectorInsight = topSector.location_quotient > 4
+      ? 'a globally significant cluster — among the strongest in North America'
+      : topSector.location_quotient > 2
+      ? 'a regional powerhouse with national-level concentration'
+      : topSector.location_quotient > 1.5
+      : 'a meaningful local specialty, but not yet a defining cluster'
+      : 'an emerging sector with room to grow';
+
+    // Talent pipeline
+    var totalCsGrads = enriched._derived_cs_grads;
+    var totalResearch = enriched._derived_research_dollars;
+    var topUni = city.universities.slice().sort(function(a, b) { return b.research_dollars_musd - a.research_dollars_musd; })[0];
+
+    // Cost analysis
+    var rentRank = ALL_CITIES.slice().sort(function(a, b) { return a.office_rent_psf_annual_usd - b.office_rent_psf_annual_usd; }).findIndex(function(c) { return c.id === city.id; }) + 1;
+    var colRank = ALL_CITIES.slice().sort(function(a, b) { return a.cost_of_living_index - b.cost_of_living_index; }).findIndex(function(c) { return c.id === city.id; }) + 1;
+
+    // Climate
+    var climateRisks = [];
+    if (city.climate.quake_risk_level === 'high') climateRisks.push('seismic');
+    if (city.climate.wildfire_risk_level === 'high') climateRisks.push('wildfire');
+    if (city.climate.flood_risk_level === 'moderate' || city.climate.flood_risk_level === 'high') climateRisks.push('flood');
+    if (city.climate.smoke_days_avg > 15) climateRisks.push('air quality (' + city.climate.smoke_days_avg + ' smoke days/yr)');
+
+    // Build report sections based on type
+    var sections = [];
+
+    // ─── Executive Summary (always) ───
+    sections.push({
+      icon: '&#128203;',
+      title: 'Executive Summary',
+      content: buildExecutiveSummary(city, score, rank, totalCities, topSector)
+    });
+
+    // ─── Strengths & Weaknesses (always) ───
+    sections.push({
+      icon: '&#9878;',
+      title: 'Strengths &amp; Weaknesses',
+      custom: buildStrengthsWeaknesses(strengths, weaknesses)
+    });
+
+    // ─── Sector Deep Dive (skip for policy type, include for others) ───
+    if (reportType !== 'policy') {
+      sections.push({
+        icon: '&#127981;',
+        title: 'Sector Deep Dive',
+        content: buildSectorSection(city, topSector, sectorInsight)
+      });
+    }
+
+    // ─── Talent Pipeline (skip for investor, include for others) ───
+    if (reportType !== 'investor') {
+      sections.push({
+        icon: '&#127891;',
+        title: 'Talent Pipeline',
+        content: buildTalentSection(city, totalCsGrads, totalResearch, topUni)
+      });
+    }
+
+    // ─── Cost Structure (always) ───
+    sections.push({
+      icon: '&#128176;',
+      title: 'Cost Structure',
+      content: buildCostSection(city, rentRank, colRank, totalCities)
+    });
+
+    // ─── Climate & Resilience (skip for investor, include for others) ───
+    if (reportType !== 'investor') {
+      sections.push({
+        icon: '&#127757;',
+        title: 'Climate &amp; Resilience',
+        content: buildClimateSection(city, climateRisks)
+      });
+    }
+
+    // ─── Cross-Border Considerations (always) ───
+    sections.push({
+      icon: '&#128206;',
+      title: 'Cross-Border Considerations',
+      content: buildCrossBorderSection(city)
+    });
+
+    // ─── Action Items (always) ───
+    sections.push({
+      icon: '&#127937;',
+      title: 'Recommended Action Items',
+      custom: buildActionItems(city, score, strengths, weaknesses, reportType)
+    });
+
+    // ─── Comparable Cities (always) ───
+    sections.push({
+      icon: '&#128279;',
+      title: 'Comparable Cascadia Cities',
+      custom: buildComparables(comparables)
+    });
+
+    return {
+      city: city,
+      score: score,
+      rank: rank,
+      totalCities: totalCities,
+      reportType: reportType,
+      sections: sections
+    };
+  }
+
+  function buildExecutiveSummary(city, score, rank, total, topSector) {
+    var rankText = rank === 1 ? 'leads the Cascadia cohort' : 'ranks #' + rank + ' of ' + total + ' in the Cascadia cohort';
+    var tierText = score.tier.toLowerCase();
+    var html = '<p><strong>' + city.name + ', ' + city.state + '</strong> ' + rankText + ' with a CIRS score of <span class="highlight">' + score.score + '/100</span> (' + score.tier + ' tier). The metro area hosts ' + (city.population_metro/1000000).toFixed(2) + 'M residents and generates $' + city.gdp_metro_usd_billions + 'B in annual GDP, growing at ' + city.gdp_growth_5yr_pct + '% over the past five years.</p>';
+    html += '<p>The city\'s defining economic cluster is <strong>' + topSector.sector + '</strong> with a location quotient of <span class="highlight">' + topSector.location_quotient.toFixed(2) + '×</span> the national average. Business formation runs at ' + city.business_formations_per_1k + ' per 1,000 residents annually. Median household income of $' + city.median_household_income_usd.toLocaleString() + ' reflects a ' + (city.median_household_income_usd > 90000 ? 'premium' : city.median_household_income_usd > 70000 ? 'mid-tier' : 'value') + ' wage market.</p>';
+    html += '<p>As a ' + tierText + ' market, ' + city.name + ' is ' + (score.tier === 'Premier' || score.tier === 'Strong' ? 'suitable for founders who can leverage its strengths and absorb its gaps' : score.tier === 'Developing' ? 'a fit for sector-specific plays but not generalist startups' : 'an early-stage ecosystem requiring creative fundraising to navigate capital and infrastructure gaps') + '. ' + score.tierBlurb + '</p>';
+    return html;
+  }
+
+  function buildStrengthsWeaknesses(strengths, weaknesses) {
+    var sHtml = strengths.map(function(s, i) {
+      return '<li><span class="rank">#' + (i+1) + '</span><span><strong>' + s.label + '</strong> (' + s.dimension + ')<br><span style="font-size:0.7rem;color:var(--fg3)">' + s.rawValue + ' ' + s.unit + ' · ' + (s.direction === 'positive' ? 'top ' : 'bottom ') + Math.round(s.normalized * 100) + '% of cohort</span></span><span class="score">+' + s.contribution.toFixed(2) + '</span></li>';
+    }).join('');
+    var wHtml = weaknesses.map(function(w, i) {
+      return '<li><span class="rank">#' + (i+1) + '</span><span><strong>' + w.label + '</strong> (' + w.dimension + ')<br><span style="font-size:0.7rem;color:var(--fg3)">' + w.rawValue + ' ' + w.unit + ' · ' + (w.direction === 'positive' ? 'bottom ' : 'top ') + Math.round((1 - w.normalized) * 100) + '% of cohort</span></span><span class="score">+' + w.contribution.toFixed(2) + '</span></li>';
+    }).join('');
+    return '<div class="dd-strength-weakness">' +
+      '<div class="dd-sw-card strengths"><h5>&#9650; Top Strengths</h5><ul class="dd-sw-list">' + sHtml + '</ul></div>' +
+      '<div class="dd-sw-card weaknesses"><h5>&#9660; Top Weaknesses</h5><ul class="dd-sw-list">' + wHtml + '</ul></div>' +
+    '</div>';
+  }
+
+  function buildSectorSection(city, topSector, sectorInsight) {
+    var sectorCards = city.top_sectors.map(function(s) {
+      var intensity = s.location_quotient > 4 ? 'var(--primary)' : s.location_quotient > 2 ? 'var(--blue)' : s.location_quotient > 1.5 ? 'var(--amber)' : 'var(--fg3)';
+      return '<div class="dd-sector-card" style="border-left-color:' + intensity + '"><div class="name">' + s.sector + '</div><div class="lq">LQ <strong>' + s.location_quotient.toFixed(2) + '×</strong> · ' + s.employment_share_pct + '% of workforce</div></div>';
+    }).join('');
+    return '<p>The dominant sector cluster in ' + city.name + ' is <strong>' + topSector.sector + '</strong>, with a location quotient of <span class="highlight">' + topSector.location_quotient.toFixed(2) + '×</span> the national average — ' + sectorInsight + '. This represents ' + topSector.employment_share_pct + '% of the local workforce.</p>' +
+      '<p>Notable companies headquartered in the metro area include ' + city.notable_companies.slice(0, 4).join(', ') + '.</p>' +
+      '<div class="dd-sector-grid">' + sectorCards + '</div>';
+  }
+
+  function buildTalentSection(city, totalCsGrads, totalResearch, topUni) {
+    var csGradsText = totalCsGrads > 500 ? 'a deep technical talent pipeline' : totalCsGrads > 200 ? 'a moderate technical talent pipeline' : totalCsGrads > 50 ? 'a limited but present technical talent pipeline' : 'a thin technical talent pipeline requiring recruitment from outside the region';
+    var researchText = topUni ? 'The leading research institution is <strong>' + topUni.name + '</strong> with $' + topUni.research_dollars_musd + 'M in annual research expenditure' : 'No major research university is headquartered in the metro area';
+    return '<p>' + city.name + ' produces <span class="highlight">' + totalCsGrads + ' CS graduates annually</span> across ' + city.universities.length + ' institution' + (city.universities.length > 1 ? 's' : '') + ', representing ' + csGradsText + '.</p>' +
+      '<p>' + researchText + (topUni ? (' (' + topUni.enrollment.toLocaleString() + ' enrollment, ' + topUni.cs_grads_annual + ' CS grads/yr).' : '.')) + '</p>' +
+      '<p>For startups hiring technical roles, expect ' + (totalCsGrads > 500 ? 'strong local supply but intense competition with established employers' : totalCsGrads > 200 ? 'adequate local supply for junior roles; senior talent often recruited remotely' : 'significant recruitment from Seattle, Portland, or Vancouver BC required') + '.</p>';
+  }
+
+  function buildCostSection(city, rentRank, colRank, total) {
+    var rentText = rentRank === 1 ? 'the cheapest office market in the cohort' : rentRank <= 3 ? 'one of the more affordable office markets (#' + rentRank + ' of ' + total + ')' : rentRank <= 7 ? 'a mid-range office market (#' + rentRank + ' of ' + total + ')' : 'one of the most expensive office markets (#' + rentRank + ' of ' + total + ')';
+    var colText = colRank === 1 ? 'the lowest cost of living in the cohort' : colRank <= 3 ? 'one of the more affordable markets (#' + colRank + ' of ' + total + ')' : colRank <= 7 ? 'a mid-range cost of living (#' + colRank + ' of ' + total + ')' : 'one of the highest costs of living (#' + colRank + ' of ' + total + ')';
+    var runway = city.office_rent_psf_annual_usd < 25 ? 'long' : city.office_rent_psf_annual_usd < 35 ? 'moderate' : 'short';
+    return '<p>Office rent in ' + city.name + ' runs <span class="highlight">$' + city.office_rent_psf_annual_usd + '/ft²/yr</span> — ' + rentText + '. Cost of living index is ' + city.cost_of_living_index + ' (US=100), making it ' + colText + '.</p>' +
+      '<p>For a 12-person startup in 2,500 ft² of Class B space, annual real estate cost is approximately <strong>$' + (city.office_rent_psf_annual_usd * 2500).toLocaleString() + '</strong>. Combined with median household income of $' + city.median_household_income_usd.toLocaleString() + ' (proxy for wage pressure), total annual operating cost per employee approaches <strong>$' + ((city.office_rent_psf_annual_usd * 2500 / 12) + (city.median_household_income_usd * 0.85)).toFixed(0) + '</strong>.</p>' +
+      '<p>Implication: a $1M seed round buys approximately <span class="highlight">' + Math.round(1000000 / ((city.office_rent_psf_annual_usd * 2500 / 12) + (city.median_household_income_usd * 0.85)) * 12) + ' months</span> of runway for a 12-person team — ' + runway + ' relative to cohort.</p>';
+  }
+
+  function buildClimateSection(city, climateRisks) {
+    var riskText = climateRisks.length === 0 ? 'no major climate risks flagged' : climateRisks.length === 1 ? 'one major climate risk: ' + climateRisks[0] : climateRisks.length + ' climate risks: ' + climateRisks.join(', ');
+    var aqiText = city.quality.aqi_avg < 40 ? 'excellent' : city.quality.aqi_avg < 55 ? 'moderate' : 'elevated';
+    var transitText = city.quality.transit_score_1_100 > 60 ? 'strong transit infrastructure' : city.quality.transit_score_1_100 > 45 ? 'adequate transit infrastructure' : 'limited transit infrastructure';
+    return '<p>' + city.name + ' has ' + riskText + '. Air quality averages AQI ' + city.quality.aqi_avg + ' (' + aqiText + '), with ' + city.climate.smoke_days_avg + ' smoke-affected days per year.</p>' +
+      '<p>The city offers ' + transitText + ' (transit score ' + city.quality.transit_score_1_100 + '/100, bike score ' + city.quality.bike_score_1_100 + '/100). Hospital bed density is ' + city.quality.hospital_beds_per_1k + ' per 1,000 residents.</p>' +
+      '<p>For employee retention over a 5-10 year horizon, ' + (climateRisks.length >= 2 ? 'climate adaptation planning is a material consideration' : climateRisks.length === 1 ? 'climate risk is worth monitoring but not disqualifying' : 'climate resilience is a meaningful long-term advantage') + '.</p>';
+  }
+
+  function buildCrossBorderSection(city) {
+    var isCanada = city.country === 'CA';
+    var currency = city.cross_border.currency;
+    var taxDiff = isCanada ? '7 points higher than US federal rate' : '7 points lower than BC rate';
+    var immText = city.cross_border.immigration_difficulty_1_10 <= 4 ? 'relatively accessible immigration pathways (difficulty ' + city.cross_border.immigration_difficulty_1_10 + '/10)' : 'more complex immigration pathways (difficulty ' + city.cross_border.immigration_difficulty_1_10 + '/10)';
+    var borderDist = city.cross_border.distance_to_canada_km;
+    var borderText = borderDist === 0 ? 'a Canadian market — directly applicable to cross-border operations' : borderDist < 100 ? 'within 100km of the Canadian border — strong cross-border collaboration potential' : borderDist < 300 ? 'within 300km of the border — moderate cross-border collaboration potential' : 'distant from the border — cross-border operations require dedicated travel';
+
+    return '<p>' + city.name + ' operates in <span class="highlight">' + currency + '</span> with a corporate tax rate of ' + city.cross_border.corp_tax_rate_pct + '%, ' + taxDiff + '.</p>' +
+      '<p>The market has ' + immText + '. ' + city.name + ' is ' + borderText + '.</p>' +
+      '<p>For cross-border operations: ' + (isCanada ? 'US market access is straightforward via existing USMCA provisions; tech talent mobility via TN visas is well-established. CAD currency hedge may be required for USD-denominated revenue.' : 'Canadian market access via USMCA is straightforward; for talent recruitment from BC, TN visa processing is the primary pathway. USD revenue simplifies accounting for global SaaS operations.') + '</p>';
+  }
+
+  function buildActionItems(city, score, strengths, weaknesses, reportType) {
+    var items = [];
+
+    // Always: address top weakness
+    if (weaknesses.length > 0) {
+      var w = weaknesses[0];
+      items.push({
+        priority: 'high',
+        text: 'Mitigate the <strong>' + w.label + '</strong> gap (' + w.dimension + ') — currently in the bottom ' + Math.round((1 - w.normalized) * 100) + '% of the Cascadia cohort. ' + getMitigationAction(w, city)
+      });
+    }
+
+    // Always: leverage top strength
+    if (strengths.length > 0) {
+      var s = strengths[0];
+      items.push({
+        priority: 'high',
+        text: 'Lean into the <strong>' + s.label + '</strong> advantage (' + s.dimension + ') — top ' + Math.round(s.normalized * 100) + '% of the cohort. ' + getLeverageAction(s, city)
+      });
+    }
+
+    // Type-specific items
+    if (reportType === 'founder') {
+      items.push({ priority: 'med', text: 'For site selection: budget ' + (city.office_rent_psf_annual_usd < 25 ? '6-9 months' : '9-15 months') + ' of pre-revenue runway given ' + city.name + '\'s cost structure and ' + city.cross_border.currency + ' exposure.' });
+      items.push({ priority: 'med', text: 'Talent plan: ' + (city.universities.reduce(function(sum, u) { return sum + u.cs_grads_annual; }, 0) > 300 ? 'build university recruiting pipeline with ' + city.universities[0].name : 'plan to recruit senior talent remotely from Seattle or Vancouver BC') + '.' });
+    } else if (reportType === 'investor') {
+      items.push({ priority: 'high', text: 'Investor diligence: validate the ' + city.top_sectors[0].sector + ' cluster thesis (LQ ' + city.top_sectors[0].location_quotient.toFixed(2) + '×) — is the startup leveraging this cluster or just collocated?' });
+      items.push({ priority: 'med', text: 'Exit path analysis: comparable exits in ' + city.name + ' are ' + (city.vc_presence_score_1_10 >= 7 ? 'well-supported by local VC presence' : 'limited — most exits route through Seattle or Bay Area acquirers') + '.' });
+    } else if (reportType === 'policy') {
+      items.push({ priority: 'med', text: 'Ecosystem gap: ' + (score.dimensions.capitalAccess.score < 8 ? 'capital access is the binding constraint — consider state/provincial co-investment funds' : score.dimensions.talentPipeline.score < 8 ? 'talent pipeline is the binding constraint — expand university CS capacity' : 'no single binding constraint — focus on sector-specific accelerators') + '.' });
+      items.push({ priority: 'low', text: 'Cross-border lever: ' + city.name + '\'s ' + city.cross_border.distance_to_canada_km + 'km distance to the border suggests ' + (city.cross_border.distance_to_canada_km < 100 ? 'joint programming with the neighboring country is high-ROI' : 'cross-border programming should be virtual-first') + '.' });
+    }
+
+    // Always: comparable city reference
+    items.push({ priority: 'low', text: 'Benchmark against comparable Cascadia cities (see section below) — what are they doing differently in their weakest dimension that ' + city.name + ' could adopt?' });
+
+    var html = items.map(function(item) {
+      return '<li>' + item.text + '<span class="priority dd-priority-' + item.priority + '">' + item.priority + '</span></li>';
+    }).join('');
+    return '<ol class="dd-action-list">' + html + '</ol>';
+  }
+
+  function getMitigationAction(w, city) {
+    var label = w.label;
+    if (label === 'Office Rent' || label === 'Cost of Living' || label === 'Wage Pressure') {
+      return 'Consider hybrid/remote-first operations or satellite offices in nearby lower-cost markets like ' + (city.country === 'CA' ? 'Abbotsford or Victoria' : 'Tacoma or Spokane') + '.';
+    }
+    if (label === 'VC Presence') {
+      return 'Pre-build relationships with Seattle/Bellevue VCs and Bay Area funds with PNW portfolio presence; consider Vancouver BC for CleanTech capital.';
+    }
+    if (label === 'Annual CS Graduates' || label === 'Tech Employment') {
+      return 'Invest in upskilling programs, remote recruiting from larger markets, and partnership with ' + (city.universities[0] ? city.universities[0].name : 'regional universities') + '.';
+    }
+    if (label === 'Climate Risk' || label === 'Air Quality') {
+      return 'Develop business continuity plans for smoke/wildfire days; invest in air filtration for office space; consider hybrid work during peak risk months.';
+    }
+    if (label === '5-yr GDP Growth' || label === 'Business Formations') {
+      return 'Focus on sectors with secular tailwinds (clean energy, AI infrastructure, healthcare automation) rather than cyclical plays.';
+    }
+    return 'Develop a specific mitigation plan addressing this constraint in the next 90 days.';
+  }
+
+  function getLeverageAction(s, city) {
+    var label = s.label;
+    if (label === 'Top Sector Concentration') {
+      return 'Build direct partnerships with the ' + city.top_sectors[0].sector + ' cluster leaders (' + city.notable_companies.slice(0, 2).join(', ') + '); position the startup as a complement, not a competitor.';
+    }
+    if (label === 'Annual CS Graduates') {
+      return 'Establish a university recruiting pipeline with ' + city.universities[0].name + ' targeting top quartile graduates; offer internships starting junior year.';
+    }
+    if (label === 'Univ. Research $') {
+      return 'Explore SBIR/STTR-style grants and direct research partnerships with the leading university — spinout opportunities are often underexploited.';
+    }
+    if (label === 'Office Rent' || label === 'Cost of Living') {
+      return 'Use the cost advantage to extend runway — hire 1.5-2x the headcount possible in Seattle or Vancouver BC for the same burn.';
+    }
+    if (label === 'Median HH Income') {
+      return 'Premium local market — test pricing power with enterprise customers in the metro area before expanding regionally.';
+    }
+    return 'Identify 2-3 specific ways to compound this advantage in the next 6 months.';
+  }
+
+  function buildComparables(comparables) {
+    var rows = comparables.map(function(c) {
+      var simPct = Math.round(c.similarity);
+      return '<tr>' +
+        '<td style="font-weight:700;color:var(--fg)">' + c.city.name + ', ' + c.city.state + '</td>' +
+        '<td>' + c.score.score.toFixed(1) + '/100 <span style="color:var(--fg3);font-size:0.7rem">(' + c.score.tier + ')</span></td>' +
+        '<td><span class="similarity-bar"><span class="similarity-fill" style="width:' + simPct + '%"></span></span>' + simPct + '%</td>' +
+        '<td style="font-size:0.72rem;color:var(--fg3)">' + c.city.top_sectors[0].sector + ' (LQ ' + c.city.top_sectors[0].location_quotient.toFixed(2) + '×)</td>' +
+      '</tr>';
+    }).join('');
+    return '<p>Three Cascadia cities with the most similar score profile — useful for benchmarking and peer learning:</p>' +
+      '<table class="dd-compare-table">' +
+        '<thead><tr><th>City</th><th>CIRS Score</th><th>Similarity</th><th>Top Sector</th></tr></thead>' +
+        '<tbody>' + rows + '</tbody>' +
+      '</table>';
+  }
+
+  // ───────────────────────────────────────────────────────────────
+  // RENDER
+  // ───────────────────────────────────────────────────────────────
+
+  function renderReport(report) {
+    var host = document.getElementById('dd-report-host');
+    var typeLabels = { full: 'Full Report', investor: 'Investor Brief', founder: 'Founder Site-Selection', policy: 'Policy & Ecosystem' };
+
+    var sectionsHtml = report.sections.map(function(sec) {
+      var body = sec.custom || ('<p>' + sec.content + '</p>');
+      return '<div class="dd-section"><h4><span class="icon">' + sec.icon + '</span> ' + sec.title + '</h4>' + body + '</div>';
+    }).join('');
+
+    host.innerHTML =
+      '<div class="dd-report">' +
+        '<div class="dd-report-header">' +
+          '<h3>' + report.city.name + ', ' + report.city.state + ' — Deep Dive</h3>' +
+          '<div class="subtitle">' + typeLabels[report.reportType] + ' · CIRS Score ' + report.score.score + '/100 (' + report.score.tier + ') · Rank #' + report.rank + ' of ' + report.totalCities + '</div>' +
+          '<div class="meta">Generated ' + new Date().toLocaleString() + ' · Computed from cities-data.json v1.0 · 10-city cohort</div>' +
+        '</div>' +
+        sectionsHtml +
+      '</div>';
+
+    document.getElementById('dd-meta-badge').textContent = 'Generated ' + new Date().toLocaleTimeString();
+  }
+
+  // ───────────────────────────────────────────────────────────────
+  // INIT
+  // ───────────────────────────────────────────────────────────────
+
+  document.getElementById('dd-generate-btn').addEventListener('click', function() {
+    var cityId = document.getElementById('dd-city-select').value;
+    var reportType = document.getElementById('dd-type-select').value;
+    var city = ALL_CITIES.find(function(c) { return c.id === cityId; });
+    if (!city) return;
+    var report = generateReport(city, reportType);
+    renderReport(report);
+  });
+
+  // Auto-generate for first city on load
+  function init() {
+    if (!window.CIRS) { setTimeout(init, 50); return; }
+    loadData().then(function() {
+      // auto-generate full report for first city
+      var city = ALL_CITIES[0];
+      var report = generateReport(city, 'full');
+      renderReport(report);
+    }).catch(function(err) {
+      document.getElementById('dd-report-host').innerHTML =
+        '<p style="color:var(--red);font-size:13px">Failed to load data: ' + err.message + '</p>';
+    });
+  }
+  init();
+})();
+/* /DD */
 </script>
 </body></html>

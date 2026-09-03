@@ -1160,7 +1160,7 @@ a:hover { text-decoration: underline; }
       <div class="bvs-logo-mark">AI</div>
       <div class="bvs-logo-text">AI<span>BizVan360</span></div>
     </a>
-    <nav class="bvs-nav"><a href="index.html" class="">Overview</a><a href="government.html" class="">Government</a><a href="dashboard.html" class="">Dashboard</a><a href="economics.html" class=" active">Economics</a><a href="leisure.html" class="">Leisure</a><a href="travel.html" class="">Travel</a><a href="technology.html" class="">Technology</a><a href="transportation.html" class="">Transport</a><a href="demographics.html" class="">Demographics</a><a href="resources.html" class="">Resources</a><a href="environment.html" class="">Environment</a><a href="sports.html" class="">Sports</a><a href="whatif-scenario.html" class="">What-If</a><a href="city-compare.html" class="">City vs City</a></nav>
+    <nav class="bvs-nav"><a href="index.html" class="">Overview</a><a href="government.html" class="">Government</a><a href="dashboard.html" class="">Dashboard</a><a href="dashboard-2.html" class="">Dashboard 2</a><a href="economics.html" class=" active">Economics</a><a href="leisure.html" class="">Leisure</a><a href="travel.html" class="">Travel</a><a href="technology.html" class="">Technology</a><a href="transportation.html" class="">Transport</a><a href="demographics.html" class="">Demographics</a><a href="resources.html" class="">Resources</a><a href="environment.html" class="">Environment</a><a href="sports.html" class="">Sports</a><a href="whatif-scenario.html" class="">What-If</a><a href="city-compare.html" class="">City vs City</a></nav>
     <div class="ai-actions">
       <a href="index.html" class="ai-home-btn" title="Home">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
@@ -1188,7 +1188,7 @@ a:hover { text-decoration: underline; }
   <div class="bvs-mobile-menu" id="ai-mobile-menu">
     <a href="index.html" class="">Overview</a>
     <a href="government.html" class="">Government</a>
-    <a href="dashboard.html" class="">Dashboard</a>
+    <a href="dashboard.html" class="">Dashboard</a><a href="dashboard-2.html" class="">Dashboard 2</a>
     <a href="economics.html" class=" active">Economics</a>
     <a href="leisure.html" class="">Leisure</a>
     <a href="travel.html" class="">Travel</a>
@@ -1322,6 +1322,112 @@ a:hover { text-decoration: underline; }
   }
 </style>
 <!-- /ROTATING-BANNER -->
+
+<!-- DAILY WEATHER PANEL (10-min refresh) -->
+<section class="container" style="padding:16px 24px 0">
+  <div id="weather-panel" class="bvs-card" style="padding:14px 18px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:8px">
+      <span style="font-size:11px;color:var(--fg3);text-transform:uppercase;letter-spacing:0.05em">Weather</span>
+      <span id="weather-source" style="font-size:9px;color:var(--fg3);padding:2px 6px;border:1px solid var(--border);border-radius:3px">Open-Meteo (free, no API key)</span>
+    </div>
+    <div id="weather-cities" style="display:flex;gap:14px;flex-wrap:wrap;flex:1">
+      <!-- populated by JS -->
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--fg3)">
+      <span id="weather-refresh-status">Loading…</span>
+      <button id="weather-refresh-btn" style="background:transparent;border:1px solid var(--border);color:var(--fg2);padding:3px 8px;border-radius:4px;cursor:pointer;font-size:10px">Refresh</button>
+    </div>
+  </div>
+</section>
+<style>
+  .weather-city-card {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: var(--bg3);
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+  .weather-city-card .name { font-size: 11px; font-weight: 700; color: var(--fg); }
+  .weather-city-card .temp { font-size: 14px; font-weight: 800; color: var(--primary); }
+  .weather-city-card .desc { font-size: 10px; color: var(--fg3); }
+  .weather-city-card .icon { font-size: 18px; }
+</style>
+<script>
+(function(){
+  var WEATHER_CITIES = [
+    {id:'seattle', name:'Seattle', lat:47.6062, lng:-122.3321},
+    {id:'portland', name:'Portland', lat:45.5152, lng:-122.6784},
+    {id:'vancouver-bc', name:'Vancouver', lat:49.2827, lng:-123.1207},
+    {id:'spokane', name:'Spokane', lat:47.6588, lng:-117.4260},
+    {id:'bend', name:'Bend', lat:44.0582, lng:-121.3153},
+    {id:'victoria', name:'Victoria', lat:48.4284, lng:-123.3656}
+  ];
+  var WMO_CODES = {
+    0:'Clear',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',45:'Fog',48:'Fog',
+    51:'Light drizzle',53:'Drizzle',55:'Drizzle',56:'Freezing drizzle',57:'Freezing drizzle',
+    61:'Light rain',63:'Rain',65:'Heavy rain',66:'Freezing rain',67:'Freezing rain',
+    71:'Light snow',73:'Snow',75:'Heavy snow',77:'Snow grains',
+    80:'Showers',81:'Showers',82:'Heavy showers',85:'Snow showers',86:'Snow showers',
+    95:'Thunderstorm',96:'Thunderstorm',99:'Thunderstorm'
+  };
+  var WMO_ICONS = {
+    0:'☀',1:'🌤',2:'⛅',3:'☁',45:'🌫',48:'🌫',
+    51:'🌦',53:'🌦',55:'🌧',56:'🌧',57:'🌧',
+    61:'🌦',63:'🌧',65:'🌧',66:'🌧',67:'🌧',
+    71:'🌨',73:'❄',75:'❄',77:'🌨',
+    80:'🌦',81:'🌧',82:'⛈',85:'🌨',86:'🌨',
+    95:'⛈',96:'⛈',99:'⛈'
+  };
+  function fetchWeather(){
+    var status = document.getElementById('weather-refresh-status');
+    status.textContent = 'Refreshing…';
+    var promises = WEATHER_CITIES.map(function(city){
+      var url = 'https://api.open-meteo.com/v1/forecast?latitude=' + city.lat + '&longitude=' + city.lng + '&current=temperature_2m,weather_code,wind_speed_10m&temperature_unit=celsius&timezone=auto';
+      return fetch(url).then(function(r){return r.json();}).then(function(d){
+        return {
+          city: city,
+          temp: d.current ? d.current.temperature_2m : null,
+          code: d.current ? d.current.weather_code : null,
+          wind: d.current ? d.current.wind_speed_10m : null
+        };
+      }).catch(function(e){
+        return { city: city, error: e.message };
+      });
+    });
+    Promise.all(promises).then(function(results){
+      var html = '';
+      results.forEach(function(r){
+        if (r.error || r.temp === null) {
+          html += '<div class="weather-city-card"><span class="name">' + r.city.name + '</span><span class="desc">N/A</span></div>';
+        } else {
+          var desc = WMO_CODES[r.code] || 'Unknown';
+          var icon = WMO_ICONS[r.code] || '🌡';
+          html += '<div class="weather-city-card">' +
+            '<span class="icon">' + icon + '</span>' +
+            '<span class="name">' + r.city.name + '</span>' +
+            '<span class="temp">' + Math.round(r.temp) + '°C</span>' +
+            '<span class="desc">' + desc + ' · ' + Math.round(r.wind) + 'km/h</span>' +
+          '</div>';
+        }
+      });
+      document.getElementById('weather-cities').innerHTML = html;
+      var now = new Date();
+      status.textContent = 'Updated ' + now.toLocaleTimeString();
+    }).catch(function(e){
+      status.textContent = 'Error: ' + e.message;
+    });
+  }
+  // Initial fetch
+  fetchWeather();
+  // Auto-refresh every 10 minutes
+  setInterval(fetchWeather, 10 * 60 * 1000);
+  // Manual refresh button
+  var btn = document.getElementById('weather-refresh-btn');
+  if (btn) btn.addEventListener('click', fetchWeather);
+})();
+</script>
 
 <!-- KPI METRICS ROW -->
 <section class="container">
@@ -3041,20 +3147,42 @@ a:hover { text-decoration: underline; }
     renderReport(report);
   });
 
-  // Auto-generate for first city on load
+  // Auto-generate for first city on load (robust init)
   function init() {
-    if (!window.CIRS) { setTimeout(init, 50); return; }
+    if (!window.CIRS) {
+      console.log('[DD] CIRS not yet loaded, retrying in 100ms...');
+      setTimeout(init, 100);
+      return;
+    }
+    if (!window.CIRS.compute || !window.CIRS.derivedFields) {
+      console.log('[DD] CIRS partially loaded, retrying in 100ms...');
+      setTimeout(init, 100);
+      return;
+    }
+    console.log('[DD] CIRS ready, loading data...');
     loadData().then(function() {
+      // Populate dropdown FIRST so user can interact even before report renders
+      populateCitySelect();
       // auto-generate full report for first city
       var city = ALL_CITIES[0];
       var report = generateReport(city, 'full');
       renderReport(report);
+      console.log('[DD] Report generated for', city.name);
     }).catch(function(err) {
-      document.getElementById('dd-report-host').innerHTML =
-        '<p style="color:var(--red);font-size:13px">Failed to load data: ' + err.message + '</p>';
+      console.error('[DD] Init failed:', err);
+      var host = document.getElementById('dd-report-host');
+      if (host) host.innerHTML = '<p style="color:var(--red);font-size:13px">Failed to load data: ' + err.message + '</p>';
+      var badge = document.getElementById('dd-meta-badge');
+      if (badge) badge.textContent = 'Error: ' + err.message;
     });
   }
-  init();
+
+  // Wait for DOM ready before initializing
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
 /* /DD */
 </script>

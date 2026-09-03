@@ -1258,17 +1258,13 @@ a:hover { text-decoration: underline; }
   </div>
 </section>
 
+
 <!-- ROTATING CITY BANNER HERO -->
 <section class="container" style="padding:24px 24px 0;position:relative">
   <div id="rotating-banner" style="position:relative;aspect-ratio:16/5;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,#2E4756,#6B8E9B);transition:background 1.2s ease">
-    <!-- Active image layer (fades in/out) -->
     <img id="rb-img-current" src="banners/seattle.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1;transition:opacity 1.2s ease">
-    <img id="rb-img-next" src="banners/portland.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease">
-
-    <!-- Palette radial accent (subtle, follows current city) -->
+    <img id="rb-img-next" src="" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease">
     <div id="rb-radial" style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 70%, rgba(212,165,116,0.25) 0%, transparent 60%);pointer-events:none;transition:background 1.2s ease"></div>
-
-    <!-- Bottom gradient + city name + meta -->
     <div style="position:absolute;bottom:0;left:0;right:0;padding:24px 32px;background:linear-gradient(transparent,rgba(0,0,0,0.7));pointer-events:none">
       <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px">
         <div>
@@ -1276,13 +1272,11 @@ a:hover { text-decoration: underline; }
           <div id="rb-city-meta" style="color:rgba(255,255,255,0.85);font-size:13px;margin-top:6px;font-weight:500;text-shadow:0 1px 4px rgba(0,0,0,0.6)">Washington, US · 4.02M metro · Premier tech cluster</div>
         </div>
         <div style="text-align:right">
-          <div id="rb-score" style="color:var(--primary);font-size:28px;font-weight:800;line-height:1;text-shadow:0 2px 8px rgba(0,0,0,0.6)">59.2</div>
+          <div id="rb-score" style="color:#4ecdc4;font-size:28px;font-weight:800;line-height:1;text-shadow:0 2px 8px rgba(0,0,0,0.6)">59.2</div>
           <div style="color:rgba(255,255,255,0.7);font-size:10px;text-transform:uppercase;letter-spacing:0.05em;margin-top:2px">CIRS Score</div>
         </div>
       </div>
     </div>
-
-    <!-- Top-right: palette swatches + city dots -->
     <div style="position:absolute;top:16px;right:16px;display:flex;align-items:center;gap:12px;pointer-events:auto">
       <div id="rb-swatches" style="display:flex;gap:3px">
         <span class="rb-swatch" style="width:12px;height:12px;border-radius:2px;background:#2E4756;border:1px solid rgba(255,255,255,0.3)"></span>
@@ -1290,24 +1284,14 @@ a:hover { text-decoration: underline; }
         <span class="rb-swatch" style="width:12px;height:12px;border-radius:2px;background:#D4A574;border:1px solid rgba(255,255,255,0.3)"></span>
       </div>
     </div>
-
-    <!-- Top-left: rotation indicator + IP detected -->
     <div style="position:absolute;top:16px;left:16px;display:flex;flex-direction:column;gap:6px;pointer-events:auto">
       <div id="rb-status" style="background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);color:rgba(255,255,255,0.9);font-size:10px;padding:4px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.15);text-transform:uppercase;letter-spacing:0.05em">
         <span id="rb-status-text">Loading rotation…</span>
       </div>
     </div>
-
-    <!-- Bottom-right: city pagination dots -->
-    <div id="rb-dots" style="position:absolute;bottom:16px;right:24px;display:flex;gap:4px;pointer-events:auto">
-      <!-- populated by JS -->
-    </div>
-
-    <!-- Click overlay: clicking the banner takes you to that city's CIRS section -->
+    <div id="rb-dots" style="position:absolute;bottom:16px;right:24px;display:flex;gap:4px;pointer-events:auto"></div>
     <a id="rb-link" href="#cascadia-investor-readiness-score-cirs" style="position:absolute;inset:0;display:block" aria-label="View CIRS score for current city"></a>
   </div>
-
-  <!-- Manual nav: prev / pause / next -->
   <div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-top:12px;font-size:11px;color:var(--fg3)">
     <button id="rb-prev" style="background:transparent;border:1px solid rgba(78,205,196,0.2);color:var(--fg2);padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px">&#8592; Prev</button>
     <span id="rb-counter" style="font-family:'SF Mono',Monaco,monospace">1 / 10</span>
@@ -1326,7 +1310,7 @@ a:hover { text-decoration: underline; }
     transition: all 0.2s;
   }
   .rb-dot.active {
-    background: var(--primary);
+    background: #4ecdc4;
     width: 18px;
     border-radius: 3px;
   }
@@ -2330,6 +2314,105 @@ a:hover { text-decoration: underline; }
 </style>
 <!-- /CIRS -->
 
+<!-- FOUR MOATS SECTION -->
+<section class="container" style="padding:0 0 24px">
+  <div class="bvs-section-title">The Four Moats — Capabilities No Other Platform Can Replicate</div>
+  <div class="bvs-section-sub">Four capabilities that, once built, cannot be cloned even with infinite funding. Each takes years to accumulate (longitudinal data, trust relationships, provenance history) or builds on taxpayer-funded public data that no platform should gate behind private subscriptions. Click any moat to expand.</div>
+
+  <div class="bvs-grid bvs-grid-2" style="padding:0 0 24px">
+
+    <!-- MOAT 1: FOUNDER OUTCOME PANEL -->
+    <div class="bvs-card moat-card" style="padding:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div class="bvs-card-header" style="margin:0"><span style="color:var(--primary)">&#9201;</span> Founder Outcome Panel</div>
+        <span class="bvs-badge bvs-badge-secondary">v0 · synthetic</span>
+      </div>
+      <div class="bvs-card-title" style="font-size:14px;margin-bottom:6px">Longitudinal outcome data — the calibration moat</div>
+      <p style="font-size:12px;color:var(--fg2);margin-bottom:12px;line-height:1.6">50 founders tracked 2015–2025 with founding date, location, sector, headcount trajectory, funding rounds, status, satisfaction. Synthetic for v0; real founder recruitment begins Q4 2026. Once real data accumulates for 5+ years, no competitor can catch up to the calibration history.</p>
+      <div id="moat-founders-stats" style="background:var(--bg3);border-radius:6px;padding:12px;font-size:11px">
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
+          <div><div style="color:var(--fg3);font-size:9px;text-transform:uppercase">Founders</div><div id="mof-total" style="color:var(--primary);font-weight:800;font-size:18px">—</div></div>
+          <div><div style="color:var(--fg3);font-size:9px;text-transform:uppercase">Operating</div><div id="mof-operating" style="color:var(--green);font-weight:800;font-size:18px">—</div></div>
+          <div><div style="color:var(--fg3);font-size:9px;text-transform:uppercase">Median Raised</div><div id="mof-raised" style="color:var(--primary);font-weight:800;font-size:14px">—</div></div>
+          <div><div style="color:var(--fg3);font-size:9px;text-transform:uppercase">Would Re-Choose City</div><div id="mof-rechoose" style="color:var(--primary);font-weight:800;font-size:14px">—</div></div>
+        </div>
+      </div>
+      <button onclick="document.getElementById('moat-founders-detail').style.display=document.getElementById('moat-founders-detail').style.display==='none'?'block':'none';this.textContent=this.textContent==='View founder sample →'?'Hide ←':'View founder sample →'" style="background:transparent;border:1px solid var(--primary-border);color:var(--primary);padding:6px 12px;border-radius:6px;font-size:11px;cursor:pointer;margin-top:8px;width:100%">View founder sample →</button>
+      <div id="moat-founders-detail" style="display:none;margin-top:12px;font-size:11px;color:var(--fg2);max-height:280px;overflow-y:auto;border-top:1px solid var(--border);padding-top:12px"></div>
+    </div>
+
+    <!-- MOAT 2: REAL-TIME REGULATORY DIFF ENGINE -->
+    <div class="bvs-card moat-card" style="padding:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div class="bvs-card-header" style="margin:0"><span style="color:var(--primary)">&#128240;</span> Real-Time Regulatory Diff Engine</div>
+        <span class="bvs-badge bvs-badge-primary">v1 · live</span>
+      </div>
+      <div class="bvs-card-title" style="font-size:14px;margin-bottom:6px">Public data, taxpayer-funded, automated classification</div>
+      <p style="font-size:12px;color:var(--fg2);margin-bottom:12px;line-height:1.6">Pulls from US Federal Register API (public domain). Past 30 days scanned for Cascadia-relevant publications. v1 uses keyword classification; v2 will add WA/OR/BC gazettes + NLP entity extraction. Every publication traces to a taxpayer-funded source.</p>
+      <div id="moat-reg-stats" style="background:var(--bg3);border-radius:6px;padding:12px;font-size:11px">
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
+          <div><div style="color:var(--fg3);font-size:9px;text-transform:uppercase">Publications (30d)</div><div id="mor-total" style="color:var(--primary);font-weight:800;font-size:18px">—</div></div>
+          <div><div style="color:var(--fg3);font-size:9px;text-transform:uppercase">Source</div><div style="color:var(--fg2);font-weight:600;font-size:11px;line-height:1.3;margin-top:4px">US Federal Register API</div></div>
+        </div>
+      </div>
+      <button onclick="document.getElementById('moat-reg-detail').style.display=document.getElementById('moat-reg-detail').style.display==='none'?'block':'none';this.textContent=this.textContent==='View publications →'?'Hide ←':'View publications →'" style="background:transparent;border:1px solid var(--primary-border);color:var(--primary);padding:6px 12px;border-radius:6px;font-size:11px;cursor:pointer;margin-top:8px;width:100%">View publications →</button>
+      <div id="moat-reg-detail" style="display:none;margin-top:12px;font-size:11px;color:var(--fg2);max-height:280px;overflow-y:auto;border-top:1px solid var(--border);padding-top:12px"></div>
+    </div>
+
+    <!-- MOAT 3: CRYPTOGRAPHIC PROVENANCE LAYER -->
+    <div class="bvs-card moat-card" style="padding:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div class="bvs-card-header" style="margin:0"><span style="color:var(--primary)">&#128274;</span> Cryptographic Provenance Layer</div>
+        <span class="bvs-badge bvs-badge-primary">v1 · live</span>
+      </div>
+      <div class="bvs-card-title" style="font-size:14px;margin-bottom:6px">Every data point hashed and sourced</div>
+      <p style="font-size:12px;color:var(--fg2);margin-bottom:12px;line-height:1.6">Every field in cities-data.json is hashed (SHA-256) with source attribution. v1 = integrity verification; v2 = Ed25519 cryptographic signing. Once 5+ years of provenance history exists, no competitor can fabricate it.</p>
+      <div id="moat-prov-stats" style="background:var(--bg3);border-radius:6px;padding:12px;font-size:11px">
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
+          <div><div style="color:var(--fg3);font-size:9px;text-transform:uppercase">Fields Signed</div><div id="mop-fields" style="color:var(--primary);font-weight:800;font-size:18px">—</div></div>
+          <div><div style="color:var(--fg3);font-size:9px;text-transform:uppercase">Taxpayer-Funded</div><div id="mop-public" style="color:var(--green);font-weight:800;font-size:14px">—</div></div>
+          <div><div style="color:var(--fg3);font-size:9px;text-transform:uppercase">Private Source</div><div id="mop-private" style="color:var(--amber);font-weight:800;font-size:14px">—</div></div>
+          <div><div style="color:var(--fg3);font-size:9px;text-transform:uppercase">Dataset Hash</div><div id="mop-hash" style="color:var(--fg2);font-family:monospace;font-size:9px;margin-top:4px">—</div></div>
+        </div>
+      </div>
+      <button onclick="document.getElementById('moat-prov-detail').style.display=document.getElementById('moat-prov-detail').style.display==='none'?'block':'none';this.textContent=this.textContent==='View field provenance →'?'Hide ←':'View field provenance →'" style="background:transparent;border:1px solid var(--primary-border);color:var(--primary);padding:6px 12px;border-radius:6px;font-size:11px;cursor:pointer;margin-top:8px;width:100%">View field provenance →</button>
+      <div id="moat-prov-detail" style="display:none;margin-top:12px;font-size:11px;color:var(--fg2);max-height:280px;overflow-y:auto;border-top:1px solid var(--border);padding-top:12px"></div>
+    </div>
+
+    <!-- MOAT 4: CROSS-BORDER FRICTION MODEL -->
+    <div class="bvs-card moat-card" style="padding:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div class="bvs-card-header" style="margin:0"><span style="color:var(--primary)">&#128206;</span> Cross-Border Friction Model</div>
+        <span class="bvs-badge bvs-badge-primary">v1 · live</span>
+      </div>
+      <div class="bvs-card-title" style="font-size:14px;margin-bottom:6px">US/CA-specific calculator — all public sources</div>
+      <p style="font-size:12px;color:var(--fg2);margin-bottom:12px;line-height:1.6">Quantifies actual cost of operating across US/Canada border: currency hedging, tax nexus, immigration, healthcare differential, customs, data residency. Built entirely from public taxpayer-funded sources (IRS, CRA, USCIS, IRCC, USMCA, Bank of Canada).</p>
+      <div id="moat-xb-stats" style="background:var(--bg3);border-radius:6px;padding:12px;font-size:11px">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px">
+          <div><div style="color:var(--fg3);font-size:9px;text-transform:uppercase">Scenario A</div><div id="mox-a" style="color:var(--primary);font-weight:800;font-size:14px">—</div></div>
+          <div><div style="color:var(--fg3);font-size:9px;text-transform:uppercase">Scenario B</div><div id="mox-b" style="color:var(--primary);font-weight:800;font-size:14px">—</div></div>
+          <div><div style="color:var(--fg3);font-size:9px;text-transform:uppercase">Scenario C</div><div id="mox-c" style="color:var(--primary);font-weight:800;font-size:14px">—</div></div>
+        </div>
+        <div style="font-size:9px;color:var(--fg3);line-height:1.4">A = US SaaS 8US+2CA $2M rev · B = CA Cleantech 10CA+3US $5M rev · C = US Hardware 5US+1CA $1M rev</div>
+      </div>
+      <button onclick="document.getElementById('moat-xb-detail').style.display=document.getElementById('moat-xb-detail').style.display==='none'?'block':'none';this.textContent=this.textContent==='View scenarios →'?'Hide ←':'View scenarios →'" style="background:transparent;border:1px solid var(--primary-border);color:var(--primary);padding:6px 12px;border-radius:6px;font-size:11px;cursor:pointer;margin-top:8px;width:100%">View scenarios →</button>
+      <div id="moat-xb-detail" style="display:none;margin-top:12px;font-size:11px;color:var(--fg2);max-height:280px;overflow-y:auto;border-top:1px solid var(--border);padding-top:12px"></div>
+    </div>
+
+  </div>
+
+  <div style="background:var(--bg2);border-left:3px solid var(--primary);border-radius:6px;padding:14px;font-size:11px;color:var(--fg2);line-height:1.7">
+    <strong style="color:var(--primary)">Philosophy:</strong> All tax, immigration, customs, and regulatory data is <strong>taxpayer-funded and public</strong>. No government should restrict public access to public data, and no private platform should gate it behind subscriptions. These four moats are built from public sources — defensibility comes from <em>integration</em>, not data hoarding. <strong style="color:var(--primary)">Strategic memo:</strong> <a href="STRATEGIC-ENHANCEMENT-MEMO.md" style="color:var(--primary)">STRATEGIC-ENHANCEMENT-MEMO.md</a>
+  </div>
+</section>
+
+<style>
+  .moat-card { transition: all 0.2s; }
+  .moat-card:hover { border-color: var(--primary-border); transform: translateY(-2px); }
+  .moat-card button:hover { background: var(--primary-dim); }
+</style>
+<!-- /FOUR-MOATS -->
+
 <!-- CASCADIA ECONOMICS AI OUTLOOK -->
 <section class="container" style="padding:0 0 48px">
   <div class="sports-insight-box">
@@ -3158,6 +3241,9 @@ a:hover { text-decoration: underline; }
 </script>
 <!-- Rotating banner scripts -->
 <script>
+</script>
+<!-- Rotating banner scripts -->
+<script>
 /* ROTATING BANNER SCRIPT */
 (function() {
   'use strict';
@@ -3167,9 +3253,9 @@ a:hover { text-decoration: underline; }
   var currentIdx = 0;
   var rotationTimer = null;
   var isPaused = false;
-  var ipDetectedCity = null;
+  var isTransitioning = false;
+  var imageCache = {};
 
-  // Tier taglines per tier
   var TIER_TAGS = {
     Premier: 'Premier market',
     Strong: 'Strong market',
@@ -3177,36 +3263,51 @@ a:hover { text-decoration: underline; }
     Emerging: 'Emerging market'
   };
 
+  // Preload all city banner images immediately on script load
+  function preloadImages() {
+    ALL_CITIES.forEach(function(c) {
+      var img = new Image();
+      img.src = 'banners/' + c.id + '.png';
+      imageCache[c.id] = img;
+    });
+  }
+
   function loadData() {
     return fetch('cities-data.json')
       .then(function(r) { return r.json(); })
       .then(function(d) {
         DATA = d;
         ALL_CITIES = d.cities;
+        preloadImages();
       });
   }
 
-  // ───────────────────────────────────────────────────────────────
-  // IP GEOLOCATION — try to detect user's nearest Cascadia city
-  // ───────────────────────────────────────────────────────────────
   function detectNearestCity() {
-    return fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout ? AbortSignal.timeout(3000) : null })
-      .then(function(r) { return r.json(); })
-      .then(function(loc) {
-        if (!loc || !loc.latitude) return null;
-        // Find nearest city in our cohort by haversine distance
-        var nearest = null, nearestDist = Infinity;
-        ALL_CITIES.forEach(function(c) {
-          var dist = haversine(loc.latitude, loc.longitude, c.lat, c.lng);
-          if (dist < nearestDist) { nearestDist = dist; nearest = c; }
+    // Use AbortController for timeout (compatible with older browsers)
+    return new Promise(function(resolve) {
+      var controller = new AbortController();
+      var timeoutId = setTimeout(function() { controller.abort(); }, 3000);
+      fetch('https://ipapi.co/json/', { signal: controller.signal })
+        .then(function(r) { return r.json(); })
+        .then(function(loc) {
+          clearTimeout(timeoutId);
+          if (!loc || !loc.latitude) return resolve(null);
+          var nearest = null, nearestDist = Infinity;
+          ALL_CITIES.forEach(function(c) {
+            var dist = haversine(loc.latitude, loc.longitude, c.lat, c.lng);
+            if (dist < nearestDist) { nearestDist = dist; nearest = c; }
+          });
+          if (nearestDist < 500) {
+            resolve({ city: nearest, distance: nearestDist, userLocation: loc });
+          } else {
+            resolve({ city: null, distance: nearestDist, userLocation: loc });
+          }
+        })
+        .catch(function() {
+          clearTimeout(timeoutId);
+          resolve(null);
         });
-        // Only use if user is within ~500km of a cohort city (i.e. actually in Cascadia region)
-        if (nearestDist < 500) {
-          return { city: nearest, distance: nearestDist, userLocation: loc };
-        }
-        return { city: null, distance: nearestDist, userLocation: loc };
-      })
-      .catch(function() { return null; });
+    });
   }
 
   function haversine(lat1, lng1, lat2, lng2) {
@@ -3229,55 +3330,51 @@ a:hover { text-decoration: underline; }
     return a;
   }
 
-  // ───────────────────────────────────────────────────────────────
-  // RENDER
-  // ───────────────────────────────────────────────────────────────
-
   function renderCurrentCity() {
+    if (isTransitioning) return;
+    isTransitioning = true;
+
     var city = ALL_CITIES[currentIdx];
     var b = city.ai_banner;
     var score = window.CIRS.compute(city, ALL_CITIES);
-    var tierColor = { Premier:'#1B5E3F', Strong:'#2E7D5B', Developing:'#B07D2E', Emerging:'#9B3D3D' }[score.tier] || 'var(--primary)';
+    var tierColor = { Premier:'#1B5E3F', Strong:'#2E7D5B', Developing:'#B07D2E', Emerging:'#9B3D3D' }[score.tier] || '#4ecdc4';
 
-    // Cross-fade: current → next, then swap
     var imgCurrent = document.getElementById('rb-img-current');
     var imgNext = document.getElementById('rb-img-next');
-    imgNext.src = 'banners/' + city.id + '.png';
-    imgNext.onload = function() {
-      imgNext.style.opacity = '1';
-      imgCurrent.style.opacity = '0';
-      // After transition, swap roles
-      setTimeout(function() {
-        var tmp = imgCurrent.src;
-        imgCurrent.src = imgNext.src;
-        imgCurrent.style.opacity = '1';
-        imgNext.style.opacity = '0';
-      }, 1300);
-    };
-    imgNext.onerror = function() {
-      // Image failed — fall back to gradient only
-      imgNext.style.opacity = '0';
-    };
 
-    // Update background gradient (instant)
+    // Use cached image directly — no onload needed since preloaded
+    var newSrc = 'banners/' + city.id + '.png';
+
+    // If the next img src is already this city, just swap
+    if (imgNext.src.indexOf(city.id + '.png') === -1) {
+      imgNext.src = newSrc;
+    }
+
+    // Cross-fade
+    imgNext.style.opacity = '1';
+    imgCurrent.style.opacity = '0';
+
+    // After transition completes, swap roles
+    setTimeout(function() {
+      imgCurrent.src = newSrc;
+      imgCurrent.style.opacity = '1';
+      imgNext.style.opacity = '0';
+      isTransitioning = false;
+    }, 1300);
+
+    // Background gradient (instant)
     document.getElementById('rotating-banner').style.background =
       'linear-gradient(135deg,' + b.palette_primary + ',' + b.palette_secondary + ')';
-
-    // Update radial accent
     document.getElementById('rb-radial').style.background =
       'radial-gradient(ellipse at 30% 70%,' + b.palette_accent + ' 0%, transparent 60%)';
 
-    // Update text
     document.getElementById('rb-city-name').textContent = city.name;
-    var notableTag = city.notable_companies.slice(0,2).join(', ');
     document.getElementById('rb-city-meta').textContent =
       city.state + ', ' + city.country + ' · ' + (city.population_metro/1000000).toFixed(2) + 'M metro · ' + TIER_TAGS[score.tier];
 
-    // Update score
     document.getElementById('rb-score').textContent = score.score.toFixed(1);
     document.getElementById('rb-score').style.color = tierColor;
 
-    // Update swatches
     var swatches = document.querySelectorAll('.rb-swatch');
     if (swatches.length === 3) {
       swatches[0].style.background = b.palette_primary;
@@ -3285,10 +3382,8 @@ a:hover { text-decoration: underline; }
       swatches[2].style.background = b.palette_accent;
     }
 
-    // Update counter
     document.getElementById('rb-counter').textContent = (currentIdx + 1) + ' / ' + ALL_CITIES.length;
 
-    // Update dots
     var dots = document.querySelectorAll('.rb-dot');
     dots.forEach(function(d, i) {
       d.classList.toggle('active', i === currentIdx);
@@ -3340,34 +3435,24 @@ a:hover { text-decoration: underline; }
     }
   }
 
-  // ───────────────────────────────────────────────────────────────
-  // INIT
-  // ───────────────────────────────────────────────────────────────
-
   function init() {
     if (!window.CIRS) { setTimeout(init, 50); return; }
     loadData().then(function() {
-      // Try IP detection first
+      // Try IP detection
       detectNearestCity().then(function(result) {
         if (result && result.city) {
-          // User is in/near Cascadia — start with their nearest city
-          ipDetectedCity = result.city;
           currentIdx = ALL_CITIES.findIndex(function(c) { return c.id === result.city.id; });
           if (currentIdx < 0) currentIdx = 0;
-
-          var statusText = 'Showing ' + result.city.name + ' — ' + Math.round(result.distance) + 'km from you';
-          document.getElementById('rb-status-text').textContent = statusText;
+          document.getElementById('rb-status-text').textContent =
+            'Showing ' + result.city.name + ' — ' + Math.round(result.distance) + 'km from you';
         } else if (result && result.userLocation && result.userLocation.city) {
-          // IP detected but not near a cohort city
           var loc = result.userLocation;
           document.getElementById('rb-status-text').textContent =
             'You\'re in ' + (loc.city + ', ' + (loc.country_code || '')) + ' — random rotation';
-          // Random rotation: shuffle the cities order
           ALL_CITIES = shuffleArray(ALL_CITIES);
           currentIdx = 0;
         } else {
-          // IP detection failed entirely
-          document.getElementById('rb-status-text').textContent = 'Random rotation (location not detected)';
+          document.getElementById('rb-status-text').textContent = 'Random rotation';
           ALL_CITIES = shuffleArray(ALL_CITIES);
           currentIdx = 0;
         }
@@ -3376,12 +3461,10 @@ a:hover { text-decoration: underline; }
         renderCurrentCity();
         resetTimer();
 
-        // Wire up controls
         document.getElementById('rb-prev').addEventListener('click', function() { prev(); resetTimer(); });
         document.getElementById('rb-next').addEventListener('click', function() { next(); resetTimer(); });
         document.getElementById('rb-pause').addEventListener('click', togglePause);
 
-        // Pause on hover
         var banner = document.getElementById('rotating-banner');
         banner.addEventListener('mouseenter', function() {
           if (!isPaused && rotationTimer) { clearInterval(rotationTimer); rotationTimer = null; }
@@ -3398,5 +3481,153 @@ a:hover { text-decoration: underline; }
   init();
 })();
 /* /ROTATING-BANNER */
+</script>
+<!-- Four Moats scripts -->
+<script>
+/* FOUR MOATS SCRIPT */
+(function() {
+  'use strict';
+
+  function fetchJSON(path) {
+    return fetch(path).then(function(r) { return r.json(); });
+  }
+
+  // ─── MOAT 1: Founder Outcomes ───
+  function loadFounders() {
+    fetchJSON('founder-outcomes.json').then(function(data) {
+      var stats = data.stats;
+      document.getElementById('mof-total').textContent = stats.total_founders;
+      document.getElementById('mof-operating').textContent = stats.by_status.operating || 0;
+      document.getElementById('mof-raised').textContent = '$' + (stats.median_total_raised_usd/1000).toFixed(0) + 'k';
+      document.getElementById('mof-rechoose').textContent = stats.would_choose_same_city_pct.toFixed(0) + '%';
+
+      var html = '<div style="font-size:10px;color:var(--fg3);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em">Sample of 5 founders (synthetic):</div>';
+      data.founders.slice(0, 5).forEach(function(f) {
+        var statusColor = {operating:'#4ecdc4',acquired:'#1B5E3F',shutdown:'#ff6b6b',pivoted:'#f0a500'}[f.status];
+        html += '<div style="padding:6px 0;border-bottom:1px dashed rgba(255,255,255,0.05)">' +
+          '<div style="display:flex;justify-content:space-between">' +
+            '<div><strong style="color:var(--fg)">' + f.company_name + '</strong></div>' +
+            '<div style="color:' + statusColor + ';font-weight:600">' + f.status + '</div>' +
+          '</div>' +
+          '<div style="color:var(--fg3);font-size:10px;margin-top:2px">' +
+            f.founder_name + ' · ' + f.city_id + ' · ' + f.sector + ' · founded ' + f.founding_date.slice(0,4) +
+          '</div>' +
+          '<div style="color:var(--fg2);font-size:10px;margin-top:2px">' +
+            'Headcount: ' + f.headcount.founding + ' → ' + f.headcount.final + ' · Raised: $' + (f.funding.total_raised_usd/1000).toFixed(0) + 'k · Satisfaction: ' + f.founder_satisfaction_1_10 + '/10' +
+          '</div>' +
+        '</div>';
+      });
+      html += '<div style="font-size:9px;color:var(--fg3);margin-top:8px;font-style:italic">All 50 records are synthetic for v0 testing. Real founder recruitment begins Q4 2026.</div>';
+      document.getElementById('moat-founders-detail').innerHTML = html;
+    }).catch(function(e) {
+      document.getElementById('moat-founders-stats').innerHTML = '<div style="color:var(--red);font-size:11px">Load failed: ' + e.message + '</div>';
+    });
+  }
+
+  // ─── MOAT 2: Regulatory Diff ───
+  function loadRegulatory() {
+    fetchJSON('moats/regulatory-diff.json').then(function(data) {
+      document.getElementById('mor-total').textContent = data.stats.total_publications_processed;
+
+      var html = '<div style="font-size:10px;color:var(--fg3);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em">Recent Cascadia-relevant publications (top 8):</div>';
+      data.publications.slice(0, 8).forEach(function(p) {
+        var typeColor = {Rule:'#4ecdc4',Notice:'#6c9bff','Proposed Rule':'#f0a500',Presidential:'#ff6b6b'}[p.type] || '#a0a0a0';
+        html += '<div style="padding:6px 0;border-bottom:1px dashed rgba(255,255,255,0.05)">' +
+          '<div style="display:flex;justify-content:space-between;gap:8px">' +
+            '<div><a href="' + p.source_url + '" target="_blank" style="color:var(--fg);font-weight:600;text-decoration:none">' + p.title.substring(0,90) + (p.title.length>90?'…':'') + '</a></div>' +
+            '<div style="color:' + typeColor + ';font-size:9px;text-transform:uppercase;white-space:nowrap">' + p.type + '</div>' +
+          '</div>' +
+          '<div style="color:var(--fg3);font-size:10px;margin-top:2px">' +
+            p.publication_date + ' · ' + (p.agencies[0] || '').substring(0,40) +
+          '</div>' +
+          '<div style="color:var(--fg2);font-size:10px;margin-top:2px;line-height:1.5">' +
+            (p.abstract || '').substring(0,150) + '…' +
+          '</div>' +
+          (p.classification.matched_keywords.length > 0 ?
+            '<div style="color:var(--primary);font-size:9px;margin-top:3px">Keywords: ' + p.classification.matched_keywords.join(', ') + '</div>' : '') +
+        '</div>';
+      });
+      html += '<div style="font-size:9px;color:var(--fg3);margin-top:8px;font-style:italic">Source: US Federal Register API (public domain). ' + data._meta.lookback_days + '-day lookback.</div>';
+      document.getElementById('moat-reg-detail').innerHTML = html;
+    }).catch(function(e) {
+      document.getElementById('moat-reg-stats').innerHTML = '<div style="color:var(--red);font-size:11px">Load failed: ' + e.message + '</div>';
+    });
+  }
+
+  // ─── MOAT 3: Provenance Layer ───
+  function loadProvenance() {
+    fetchJSON('moats/cities-data-provenance.json').then(function(data) {
+      var meta = data._provenance_meta;
+      document.getElementById('mop-fields').textContent = meta.field_count;
+      document.getElementById('mop-public').textContent = meta.taxpayer_funded_fields;
+      document.getElementById('mop-private').textContent = meta.private_source_fields;
+      document.getElementById('mop-hash').textContent = meta.dataset_hash_sha256.substring(0,16) + '…';
+
+      var html = '<div style="font-size:10px;color:var(--fg3);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em">Field-level provenance — Seattle sample:</div>';
+      var seattle = data.cities.find(function(c) { return c.id === 'seattle'; });
+      if (seattle) {
+        Object.keys(seattle.provenance.field_provenance).slice(0, 12).forEach(function(field) {
+          var fp = seattle.provenance.field_provenance[field];
+          html += '<div style="padding:5px 0;border-bottom:1px dashed rgba(255,255,255,0.05)">' +
+            '<div style="display:flex;justify-content:space-between;gap:8px">' +
+              '<div style="color:var(--fg);font-family:monospace;font-size:10px">' + field + '</div>' +
+              '<div style="color:' + (fp.taxpayer_funded ? 'var(--green)' : 'var(--amber)') + ';font-size:9px">' + (fp.taxpayer_funded ? 'PUBLIC' : 'PRIVATE') + '</div>' +
+            '</div>' +
+            '<div style="color:var(--fg3);font-size:9px;margin-top:1px">' + fp.source.substring(0,80) + '</div>' +
+            '<div style="color:var(--fg3);font-size:9px;margin-top:1px;font-family:monospace">sha256:' + fp.field_hash_sha256.substring(0,16) + '…</div>' +
+          '</div>';
+        });
+      }
+      html += '<div style="font-size:9px;color:var(--fg3);margin-top:8px;font-style:italic">v1 = SHA-256 hashes for integrity. v2 will add Ed25519 cryptographic signing.</div>';
+      document.getElementById('moat-prov-detail').innerHTML = html;
+    }).catch(function(e) {
+      document.getElementById('moat-prov-stats').innerHTML = '<div style="color:var(--red);font-size:11px">Load failed: ' + e.message + '</div>';
+    });
+  }
+
+  // ─── MOAT 4: Cross-Border Friction ───
+  function loadFriction() {
+    fetchJSON('moats/cross-border-friction.json').then(function(data) {
+      var scenarios = data.scenarios;
+      if (scenarios.length >= 3) {
+        document.getElementById('mox-a').textContent = '$' + (scenarios[0].result.summary.total_annual_friction_cost_usd/1000).toFixed(0) + 'k (' + scenarios[0].result.summary.friction_as_pct_of_revenue + '%)';
+        document.getElementById('mox-b').textContent = '$' + (scenarios[1].result.summary.total_annual_friction_cost_usd/1000).toFixed(0) + 'k (' + scenarios[1].result.summary.friction_as_pct_of_revenue + '%)';
+        document.getElementById('mox-c').textContent = '$' + (scenarios[2].result.summary.total_annual_friction_cost_usd/1000).toFixed(0) + 'k (' + scenarios[2].result.summary.friction_as_pct_of_revenue + '%)';
+      }
+
+      var html = '';
+      scenarios.forEach(function(s) {
+        var r = s.result;
+        html += '<div style="padding:8px 0;border-bottom:1px dashed rgba(255,255,255,0.05)">' +
+          '<div style="color:var(--fg);font-weight:600;font-size:11px;margin-bottom:4px">' + s.scenario_name + '</div>' +
+          '<div style="color:var(--primary);font-weight:800;font-size:13px;margin-bottom:4px">Total friction: $' + r.summary.total_annual_friction_cost_usd.toLocaleString() + ' (' + r.summary.friction_as_pct_of_revenue + '% of revenue)</div>' +
+          '<div style="color:var(--fg2);font-size:10px;margin-bottom:4px">Recommended: <strong>' + r.recommended_structure.structure + '</strong></div>' +
+          '<div style="color:var(--fg3);font-size:10px;margin-bottom:4px">' + r.recommended_structure.rationale + '</div>' +
+          '<div style="margin-top:6px">';
+        r.friction_breakdown.forEach(function(item) {
+          html += '<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--fg2);padding:1px 0">' +
+            '<span>' + item.category + '</span>' +
+            '<span style="color:var(--primary);font-family:monospace">$' + item.annual_cost_usd.toLocaleString() + '</span>' +
+          '</div>';
+        });
+        html += '</div></div>';
+      });
+      html += '<div style="font-size:9px;color:var(--fg3);margin-top:8px;font-style:italic">All data from public taxpayer-funded sources (IRS, CRA, USCIS, IRCC, USMCA, Bank of Canada, KFF).</div>';
+      document.getElementById('moat-xb-detail').innerHTML = html;
+    }).catch(function(e) {
+      document.getElementById('moat-xb-stats').innerHTML = '<div style="color:var(--red);font-size:11px">Load failed: ' + e.message + '</div>';
+    });
+  }
+
+  // Init all four
+  function init() {
+    loadFounders();
+    loadRegulatory();
+    loadProvenance();
+    loadFriction();
+  }
+  init();
+})();
+/* /FOUR-MOATS */
 </script>
 </body></html>

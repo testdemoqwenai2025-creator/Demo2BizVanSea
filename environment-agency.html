@@ -255,6 +255,7 @@ a:hover { text-decoration: underline; }
     <button class="env-tab" data-tab="wildfire">Wildfire Risk</button>
     <button class="env-tab" data-tab="migration">Wildlife Migration</button>
     <button class="env-tab" data-tab="budget">Agency Budget</button>
+    <button class="env-tab" data-tab="projects">Projects Decade</button>
   </div>
 
   <!-- AIR QUALITY TAB -->
@@ -511,6 +512,47 @@ a:hover { text-decoration: underline; }
         <li><strong>Cross-border data sharing:</strong> No formal US-Canada environmental data treaty; ad-hoc coordination only.</li>
       </ul>
       <p style="font-size: 10px; color: var(--fg3); margin-top: 12px;">All budget data from public agency budget documents. Taxpayer-funded; freely accessible. AIBizVan360 does not gate this data — it's compiled here for transparency.</p>
+    </div>
+  </div>
+
+  <!-- PROJECTS DECADE TAB -->
+  <div class="env-tab-panel" id="tab-projects">
+    <div class="bvs-section-title">Cascadia Projects — Next Decade (2025-2035)</div>
+    <div class="bvs-section-sub">
+      Major infrastructure, clean energy, and environmental restoration projects planned or underway in Cascadia. All budgets from public government sources. Click any project for details, source documents, and uncertainty analysis.
+      <span class="source-tag src-gov">PUBLIC BUDGET</span>
+    </div>
+
+    <!-- Budget summation dashboard -->
+    <div id="env-budget-dashboard" class="bvs-grid bvs-grid-4" style="margin-bottom: 20px;">
+      <!-- populated by JS -->
+    </div>
+
+    <!-- Budget by category chart -->
+    <div class="bvs-card" style="margin-bottom: 20px;">
+      <div class="bvs-card-header">Budget by Category — Cascadia Decade Total</div>
+      <div id="env-category-chart"></div>
+    </div>
+
+    <!-- Project cards -->
+    <div id="env-projects-grid" class="bvs-grid bvs-grid-2" style="padding-bottom: 24px;">
+      <!-- populated by JS -->
+    </div>
+
+    <div class="bvs-card" style="background: var(--bg3); border-left: 3px solid var(--primary);">
+      <div style="font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 8px;">📊 Decade Outlook Analysis</div>
+      <p style="font-size: 11px; color: var(--fg2); line-height: 1.7;">
+        The next decade in Cascadia will see <strong>$60+ billion in major infrastructure and environmental investment</strong> across the bioregion. Key themes:
+      </p>
+      <ul style="font-size: 11px; color: var(--fg2); line-height: 1.8; margin-left: 20px; margin-top: 8px;">
+        <li><strong>Transportation transformation:</strong> Cascadia HSR ($24-42B) + I-5 Bridge ($10B) = potential $52B+ in cross-border mobility investment. HSR alone would generate estimated $355B economic return.</li>
+        <li><strong>Clean energy buildout:</strong> PNW Hydrogen Hub ($1B federal) + BC North Coast Transmission ($2.8B CAD) + ongoing renewable builds = multi-billion clean energy transition.</li>
+        <li><strong>Salmon restoration pivot:</strong> Columbia River programs ($66.7M/yr) + PSAR ($60.5M biennium) + Snake River dam study = potential $1.5B+ dam breaching decision looming.</li>
+        <li><strong>Wildfire resilience scaling:</strong> WA ($500M/8yr) + BC ($220M CAD Budget 2026) = ~$700M+ dedicated wildfire resilience, but 2023 BC fires alone cost $1.1B emergency.</li>
+        <li><strong>Indigenous-led conservation:</strong> Canada Guardians program ($340M CAD + $173M for Guardians) = largest Indigenous conservation investment in Canadian history.</li>
+        <li><strong>Port modernization:</strong> Port of Seattle ($5.6B/5yr) + Port of Vancouver ($112M/yr) = sustained maritime infrastructure investment driving regional trade.</li>
+      </ul>
+      <p style="font-size: 10px; color: var(--fg3); margin-top: 12px;">All budgets verified from public government sources (WSDOT, DOE, BC Budget 2026, Port budgets, USFWS, WA Legislature, Environment Canada). Updated September 2026.</p>
     </div>
   </div>
 
@@ -1029,6 +1071,74 @@ a:hover { text-decoration: underline; }
     });
   }
 
+
+  function loadProjects(){
+    return fetch('project-registry.json').then(function(r){ return r.json(); }).then(function(data){
+      var projects = data.projects.filter(function(p){ return p.page === 'environment' || p.page === 'both'; });
+
+      // Budget dashboard — total + by category
+      var totalBudget = projects.reduce(function(sum, p){ return sum + p.budget_usd; }, 0);
+      var categories = {};
+      projects.forEach(function(p){
+        categories[p.category] = (categories[p.category] || 0) + p.budget_usd;
+      });
+
+      var dashHtml = '<div class="bvs-card metric-tile">' +
+        '<div class="metric-value" style="color: var(--primary);">$' + (totalBudget/1e9).toFixed(1) + 'B</div>' +
+        '<div class="metric-label">Total Decade Investment</div>' +
+        '<div class="metric-unit">' + projects.length + ' major projects</div>' +
+      '</div>';
+      Object.keys(categories).slice(0,3).forEach(function(cat){
+        var pct = (categories[cat] / totalBudget * 100).toFixed(0);
+        dashHtml += '<div class="bvs-card metric-tile">' +
+          '<div class="metric-value" style="color: var(--env-green);">$' + (categories[cat]/1e9).toFixed(1) + 'B</div>' +
+          '<div class="metric-label">' + cat + '</div>' +
+          '<div class="metric-unit">' + pct + '% of total</div>' +
+        '</div>';
+      });
+      document.getElementById('env-budget-dashboard').innerHTML = dashHtml;
+
+      // Category chart — horizontal bars
+      var chartHtml = '';
+      var maxCat = Math.max.apply(null, Object.values(categories));
+      Object.keys(categories).sort(function(a,b){ return categories[b] - categories[a]; }).forEach(function(cat){
+        var pct = (categories[cat] / maxCat * 100);
+        chartHtml += '<div style="display:flex;align-items:center;gap:10px;margin:6px 0;">' +
+          '<div style="width:140px;font-size:11px;color:var(--fg2);text-align:right;">' + cat + '</div>' +
+          '<div style="flex:1;height:20px;background:var(--bg3);border-radius:4px;overflow:hidden;">' +
+            '<div style="width:' + pct + '%;height:100%;background:linear-gradient(90deg,var(--primary),var(--env-green));transition:width 0.5s;"></div>' +
+          '</div>' +
+          '<div style="width:80px;font-size:11px;color:var(--primary);font-weight:700;">$' + (categories[cat]/1e9).toFixed(2) + 'B</div>' +
+        '</div>';
+      });
+      document.getElementById('env-category-chart').innerHTML = chartHtml;
+
+      // Project cards
+      var cardsHtml = '';
+      projects.forEach(function(p){
+        var statusColor = p.budget_status === 'funded' ? 'var(--env-green)' :
+                          p.budget_status === 'partially funded' ? 'var(--env-amber)' : 'var(--env-red)';
+        cardsHtml += '<div class="bvs-card" style="border-left: 3px solid ' + statusColor + ';">' +
+          '<div style="display:flex;justify-content:space-between;align-items:start;gap:8px;margin-bottom:8px;">' +
+            '<div><div style="font-size:14px;font-weight:700;color:var(--fg);">' + p.name + '</div>' +
+            '<div style="font-size:10px;color:var(--fg3);margin-top:2px;">' + p.region + ' · ' + p.country + '</div></div>' +
+            '<span style="font-size:9px;padding:2px 8px;border-radius:3px;background:' + statusColor + ';color:#fff;font-weight:600;text-transform:uppercase;">' + p.budget_status + '</span>' +
+          '</div>' +
+          '<div style="font-size:20px;font-weight:800;color:var(--primary);margin:8px 0;">' + p.budget_display + '</div>' +
+          '<div style="font-size:10px;color:var(--fg3);margin-bottom:8px;"><strong>Timeline:</strong> ' + p.timeline + '</div>' +
+          '<div style="font-size:11px;color:var(--fg2);line-height:1.6;margin-bottom:8px;">' + p.description + '</div>' +
+          '<div style="font-size:10px;color:var(--fg3);margin-bottom:6px;"><strong>Status:</strong> ' + p.status + '</div>' +
+          '<div style="font-size:10px;color:var(--env-amber);margin-bottom:8px;"><strong>⚠ Uncertainties:</strong> ' + p.uncertainties + '</div>' +
+          '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
+            '<a href="' + p.source_url + '" target="_blank" style="font-size:10px;color:var(--primary);padding:3px 8px;border:1px solid var(--primary-border);border-radius:4px;text-decoration:none;">Source →</a>' +
+            (p.pdf_url ? '<a href="' + p.pdf_url + '" target="_blank" style="font-size:10px;color:var(--fg2);padding:3px 8px;border:1px solid var(--border);border-radius:4px;text-decoration:none;">📄 PDF</a>' : '') +
+          '</div>' +
+        '</div>';
+      });
+      document.getElementById('env-projects-grid').innerHTML = cardsHtml;
+    });
+  }
+
   function refreshAll(){
     var status = document.getElementById('last-refresh');
     status.textContent = 'Refreshing…';
@@ -1039,7 +1149,8 @@ a:hover { text-decoration: underline; }
       loadFacilities(),
       loadEnergy(),
       loadClimate(),
-      loadMigration()
+      loadMigration(),
+      loadProjects()
     ]).then(function(){
       status.textContent = 'Last updated: ' + new Date().toLocaleTimeString();
     }).catch(function(){

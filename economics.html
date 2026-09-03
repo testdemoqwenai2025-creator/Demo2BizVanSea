@@ -1258,6 +1258,87 @@ a:hover { text-decoration: underline; }
   </div>
 </section>
 
+<!-- ROTATING CITY BANNER HERO -->
+<section class="container" style="padding:24px 24px 0;position:relative">
+  <div id="rotating-banner" style="position:relative;aspect-ratio:16/5;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,#2E4756,#6B8E9B);transition:background 1.2s ease">
+    <!-- Active image layer (fades in/out) -->
+    <img id="rb-img-current" src="banners/seattle.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1;transition:opacity 1.2s ease">
+    <img id="rb-img-next" src="banners/portland.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease">
+
+    <!-- Palette radial accent (subtle, follows current city) -->
+    <div id="rb-radial" style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 70%, rgba(212,165,116,0.25) 0%, transparent 60%);pointer-events:none;transition:background 1.2s ease"></div>
+
+    <!-- Bottom gradient + city name + meta -->
+    <div style="position:absolute;bottom:0;left:0;right:0;padding:24px 32px;background:linear-gradient(transparent,rgba(0,0,0,0.7));pointer-events:none">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px">
+        <div>
+          <div id="rb-city-name" style="color:white;font-size:32px;font-weight:800;line-height:1;text-shadow:0 2px 12px rgba(0,0,0,0.6)">Seattle</div>
+          <div id="rb-city-meta" style="color:rgba(255,255,255,0.85);font-size:13px;margin-top:6px;font-weight:500;text-shadow:0 1px 4px rgba(0,0,0,0.6)">Washington, US · 4.02M metro · Premier tech cluster</div>
+        </div>
+        <div style="text-align:right">
+          <div id="rb-score" style="color:var(--primary);font-size:28px;font-weight:800;line-height:1;text-shadow:0 2px 8px rgba(0,0,0,0.6)">59.2</div>
+          <div style="color:rgba(255,255,255,0.7);font-size:10px;text-transform:uppercase;letter-spacing:0.05em;margin-top:2px">CIRS Score</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top-right: palette swatches + city dots -->
+    <div style="position:absolute;top:16px;right:16px;display:flex;align-items:center;gap:12px;pointer-events:auto">
+      <div id="rb-swatches" style="display:flex;gap:3px">
+        <span class="rb-swatch" style="width:12px;height:12px;border-radius:2px;background:#2E4756;border:1px solid rgba(255,255,255,0.3)"></span>
+        <span class="rb-swatch" style="width:12px;height:12px;border-radius:2px;background:#6B8E9B;border:1px solid rgba(255,255,255,0.3)"></span>
+        <span class="rb-swatch" style="width:12px;height:12px;border-radius:2px;background:#D4A574;border:1px solid rgba(255,255,255,0.3)"></span>
+      </div>
+    </div>
+
+    <!-- Top-left: rotation indicator + IP detected -->
+    <div style="position:absolute;top:16px;left:16px;display:flex;flex-direction:column;gap:6px;pointer-events:auto">
+      <div id="rb-status" style="background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);color:rgba(255,255,255,0.9);font-size:10px;padding:4px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.15);text-transform:uppercase;letter-spacing:0.05em">
+        <span id="rb-status-text">Loading rotation…</span>
+      </div>
+    </div>
+
+    <!-- Bottom-right: city pagination dots -->
+    <div id="rb-dots" style="position:absolute;bottom:16px;right:24px;display:flex;gap:4px;pointer-events:auto">
+      <!-- populated by JS -->
+    </div>
+
+    <!-- Click overlay: clicking the banner takes you to that city's CIRS section -->
+    <a id="rb-link" href="#cascadia-investor-readiness-score-cirs" style="position:absolute;inset:0;display:block" aria-label="View CIRS score for current city"></a>
+  </div>
+
+  <!-- Manual nav: prev / pause / next -->
+  <div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-top:12px;font-size:11px;color:var(--fg3)">
+    <button id="rb-prev" style="background:transparent;border:1px solid rgba(78,205,196,0.2);color:var(--fg2);padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px">&#8592; Prev</button>
+    <span id="rb-counter" style="font-family:'SF Mono',Monaco,monospace">1 / 10</span>
+    <button id="rb-pause" style="background:transparent;border:1px solid rgba(78,205,196,0.2);color:var(--fg2);padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px">&#10073;&#10073; Pause</button>
+    <button id="rb-next" style="background:transparent;border:1px solid rgba(78,205,196,0.2);color:var(--fg2);padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px">Next &#8594;</button>
+  </div>
+</section>
+
+<style>
+  .rb-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    border: 1px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .rb-dot.active {
+    background: var(--primary);
+    width: 18px;
+    border-radius: 3px;
+  }
+  .rb-dot:hover { background: rgba(255,255,255,0.6); }
+  @media (max-width: 768px) {
+    #rotating-banner { aspect-ratio: 16/9; }
+    #rb-city-name { font-size: 22px !important; }
+    #rb-score { font-size: 22px !important; }
+  }
+</style>
+<!-- /ROTATING-BANNER -->
+
 <!-- KPI METRICS ROW -->
 <section class="container">
   <div class="bvs-grid bvs-grid-4" style="padding:24px 0">
@@ -3074,5 +3155,248 @@ a:hover { text-decoration: underline; }
   init();
 })();
 /* /CIRS */
+</script>
+<!-- Rotating banner scripts -->
+<script>
+/* ROTATING BANNER SCRIPT */
+(function() {
+  'use strict';
+  var ALL_CITIES = [];
+  var DATA = null;
+  var ROTATION_MS = 8000;
+  var currentIdx = 0;
+  var rotationTimer = null;
+  var isPaused = false;
+  var ipDetectedCity = null;
+
+  // Tier taglines per tier
+  var TIER_TAGS = {
+    Premier: 'Premier market',
+    Strong: 'Strong market',
+    Developing: 'Developing market',
+    Emerging: 'Emerging market'
+  };
+
+  function loadData() {
+    return fetch('cities-data.json')
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        DATA = d;
+        ALL_CITIES = d.cities;
+      });
+  }
+
+  // ───────────────────────────────────────────────────────────────
+  // IP GEOLOCATION — try to detect user's nearest Cascadia city
+  // ───────────────────────────────────────────────────────────────
+  function detectNearestCity() {
+    return fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout ? AbortSignal.timeout(3000) : null })
+      .then(function(r) { return r.json(); })
+      .then(function(loc) {
+        if (!loc || !loc.latitude) return null;
+        // Find nearest city in our cohort by haversine distance
+        var nearest = null, nearestDist = Infinity;
+        ALL_CITIES.forEach(function(c) {
+          var dist = haversine(loc.latitude, loc.longitude, c.lat, c.lng);
+          if (dist < nearestDist) { nearestDist = dist; nearest = c; }
+        });
+        // Only use if user is within ~500km of a cohort city (i.e. actually in Cascadia region)
+        if (nearestDist < 500) {
+          return { city: nearest, distance: nearestDist, userLocation: loc };
+        }
+        return { city: null, distance: nearestDist, userLocation: loc };
+      })
+      .catch(function() { return null; });
+  }
+
+  function haversine(lat1, lng1, lat2, lng2) {
+    var R = 6371;
+    var dLat = (lat2 - lat1) * Math.PI / 180;
+    var dLng = (lng2 - lng1) * Math.PI / 180;
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLng/2) * Math.sin(dLng/2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c;
+  }
+
+  function shuffleArray(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  }
+
+  // ───────────────────────────────────────────────────────────────
+  // RENDER
+  // ───────────────────────────────────────────────────────────────
+
+  function renderCurrentCity() {
+    var city = ALL_CITIES[currentIdx];
+    var b = city.ai_banner;
+    var score = window.CIRS.compute(city, ALL_CITIES);
+    var tierColor = { Premier:'#1B5E3F', Strong:'#2E7D5B', Developing:'#B07D2E', Emerging:'#9B3D3D' }[score.tier] || 'var(--primary)';
+
+    // Cross-fade: current → next, then swap
+    var imgCurrent = document.getElementById('rb-img-current');
+    var imgNext = document.getElementById('rb-img-next');
+    imgNext.src = 'banners/' + city.id + '.png';
+    imgNext.onload = function() {
+      imgNext.style.opacity = '1';
+      imgCurrent.style.opacity = '0';
+      // After transition, swap roles
+      setTimeout(function() {
+        var tmp = imgCurrent.src;
+        imgCurrent.src = imgNext.src;
+        imgCurrent.style.opacity = '1';
+        imgNext.style.opacity = '0';
+      }, 1300);
+    };
+    imgNext.onerror = function() {
+      // Image failed — fall back to gradient only
+      imgNext.style.opacity = '0';
+    };
+
+    // Update background gradient (instant)
+    document.getElementById('rotating-banner').style.background =
+      'linear-gradient(135deg,' + b.palette_primary + ',' + b.palette_secondary + ')';
+
+    // Update radial accent
+    document.getElementById('rb-radial').style.background =
+      'radial-gradient(ellipse at 30% 70%,' + b.palette_accent + ' 0%, transparent 60%)';
+
+    // Update text
+    document.getElementById('rb-city-name').textContent = city.name;
+    var notableTag = city.notable_companies.slice(0,2).join(', ');
+    document.getElementById('rb-city-meta').textContent =
+      city.state + ', ' + city.country + ' · ' + (city.population_metro/1000000).toFixed(2) + 'M metro · ' + TIER_TAGS[score.tier];
+
+    // Update score
+    document.getElementById('rb-score').textContent = score.score.toFixed(1);
+    document.getElementById('rb-score').style.color = tierColor;
+
+    // Update swatches
+    var swatches = document.querySelectorAll('.rb-swatch');
+    if (swatches.length === 3) {
+      swatches[0].style.background = b.palette_primary;
+      swatches[1].style.background = b.palette_secondary;
+      swatches[2].style.background = b.palette_accent;
+    }
+
+    // Update counter
+    document.getElementById('rb-counter').textContent = (currentIdx + 1) + ' / ' + ALL_CITIES.length;
+
+    // Update dots
+    var dots = document.querySelectorAll('.rb-dot');
+    dots.forEach(function(d, i) {
+      d.classList.toggle('active', i === currentIdx);
+    });
+  }
+
+  function buildDots() {
+    var dotsHost = document.getElementById('rb-dots');
+    dotsHost.innerHTML = '';
+    ALL_CITIES.forEach(function(c, i) {
+      var dot = document.createElement('div');
+      dot.className = 'rb-dot' + (i === currentIdx ? ' active' : '');
+      dot.title = c.name;
+      dot.addEventListener('click', function() {
+        currentIdx = i;
+        renderCurrentCity();
+        resetTimer();
+      });
+      dotsHost.appendChild(dot);
+    });
+  }
+
+  function next() {
+    currentIdx = (currentIdx + 1) % ALL_CITIES.length;
+    renderCurrentCity();
+  }
+
+  function prev() {
+    currentIdx = (currentIdx - 1 + ALL_CITIES.length) % ALL_CITIES.length;
+    renderCurrentCity();
+  }
+
+  function resetTimer() {
+    if (rotationTimer) clearInterval(rotationTimer);
+    if (!isPaused) {
+      rotationTimer = setInterval(next, ROTATION_MS);
+    }
+  }
+
+  function togglePause() {
+    isPaused = !isPaused;
+    var btn = document.getElementById('rb-pause');
+    if (isPaused) {
+      btn.innerHTML = '&#9654; Resume';
+      if (rotationTimer) clearInterval(rotationTimer);
+    } else {
+      btn.innerHTML = '&#10073;&#10073; Pause';
+      resetTimer();
+    }
+  }
+
+  // ───────────────────────────────────────────────────────────────
+  // INIT
+  // ───────────────────────────────────────────────────────────────
+
+  function init() {
+    if (!window.CIRS) { setTimeout(init, 50); return; }
+    loadData().then(function() {
+      // Try IP detection first
+      detectNearestCity().then(function(result) {
+        if (result && result.city) {
+          // User is in/near Cascadia — start with their nearest city
+          ipDetectedCity = result.city;
+          currentIdx = ALL_CITIES.findIndex(function(c) { return c.id === result.city.id; });
+          if (currentIdx < 0) currentIdx = 0;
+
+          var statusText = 'Showing ' + result.city.name + ' — ' + Math.round(result.distance) + 'km from you';
+          document.getElementById('rb-status-text').textContent = statusText;
+        } else if (result && result.userLocation && result.userLocation.city) {
+          // IP detected but not near a cohort city
+          var loc = result.userLocation;
+          document.getElementById('rb-status-text').textContent =
+            'You\'re in ' + (loc.city + ', ' + (loc.country_code || '')) + ' — random rotation';
+          // Random rotation: shuffle the cities order
+          ALL_CITIES = shuffleArray(ALL_CITIES);
+          currentIdx = 0;
+        } else {
+          // IP detection failed entirely
+          document.getElementById('rb-status-text').textContent = 'Random rotation (location not detected)';
+          ALL_CITIES = shuffleArray(ALL_CITIES);
+          currentIdx = 0;
+        }
+
+        buildDots();
+        renderCurrentCity();
+        resetTimer();
+
+        // Wire up controls
+        document.getElementById('rb-prev').addEventListener('click', function() { prev(); resetTimer(); });
+        document.getElementById('rb-next').addEventListener('click', function() { next(); resetTimer(); });
+        document.getElementById('rb-pause').addEventListener('click', togglePause);
+
+        // Pause on hover
+        var banner = document.getElementById('rotating-banner');
+        banner.addEventListener('mouseenter', function() {
+          if (!isPaused && rotationTimer) { clearInterval(rotationTimer); rotationTimer = null; }
+        });
+        banner.addEventListener('mouseleave', function() {
+          if (!isPaused) resetTimer();
+        });
+      });
+    }).catch(function(err) {
+      document.getElementById('rb-status-text').textContent = 'Error: ' + err.message;
+    });
+  }
+
+  init();
+})();
+/* /ROTATING-BANNER */
 </script>
 </body></html>

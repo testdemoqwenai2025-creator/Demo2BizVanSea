@@ -192,22 +192,24 @@ a:hover { text-decoration: underline; }
 .density-grid {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  gap: 2px;
+  gap: 3px;
   margin-top: 12px;
-  aspect-ratio: 5/3;
+  aspect-ratio: 8/5;
 }
 .density-cell {
   background: var(--bg3);
-  border-radius: 2px;
+  border-radius: 3px;
   transition: all 0.2s;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 9px;
-  color: rgba(255,255,255,0.8);
+  font-size: 10px;
+  color: rgba(255,255,255,0.85);
   font-weight: 700;
+  min-height: 40px;
 }
+.density-cell:hover { transform: scale(1.1); z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
 
 /* Stats bar */
 .stats-bar {
@@ -289,7 +291,7 @@ a:hover { text-decoration: underline; }
     <a href="resources.html">Resources</a>
     <a href="environment.html">Environment</a>
     <a href="environment-agency.html">Env Agency</a>
-    <a href="biodiversity.html" class="active">Biodiversity</a>
+    <a href="biodiversity.html" class="active">Biodiversity</a><a href="research-hub.html" class=" active">Research Hub</a>
     <a href="sports.html">Sports</a>
     <a href="whatif-scenario.html">What-If</a>
     <a href="city-compare.html">City vs City</a>
@@ -623,7 +625,7 @@ a:hover { text-decoration: underline; }
       <a href="economics.html">Economics</a>
       <a href="environment.html">Environment</a>
       <a href="environment-agency.html">Env Agency</a>
-      <a href="biodiversity.html">Biodiversity</a>
+      <a href="biodiversity.html">Biodiversity</a><a href="research-hub.html" class="">Research Hub</a>
     </div>
     <div class="footer-col">
       <h4>Data Sources</h4>
@@ -866,42 +868,86 @@ a:hover { text-decoration: underline; }
 
   function loadDensityGrid(){
     // 8x5 grid representing Cascadia (lat 42-52, lng -125 to -117)
+    // 8 columns × 5 rows = 40 cells (matches CSS grid-template-columns: repeat(8, 1fr))
     var grid = document.getElementById('density-grid');
     var cells = [];
-    for (var lat = 50; lat >= 44; lat -= 1.5){
-      for (var lng = -124; lng <= -118; lng += 0.875){
-        cells.push({lat: lat, lng: lng, label: lat.toFixed(1) + ',' + lng.toFixed(1)});
+    // 5 rows: lat from 50.5 down to 43.5 by 1.75 (covers 42-52)
+    // 8 cols: lng from -124.5 up to -117.5 by 1.0 (covers -125 to -117)
+    for (var row = 0; row < 5; row++){
+      var lat = 50.5 - row * 1.75;
+      for (var col = 0; col < 8; col++){
+        var lng = -124.5 + col * 1.0;
+        cells.push({lat: lat, lng: lng, row: row, col: col, label: lat.toFixed(1) + '°N, ' + Math.abs(lng).toFixed(1) + '°W'});
       }
     }
     var html = '';
     cells.forEach(function(c){
-      html += '<div class="density-cell" data-lat="' + c.lat + '" data-lng="' + c.lng + '" title="' + c.label + '">·</div>';
+      html += '<div class="density-cell" data-lat="' + c.lat + '" data-lng="' + c.lng + '" data-row="' + c.row + '" data-col="' + c.col + '" title="' + c.label + '">·</div>';
     });
     grid.innerHTML = html;
 
-    // Load density data — fetch counts for each cell
+    // Load density data — batch fetch to avoid rate limiting
+    // Use Promise.all with small batches of 8 (one row at a time)
     var cellEls = document.querySelectorAll('.density-cell');
-    cellEls.forEach(function(el, i){
+
+    function fetchCell(el){
       var lat = parseFloat(el.getAttribute('data-lat'));
       var lng = parseFloat(el.getAttribute('data-lng'));
-      var url = 'https://api.inaturalist.org/v1/observations?nelat=' + (lat + 0.75) + '&nelng=' + (lng + 0.45) + '&swlat=' + (lat - 0.75) + '&swlng=' + (lng - 0.45) + '&per_page=1&quality_grade=research';
-      // Stagger requests to avoid rate limiting
-      setTimeout(function(){
-        fetch(url)
-          .then(function(r){ return r.json(); })
-          .then(function(d){
-            var count = d.total_results || 0;
-            // Color intensity based on count (log scale)
-            var intensity = Math.min(1, Math.log(count + 1) / Math.log(10000));
-            var r = Math.round(22 + (46 - 22) * intensity);
-            var g = Math.round(32 + (204 - 32) * intensity);
-            var b = Math.round(32 + (113 - 32) * intensity);
-            el.style.background = 'rgb(' + r + ',' + g + ',' + b + ')';
-            el.textContent = count > 0 ? (count > 999 ? (count/1000).toFixed(0) + 'k' : count) : '';
-          })
-          .catch(function(){});
-      }, i * 200); // stagger by 200ms
-    });
+      // Each cell covers 1.75° lat × 1.0° lng
+      var url = 'https://api.inaturalist.org/v1/observations?nelat=' + (lat + 0.875) + '&nelng=' + (lng + 0.5) + '&swlat=' + (lat - 0.875) + '&swlng=' + (lng - 0.5) + '&per_page=1&quality_grade=research';
+      return fetch(url)
+        .then(function(r){ return r.json(); })
+        .then(function(d){
+          var count = d.total_results || 0;
+          return {el: el, count: count};
+        })
+        .catch(function(){ return {el: el, count: 0}; });
+    }
+
+    function colorForCount(count){
+      if (count === 0) return {bg: '#162020', text: ''};
+      // Log scale: 1 → 0.0, 100 → 0.33, 1000 → 0.67, 10000 → 1.0
+      var intensity = Math.min(1, Math.log10(count + 1) / 4);
+      // Color gradient: dark → green → bright green → yellow
+      var r, g, b;
+      if (intensity < 0.5){
+        // dark → green
+        var t = intensity * 2;
+        r = Math.round(22 + (39 - 22) * t);
+        g = Math.round(32 + (174 - 32) * t);
+        b = Math.round(32 + (96 - 32) * t);
+      } else {
+        // green → yellow-green
+        var t = (intensity - 0.5) * 2;
+        r = Math.round(39 + (241 - 39) * t);
+        g = Math.round(174 + (196 - 174) * t);
+        b = Math.round(96 + (15 - 96) * t);
+      }
+      return {bg: 'rgb(' + r + ',' + g + ',' + b + ')', text: count > 999 ? (count/1000).toFixed(1) + 'k' : count.toString()};
+    }
+
+    // Fetch in batches of 8 (one row at a time) to avoid rate limiting
+    var batchSize = 8;
+    var batches = [];
+    for (var i = 0; i < cellEls.length; i += batchSize){
+      batches.push(Array.from(cellEls).slice(i, i + batchSize));
+    }
+
+    function processBatch(batchIdx){
+      if (batchIdx >= batches.length) return;
+      var batch = batches[batchIdx];
+      Promise.all(batch.map(fetchCell)).then(function(results){
+        results.forEach(function(r){
+          var colors = colorForCount(r.count);
+          r.el.style.background = colors.bg;
+          r.el.textContent = colors.text;
+          r.el.style.color = r.count > 500 ? '#fff' : 'rgba(255,255,255,0.7)';
+        });
+        // Process next batch after 300ms delay
+        setTimeout(function(){ processBatch(batchIdx + 1); }, 300);
+      });
+    }
+    processBatch(0);
   }
 
 

@@ -346,507 +346,87 @@ input[type="range"]::-moz-range-track {
   .wif-hero::before, .wif-hero::after { display: none; }
 }
 
-/* === SHARED HEADER/FOOTER CSS (auto-injected) === */
-.bvs-header {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(13,18,18,0.85); backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(78,205,196,0.15);
-}
-
-.bvs-header-inner { display: flex; align-items: center; justify-content: space-between; height: 52px; }
-
-.bvs-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
-
-.bvs-logo-mark { width: 32px; height: 32px; border-radius: 6px; background: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 11px; color: var(--bg); }
-
-.bvs-logo-text { font-size: 15px; font-weight: 700; color: var(--fg); }
-
-.bvs-logo-text span { color: var(--primary); }
-
-.bvs-nav { display: flex; gap: 2px; overflow-x: auto; }
-
-.bvs-nav a {
-  padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 500;
-  color: var(--fg2); white-space: nowrap; text-decoration: none; transition: all 0.15s;
-}
-
-.bvs-nav a:hover { color: var(--fg); background: var(--bg3); }
-
-.bvs-nav a.active { color: var(--primary); background: var(--primary-dim); }
-
-.ai-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-
-.ai-home-btn { display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; color: var(--primary); background: var(--primary-dim); border: 1px solid var(--primary-border); transition: all .15s; text-decoration: none; }
-
-.ai-home-btn:hover { background: var(--primary); color: #0d1212; text-decoration: none; }
-
-.ai-home-btn svg { width: 14px; height: 14px; }
-
-.ai-action-btn { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; color: var(--fg2); background: transparent; border: 1px solid rgba(255,255,255,0.1); transition: all .15s; white-space: nowrap; text-decoration: none; font-family: inherit; }
-
-.ai-action-btn:hover { background: var(--bg3); color: var(--fg); text-decoration: none; }
-
-.ai-action-btn.primary-btn { background: var(--primary); color: #0d1212; border-color: var(--primary); font-weight: 700; }
-
-.ai-action-btn.primary-btn:hover { filter: brightness(1.1); text-decoration: none; }
-
-.ai-action-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
-
-.ai-theme-toggle { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); background: transparent; color: var(--fg2); transition: all .15s; font-family: inherit; padding: 0; }
-
-.ai-theme-toggle:hover { background: var(--bg3); color: var(--fg); }
-
-.ai-mobile-toggle { display: none; width: 32px; height: 32px; border-radius: 8px; align-items: center; justify-content: center; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); background: transparent; color: var(--fg2); transition: all .15s; padding: 0; }
-
-.ai-mobile-toggle:hover { background: var(--bg3); color: var(--fg); }
-
-.bvs-mobile-menu { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg2); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 12px 24px; flex-direction: column; gap: 4px; z-index: 99; }
-
-.bvs-mobile-menu.open { display: flex; }
-
-.bvs-mobile-menu a { padding: 8px 12px; border-radius: 6px; font-size: 13px; color: var(--fg2); text-decoration: none; }
-
-.bvs-mobile-menu a:hover { background: var(--bg3); color: var(--fg); }
-
-.bvs-mobile-menu a.active { color: var(--primary); background: var(--primary-dim); }
-
-.ai-chat-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 999; display: none; }
-
-.ai-chat-overlay.open { display: block; }
-
-.ai-chat-panel { position: fixed; top: 0; right: -420px; width: 400px; height: 100vh; background: var(--bg2); border-left: 1px solid rgba(255,255,255,0.08); box-shadow: -4px 0 24px rgba(0,0,0,0.3); z-index: 1000; display: flex; flex-direction: column; transition: right .3s ease; }
-
-.ai-chat-panel.open { right: 0; }
-
-.ai-chat-panel input { background: var(--bg3); color: var(--fg); border-color: rgba(0,0,0,0.1); }
-
-.ai-chat-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.06); }
-
-.ai-chat-header h3 { font-size: 13px; font-weight: 700; color: var(--fg); }
-
-.ai-chat-close { width: 28px; height: 28px; border-radius: 6px; border: none; background: transparent; color: var(--fg2); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: all .15s; }
-
-.ai-chat-close:hover { background: var(--bg3); color: var(--fg); }
-
-.ai-models { display: flex; gap: 6px; padding: 10px 16px; overflow-x: auto; border-bottom: 1px solid rgba(255,255,255,0.04); scrollbar-width: none; }
-
-.ai-models::-webkit-scrollbar { display: none; }
-
-.ai-model-card { flex-shrink: 0; padding: 6px 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.08); background: var(--bg3); cursor: pointer; transition: all .15s; text-align: center; min-width: 64px; }
-
-.ai-model-card:hover { border-color: var(--primary-border); }
-
-.ai-model-card.active { border-color: var(--primary); background: var(--primary-dim); }
-
-.ai-model-card .model-name { font-size: 10px; font-weight: 700; color: var(--fg); line-height: 1.2; }
-
-.ai-model-card .model-by { font-size: 8px; color: var(--fg3); margin-top: 2px; }
-
-.ai-chat-messages { flex: 1; overflow-y: auto; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
-
-.ai-chat-msg { max-width: 88%; padding: 10px 14px; border-radius: 12px; font-size: 13px; line-height: 1.55; word-wrap: break-word; }
-
-.ai-chat-msg.bot { align-self: flex-start; background: var(--bg3); color: var(--fg); border-bottom-left-radius: 4px; }
-
-.ai-chat-msg.user { align-self: flex-end; background: var(--primary); color: #0d1212; border-bottom-right-radius: 4px; font-weight: 500; }
-
-.ai-chat-msg .model-tag { display: inline-block; font-size: 9px; font-weight: 700; color: var(--primary); background: var(--primary-dim); padding: 1px 6px; border-radius: 4px; margin-bottom: 4px; text-transform: uppercase; letter-spacing: .03em; }
-
-.ai-typing { align-self: flex-start; padding: 10px 16px; border-radius: 12px; background: var(--bg3); color: var(--fg3); font-size: 12px; border-bottom-left-radius: 4px; }
-
-.ai-typing span { animation: blink 1.2s infinite; }
-
-.ai-typing span:nth-child(2) { animation-delay: .2s; }
-
-.ai-typing span:nth-child(3) { animation-delay: .4s; }
-
-.ai-chat-input-area { padding: 12px 16px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; gap: 8px; }
-
-.ai-chat-input-area input { flex: 1; padding: 10px 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: var(--bg3); color: var(--fg); font-size: 13px; outline: none; transition: border-color .15s; font-family: inherit; }
-
-.ai-chat-input-area input:focus { border-color: var(--primary); }
-
-.ai-chat-input-area input::placeholder { color: var(--fg3); }
-
-.ai-chat-input-area button { padding: 10px 16px; border-radius: 8px; border: none; background: var(--primary); color: #0d1212; font-weight: 700; font-size: 13px; cursor: pointer; transition: filter .15s; font-family: inherit; }
-
-.ai-chat-input-area button:hover { filter: brightness(1.1); }
-
-.bvs-site-footer { background: #f0f4f4; border-top-color: rgba(0,0,0,0.08); }
-
-.footer-ribbon { height:4px; background:linear-gradient(90deg, var(--primary) 0%, var(--amber) 25%, var(--blue) 50%, var(--primary) 75%, var(--amber) 100%); background-size:200% 100%; animation:ribbon-shift 8s linear infinite; }
-
-.footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; gap: 32px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.06); }
-
-.footer-col h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--fg); margin-bottom: 14px; }
-
-.footer-col a { display: block; font-size: 12px; color: var(--fg3); text-decoration: none; padding: 3px 0; transition: color .15s; }
-
-.footer-col a:hover { color: var(--primary); text-decoration: none; }
-
-.footer-logo { font-size: 16px; font-weight: 800; color: var(--fg); margin-bottom: 12px; }
-
-.footer-logo span { color: var(--primary); }
-
-.footer-about { font-size: 12px; color: var(--fg3); line-height: 1.7; margin-bottom: 16px; max-width: 280px; }
-
-.footer-social a { border-color: rgba(0,0,0,0.1); color: var(--fg3); }
-
-.footer-social { display: flex; gap: 8px; }
-
-.footer-social a:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-dim); text-decoration: none; }
-
-.footer-bottom { display: flex; justify-content: space-between; align-items: center; padding: 18px 0; flex-wrap: wrap; gap: 8px; }
-
-.footer-bottom-left, .footer-bottom-right { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--fg3); flex-wrap: wrap; }
-
-.footer-bottom a { color: var(--fg3); text-decoration: none; }
-
-.footer-bottom a:hover { color: var(--primary); text-decoration: none; }
-
-.footer-bottom-right { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--fg3); flex-wrap: wrap; }
-
-.footer-sep { color: rgba(0,0,0,0.12); }
-
-[data-theme="light"] {
-  --bg: #f4f7f7; --bg2: #ffffff; --bg3: #e8edee; --bg4: #dde2e3;
-  --fg: #1a1a2e; --fg2: #4a4a5a; --fg3: #888;
-  --primary: #0d9488; --primary-dim: rgba(13,148,136,0.08); --primary-border: rgba(13,148,136,0.25);
-  --amber: #d97706; --red: #dc2626; --green: #0d9488; --blue: #2563eb;
-}
-
-[data-theme="light"] .bvs-header { background: rgba(244,247,247,0.92); border-bottom-color: rgba(13,148,136,0.15); }
-
-[data-theme="light"] .bvs-card { background: #fff; border-color: rgba(0,0,0,0.07); }
-
-[data-theme="light"] .bvs-card:hover { border-color: var(--primary-border); }
-
-[data-theme="light"] .bvs-table th { border-bottom-color: rgba(0,0,0,0.1); color: var(--fg3); }
-
-[data-theme="light"] .bvs-table td { border-bottom-color: rgba(0,0,0,0.05); color: var(--fg); }
-
-[data-theme="light"] .bvs-table tr:hover td { background: var(--bg3); }
-
-[data-theme="light"] .bvs-news-item { border-bottom-color: rgba(0,0,0,0.06); }
-
-[data-theme="light"] .bvs-ticker { background: var(--primary-dim); }
-
-[data-theme="light"] .bvs-footer { border-top-color: rgba(0,0,0,0.08); }
-
-[data-theme="light"] .bvs-badge-primary { background: var(--primary-dim); color: var(--primary); border: 1px solid var(--primary-border); }
-
-[data-theme="light"] .bvs-badge-secondary { background: var(--bg4); color: var(--fg2); }
-
-[data-theme="light"] .bvs-badge-live { background: rgba(220,38,38,0.08); color: var(--red); border: 1px solid rgba(220,38,38,0.2); }
-
-[data-theme="light"] .bvs-badge-sea { background: rgba(37,99,235,0.08); color: var(--blue); }
-
-[data-theme="light"] .bvs-badge-yvr { background: var(--primary-dim); color: var(--primary); }
-
-[data-theme="light"] .bvs-badge-cb { background: rgba(217,119,6,0.08); color: var(--amber); }
-
-[data-theme="light"] .bvs-hero { background: linear-gradient(135deg, #e0f2f1 0%, #eef8f7 50%, #e5f5f4 100%); }
-
-[data-theme="light"] .bvs-hero::before { background: radial-gradient(ellipse at 20% 50%, rgba(13,148,136,0.08) 0%, transparent 60%); }
-
-[data-theme="light"] .bvs-hero::after { background: radial-gradient(ellipse at 80% 30%, rgba(217,119,6,0.05) 0%, transparent 50%); }
-
-[data-theme="light"] .bvs-img-label { background: linear-gradient(transparent, rgba(255,255,255,0.88)); }
-
-[data-theme="light"] .bvs-img-label div { color: var(--fg) !important; }
-
-[data-theme="light"] .gaz-card { background: #fff; border-color: rgba(0,0,0,0.07); }
-
-[data-theme="light"] .gaz-card:hover { border-color: var(--primary-border); }
-
-[data-theme="light"] .tech-card { background: #fff; border-color: rgba(0,0,0,0.07); }
-
-[data-theme="light"] .tech-card:hover { border-color: var(--primary-border); }
-
-[data-theme="light"] .score-bar { background: var(--bg4); }
-
-[data-theme="light"] .nw-score { color: var(--fg); }
-
-[data-theme="light"] .auth-card { background:#fff; border-color:rgba(0,0,0,0.08); }
-
-[data-theme="light"] .auth-card::before { background:linear-gradient(90deg, var(--primary), var(--amber), var(--blue)); }
-
-[data-theme="light"] .auth-input { background:var(--bg3); border-color:rgba(0,0,0,0.12); color:var(--fg); }
-
-[data-theme="light"] .auth-input:focus { border-color:var(--primary); box-shadow:0 0 0 3px var(--primary-dim); }
-
-[data-theme="light"] .auth-select { background:var(--bg3); border-color:rgba(0,0,0,0.12); color:var(--fg); }
-
-[data-theme="light"] .auth-social-btn { border-color:rgba(0,0,0,0.1); color:var(--fg2); }
-
-[data-theme="light"] .auth-social-btn:hover { background:var(--bg3); }
-
-[data-theme="light"] .auth-divider::before, [data-theme="light"] .auth-divider::after { background:rgba(0,0,0,0.08); }
-
-[data-theme="light"] .gov-alert-weather { background:rgba(13,148,136,0.06); }
-
-[data-theme="light"] .gov-alert-traffic { background:rgba(217,119,6,0.06); }
-
-[data-theme="light"] .gov-alert-airport { background:rgba(37,99,235,0.06); }
-
-[data-theme="light"] .gov-alert-public { background:rgba(220,38,38,0.06); }
-
-[data-theme="light"] .bvs-site-footer { background: #f0f4f4; border-top-color: rgba(0,0,0,0.08); }
-
-[data-theme="light"] .footer-sep { color: rgba(0,0,0,0.12); }
-
-[data-theme="light"] .footer-social a { border-color: rgba(0,0,0,0.1); color: var(--fg3); }
-
-[data-theme="light"] .ai-action-btn { color: var(--fg2); border-color: rgba(0,0,0,0.12); }
-
-[data-theme="light"] .ai-action-btn:hover { background: var(--bg3) !important; }
-
-[data-theme="light"] .ai-action-btn.primary-btn { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
-
-[data-theme="light"] .ai-chat-panel { background: #fff; border-left-color: rgba(0,0,0,0.1); box-shadow: -4px 0 32px rgba(0,0,0,0.1); }
-
-[data-theme="light"] .ai-chat-header { border-bottom-color: rgba(0,0,0,0.08); }
-
-[data-theme="light"] .ai-model-card { background: var(--bg3); border-color: rgba(0,0,0,0.08); }
-
-[data-theme="light"] .ai-model-card.active { border-color: var(--primary); background: var(--primary-dim); }
-
-[data-theme="light"] .ai-chat-msg.bot { background: var(--bg3); color: var(--fg); }
-
-[data-theme="light"] .ai-chat-input-area { border-top-color: rgba(0,0,0,0.08); }
-
-[data-theme="light"] .ai-chat-panel input { background: var(--bg3); color: var(--fg); border-color: rgba(0,0,0,0.1); }
-
-[data-theme="light"] .bvs-mobile-menu { background: #fff; border-bottom-color: rgba(0,0,0,0.08); }
-
-[data-theme="light"] .sub-card { background:#fff; border-color:rgba(0,0,0,0.07); }
-
-[data-theme="light"] .sub-card:hover { border-color:var(--primary-border); }
-
-[data-theme="light"] .sub-card.featured { border-color:var(--primary); box-shadow:0 0 24px var(--primary-dim); }
-
-[data-theme="light"] .sub-features li { border-bottom-color:rgba(0,0,0,0.05); }
-
-[data-theme="light"] .venue-card { background:#fff; border-color:rgba(0,0,0,0.07); }
-
-[data-theme="light"] .venue-card:hover { border-color:var(--primary-border); }
-
-[data-theme="light"] .venue-meta { border-top-color:rgba(0,0,0,0.06); }
-
-[data-theme="light"] .city-card { background:#fff; border-color:rgba(0,0,0,0.07); }
-
-[data-theme="light"] .city-card:hover { border-color:var(--primary-border); }
-
-[data-theme="light"] .sector-cell { border-color:rgba(0,0,0,0.05); }
-
-[data-theme="light"] .opp-card { background:#fff; border-color:rgba(0,0,0,0.07); }
-
-[data-theme="light"] .ai-insight { background:linear-gradient(135deg, rgba(13,148,136,0.04), rgba(37,99,235,0.03)); }
-
-[data-theme="light"] .kpi-card { background:#fff; border-color:rgba(0,0,0,0.07); }
-
-[data-theme="light"] .proj-table td { border-bottom-color:rgba(0,0,0,0.05); }
-
-[data-theme="light"] .proj-table th { border-bottom-color:rgba(0,0,0,0.1); }
-
-[data-theme="light"] .proj-table tr:hover td { background:var(--bg3); }
-
-[data-theme="light"] .flow-bar-wrap { background:var(--bg4); }
-
-[data-theme="light"] .gauge-track { background:var(--bg4); }
-
-[data-theme="light"] .event-item { background:#fff; border-color:rgba(0,0,0,0.07); }
-
-[data-theme="light"] .event-item:hover { border-color:var(--primary-border); }
-
-[data-theme="light"] .env-card { background:#fff; border-color:rgba(0,0,0,0.07); }
-
-[data-theme="light"] .env-cap-panel { background:#fff; border-color:rgba(0,0,0,0.07); }
-
-[data-theme="light"] .env-cap-panel:hover { box-shadow:0 8px 32px rgba(0,0,0,0.08); }
-
-[data-theme="light"] .env-cap-head { border-bottom-color:rgba(0,0,0,0.06); }
-
-[data-theme="light"] .env-cap-col { border-right-color:rgba(0,0,0,0.06); }
-
-[data-theme="light"] .env-cap-col-ai { background:rgba(13,148,136,0.03); }
-
-[data-theme="light"] .env-cap-paper, [data-theme="light"] .env-cap-proj { border-bottom-color:rgba(0,0,0,0.05); }
-
-[data-theme="light"] .env-cap-impact { border-top-color:rgba(0,0,0,0.06); }
-
-[data-theme="light"] .env-cap-premium { background:rgba(0,0,0,0.02); border-color:rgba(0,0,0,0.1); }
-
-[data-theme="light"] .env-cap-premium:hover { background:rgba(13,148,136,0.05); }
-
-[data-theme="light"] .env-card:hover { border-color:var(--primary-border); }
-
-[data-theme="light"] .env-prob-track { background:var(--bg4); }
-
-[data-theme="light"] .env-tl-dot { background:#fff; }
-
-[data-theme="light"] .data-refresh-bar { background:var(--bg3); }
-
-[data-theme="light"] .dr-badge-live { background:rgba(13,148,136,0.08); color:var(--primary); border-color:rgba(13,148,136,0.2); }
-
-[data-theme="light"] .dr-badge-daily { background:rgba(37,99,235,0.06); color:var(--blue); border-color:rgba(37,99,235,0.15); }
-
-[data-theme="light"] .dr-badge-quarterly { background:rgba(217,119,6,0.06); color:var(--amber); border-color:rgba(217,119,6,0.15); }
-
-[data-theme="light"] .dp-panel { background:#fff; border-color:rgba(0,0,0,0.08); }
-
-[data-theme="light"] .dp-header { background:#fff; }
-
-[data-theme="light"] .dp-metric-item { background:#f5f5f5; }
-
-[data-theme="light"] .dash-tier-badge.tier-mega { background:rgba(13,148,136,0.08); }
-
-[data-theme="light"] .dash-tier-badge.tier-growth { background:rgba(37,99,235,0.06); }
-
-[data-theme="light"] .dash-tier-badge.tier-emerging { background:rgba(217,119,6,0.06); }
-
-[data-theme="light"] .ai-score.score-high { background:rgba(13,148,136,0.08); color:#0d9488; }
-
-[data-theme="light"] .ai-score.score-mid { background:rgba(37,99,235,0.06); color:#2563eb; }
-
-[data-theme="light"] .ai-score.score-low { background:rgba(217,119,6,0.06); color:#d97706; }
-
-[data-theme="light"] .improve-pill.p-critical { background:rgba(220,38,38,0.06); color:#dc2626; }
-
-[data-theme="light"] .improve-pill.p-high { background:rgba(217,119,6,0.06); color:#d97706; }
-
-[data-theme="light"] .improve-pill.p-med { background:rgba(37,99,235,0.04); color:#2563eb; }
-
-[data-theme="light"] .gdp-region-card { background:#fff; border-color:rgba(0,0,0,0.07); }
-
-[data-theme="light"] .gdp-mini-bar { background:rgba(0,0,0,0.06); }
-
-[data-theme="light"] .card-expandable.active { box-shadow:0 0 0 1px #0d9488,0 4px 24px rgba(13,148,136,0.1); }
-
-[data-theme="light"] .dd-panel { background:#fff; border-color:rgba(0,0,0,0.07); }
-
-[data-theme="light"] .dd-head { border-bottom-color:rgba(0,0,0,0.07); }
-
-[data-theme="light"] .dd-close { border-color:rgba(0,0,0,0.12); }
-
-[data-theme="light"] .dd-tab.active { color:#0d9488; background:rgba(13,148,136,0.06); border-color:rgba(13,148,136,0.15); }
-
-[data-theme="light"] .tech-cluster-card, [data-theme="light"] .tech-frontier-card, [data-theme="light"] .trans-mobility-card, [data-theme="light"] .demo-gen-card, [data-theme="light"] .demo-edu-card { background:#fff; border-color:rgba(0,0,0,0.07); }
-
-[data-theme="light"] .tech-research-row { background:#fff; border-color:rgba(0,0,0,0.07); }
-
-[data-theme="light"] .econ-vc-card, [data-theme="light"] .econ-forecast-card, [data-theme="light"] .econ-risk-card { background:#fff; border-color:rgba(0,0,0,0.07); }
-
-[data-theme="light"] .econ-forecast-card::before { background:linear-gradient(90deg, #0d9488, #2563eb); }
-
-[data-theme="light"] .econ-forecast-fill { background:linear-gradient(90deg, #0d9488, #2563eb); }
-
-[data-theme="light"] .res-cat-card, [data-theme="light"] .res-org-card { background:#fff; border-color:rgba(0,0,0,0.07); }
-
-[data-theme="light"] .res-institute-row { background:#fff; border-color:rgba(0,0,0,0.07); }
-
-[data-theme="light"] .sports-deal-card { background:#fff; border-color:rgba(0,0,0,0.07); }
-
-[data-theme="light"] .sports-val-card { background:#fff; border-color:rgba(0,0,0,0.07); }
-
-[data-theme="light"] .sports-tech-card { background:#fff; border-color:rgba(0,0,0,0.07); }
-
-[data-theme="light"] .sports-esports-row { background:#fff; border-color:rgba(0,0,0,0.07); }
-
-[data-theme="light"] .sports-insight-box { background:linear-gradient(135deg, rgba(13,148,136,0.04) 0%, rgba(37,99,235,0.04) 100%); }
-
-[data-theme="light"] .life-metric-card { background: #ffffff; border-color: #e5e7eb; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
-
-[data-theme="light"] .life-metric-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
-
-[data-theme="light"] .lmc-kpi { background: #f9fafb; }
-
-[data-theme="light"] .lmc-title { color: #111827; }
-
-[data-theme="light"] .lmc-detail-val { color: #111827; }
-
+/* === SHARED CSS (vban+footer+theme) === */
+
+/* === vban banners === */
+.vban-wrap { position: fixed; top: 50%; transform: translateY(-50%); z-index: 50; pointer-events: none; }
+.vban { pointer-events: auto; display: block; transition: opacity .2s; }
+.vban:hover { opacity: 0.85; }
+.vban-left { left: 0; }
+.vban-right { right: 0; }
+.vban img { width: 120px; height: 400px; object-fit: cover; display: block; }
+.vban-left img { border-radius: 0 8px 8px 0; border-right: 1px solid rgba(78,205,196,0.2); }
+.vban-right img { border-radius: 8px 0 0 8px; border-left: 1px solid rgba(78,205,196,0.2); }
+.vban-label { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.7); color: #4ecdc4; font-size: 9px; padding: 3px 8px; border-radius: 4px; white-space: nowrap; font-weight: 600; letter-spacing: 0.03em; }
+[data-theme="light"] .vban-label { background: rgba(255,255,255,0.85); color: #0d1212; }
 [data-theme="light"] .vban-left { border-right-color: rgba(0,0,0,0.06); }
-
 [data-theme="light"] .vban-right { border-left-color: rgba(0,0,0,0.06); }
+@media (max-width: 1400px) { .vban-wrap { display: none; } }
 
-@keyframes pulse { 0%,100% { opacity:1; }
+/* === theme toggle === */
+.ai-theme-toggle { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); background: transparent; color: var(--fg2, #a0a0a0); transition: all .15s; font-family: inherit; padding: 0; }
+.ai-theme-toggle:hover { background: var(--bg3, #1a2626); color: var(--fg, #e8e8e8); }
+[data-theme="light"] .ai-theme-toggle { border-color: rgba(0,0,0,0.1); color: #666; }
+[data-theme="light"] .ai-theme-toggle:hover { background: #f0f4f4; color: #333; }
 
-@keyframes blink { 0%,100% { opacity: .3; }
+/* === footer === */
+.bvs-site-footer { background: var(--bg2, #111919); border-top: 1px solid rgba(78,205,196,0.15); margin-top: 48px; color: var(--fg2, #a0a0a0); }
+.footer-ribbon { height: 3px; background: linear-gradient(90deg, #4ecdc4, #6c9bff, #f0a500, #4ecdc4); background-size: 200% 100%; animation: footerGradient 8s linear infinite; }
+@keyframes footerGradient { 0% { background-position: 0% 0; } 100% { background-position: 200% 0; } }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 32px; padding-bottom: 32px; }
+.footer-col h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--fg, #e8e8e8); margin-bottom: 12px; }
+.footer-col a { display: block; font-size: 12px; color: var(--fg3, #666); text-decoration: none; padding: 3px 0; transition: color .15s; }
+.footer-col a:hover { color: var(--primary, #4ecdc4); }
+.footer-logo { font-size: 18px; font-weight: 800; color: var(--fg, #e8e8e8); margin-bottom: 10px; }
+.footer-logo span { color: var(--primary, #4ecdc4); }
+.footer-about { font-size: 12px; color: var(--fg3, #666); line-height: 1.6; margin-bottom: 12px; }
+.footer-social { display: flex; gap: 8px; }
+.footer-social a { width: 32px; height: 32px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: var(--fg3, #666); text-decoration: none; transition: all .15s; }
+.footer-social a:hover { border-color: var(--primary, #4ecdc4); color: var(--primary, #4ecdc4); }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-top: 1px solid rgba(255,255,255,0.06); font-size: 11px; color: var(--fg3, #666); }
+.footer-bottom-left, .footer-bottom-right { display: flex; align-items: center; gap: 6px; }
+.footer-sep { color: var(--fg3, #444); }
+[data-theme="light"] .bvs-site-footer { background: #f0f4f4; border-top-color: rgba(0,0,0,0.08); }
+[data-theme="light"] .footer-col a { color: #666; }
+[data-theme="light"] .footer-col a:hover { color: #0d9488; }
+[data-theme="light"] .footer-social a { border-color: rgba(0,0,0,0.1); color: #666; }
+[data-theme="light"] .footer-bottom { border-top-color: rgba(0,0,0,0.08); }
+@media (max-width: 768px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+}
+
 /* === END SHARED CSS === */
 </style>
 </head>
 <body>
 
 <!-- ==================== HEADER ==================== -->
-<header class="bvs-header"><div class="bvs-header-inner">
+<header class="bvs-header">
+  <div class="container bvs-header-inner">
     <a href="index.html" class="bvs-logo">
       <div class="bvs-logo-mark">AI</div>
-      <div class="bvs-logo-text">AI<span>BizVan360</span></div>
+      <div class="bvs-logo-text"><span>AI</span>BizVan360</div>
     </a>
-    <nav class="bvs-nav"><a href="index.html" class="">Overview</a><a href="government.html" class="">Government</a><a href="dashboard.html" class="">Dashboard</a><a href="dashboard-2.html" class="">Dashboard 2</a><a href="economics.html" class="">Economics</a><a href="leisure.html" class="">Leisure</a><a href="travel.html" class="">Travel</a><a href="technology.html" class="">Technology</a><a href="transportation.html" class="">Transport</a><a href="demographics.html" class="">Demographics</a><a href="resources.html" class="">Resources</a><a href="environment.html" class="">Environment</a><a href="sports.html" class="">Sports</a><a href="whatif-scenario.html" class=" active">What-If</a><a href="city-compare.html" class="">City vs City</a></nav>
-    <div class="ai-actions">
-      <a href="index.html" class="ai-home-btn" title="Home">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
-      </a>
-      <button class="ai-theme-toggle" id="ai-theme-btn" title="Toggle theme">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      </button>
-      <a href="#" class="ai-action-btn" id="ai-chat-btn" title="AI Search">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-        <span class="btn-label">AI Search</span>
-      </a>
-      <a href="login.html" class="ai-action-btn" title="Login">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10,17 15,12 10,7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-        <span class="btn-label">Login</span>
-      </a>
-      <a href="login.html" class="ai-action-btn primary-btn" title="Get Started">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v-2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
-        <span class="btn-label">Get Started</span>
-      </a>
-            <button class="ai-mobile-toggle" id="ai-mobile-btn" title="Menu">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
-    </div>
-  </div>
-  <div class="bvs-mobile-menu" id="ai-mobile-menu">
-    <a href="index.html" class="">Overview</a>
-    <a href="government.html" class="">Government</a>
-    <a href="dashboard.html" class="">Dashboard</a>
-    <a href="dashboard-2.html" class="">Dashboard 2</a>
-    <a href="economics.html" class="">Economics</a>
-    <a href="leisure.html" class="">Leisure</a>
-    <a href="travel.html" class="">Travel</a>
-    <a href="technology.html" class="">Technology</a>
-    <a href="transportation.html" class="">Transport</a>
-    <a href="demographics.html" class="">Demographics</a>
-    <a href="resources.html" class="">Resources</a>
-    <a href="environment.html" class="">Environment</a>
-    <a href="sports.html" class="">Sports</a>
-    <a href="whatif-scenario.html" class=" active">What-If</a>
-    <a href="city-compare.html" class="">City vs City</a>
+    <nav class="bvs-nav">
+      <a href="index.html">Home</a>
+      <a href="government.html">Government</a>
+      <a href="dashboard.html">Dashboard</a><a href="dashboard-2.html">Dashboard 2</a>
+      <a href="economics.html">Economics</a>
+      <a href="leisure.html">Leisure</a>
+      <a href="travel.html">Travel</a>
+      <a href="technology.html">Technology</a>
+      <a href="transportation.html">Transport</a>
+      <a href="demographics.html">Demographics</a>
+      <a href="resources.html">Resources</a>
+      <a href="environment.html">Environment</a>
+      <a href="sports.html">Sports</a>
+      <a href="whatif-scenario.html" class="active">What-If</a>
+      <a href="city-compare.html">Compare</a>
+    </nav>
+      <button class="ai-theme-toggle" id="ai-theme-btn" title="Toggle theme"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
   </div>
 </header>
-<div class="ai-chat-overlay" id="ai-chat-overlay"></div>
-<div class="ai-chat-panel" id="ai-chat-panel">
-  <div class="ai-chat-header">
-    <h3>AI Search — Cascadia Intelligence</h3>
-    <button class="ai-chat-close" id="ai-chat-close" title="Close">&times;</button>
-  </div>
-  <div class="ai-models">
-    <div class="ai-model-card active" data-model="claude"><div class="model-name">Claude</div><div class="model-by">Anthropic</div></div>
-    <div class="ai-model-card" data-model="gpt-4"><div class="model-name">GPT-4</div><div class="model-by">OpenAI</div></div>
-    <div class="ai-model-card" data-model="gemini"><div class="model-name">Gemini</div><div class="model-by">Google</div></div>
-    <div class="ai-model-card" data-model="llama"><div class="model-name">Llama 3</div><div class="model-by">Meta</div></div>
-    <div class="ai-model-card" data-model="mistral"><div class="model-name">Mistral</div><div class="model-by">Mistral</div></div>
-  </div>
-  <div class="ai-chat-messages" id="ai-chat-messages">
-    <div class="ai-chat-msg bot"><span class="model-tag">AI</span>Hello! I can answer questions about Cascadia cities, economics, regulations, and cross-border operations. Try: "Compare Seattle and Vancouver for a 10-person SaaS startup" or "What permits do I need for a food truck in Tacoma?"</div>
-  </div>
-  <div class="ai-chat-input-area">
-    <input type="text" id="ai-chat-input" placeholder="Ask about Cascadia business intelligence..." />
-    <button id="ai-chat-send">Send</button>
-  </div>
-</div>
 
 <!-- ==================== HERO ==================== -->
 <section class="bvs-hero">
@@ -1235,7 +815,7 @@ input[type="range"]::-moz-range-track {
     <p>AIBizVan360 &mdash; Cascadia Innovation Corridor Intelligence Platform &copy; 2025. What-If Scenario Engine projections are modeled estimates for illustrative purposes only.</p>
     <div class="bvs-footer-links">
       <a href="index.html">Home</a>
-      <a href="dashboard.html">Dashboard</a>
+      <a href="dashboard.html">Dashboard</a><a href="dashboard-2.html">Dashboard 2</a>
       <a href="economics.html">Economics</a>
       <a href="technology.html">Technology</a>
       <a href="city-compare.html">Compare</a>
@@ -1831,91 +1411,22 @@ document.addEventListener('keydown', function(e) {
    ============================================== */
 onSliderChange();
 </script>
-<footer class="bvs-site-footer"><div class="footer-ribbon"></div><div class="container" style="padding-top:48px;">
-  <div class="footer-grid">
-    <div class="footer-col">
-      <div class="footer-logo">AI<span>BizVan360</span></div>
-      <p class="footer-about">AI-powered 360-degree regional intelligence platform for the Vancouver-Seattle Cascadia Innovation Corridor. Providing real-time economic, policy, and business intelligence.</p>
-      <div class="footer-social"><a href="#" title="LinkedIn">in</a><a href="#" title="X/Twitter">X</a><a href="#" title="GitHub">GH</a></div>
-    </div>
-    <div class="footer-col">
-      <h4>Navigate</h4>
-      <a href="index.html">Overview</a>
-      <a href="government.html">Government &amp; Policy</a>
-      <a href="dashboard.html">Intelligence Dashboard</a>
-      <a href="dashboard-2.html">Dashboard 2 — Command Center</a>
-      <a href="economics.html">Economics</a>
-      <a href="leisure.html">Leisure &amp; Attractions</a>
-      <a href="travel.html">Travel &amp; Hotels</a>
-      <a href="technology.html">Technology</a>
-      <a href="transportation.html">Transportation</a>
-      <a href="demographics.html">Demographics</a>
-      <a href="resources.html">Resources</a>
-      <a href="environment.html">Environment</a>
-      <a href="sports.html">Sports Business</a>
-      <a href="whatif-scenario.html">What-If Scenario Engine</a>
-      <a href="city-compare.html">City vs City</a>
-      <a href="login.html" style="color:var(--primary);font-weight:600">Login / Sign Up</a>
-    </div>
-    <div class="footer-col">
-      <h4>Data Sources</h4>
-      <a href="https://www.statcan.gc.ca" target="_blank" rel="noopener">Statistics Canada</a>
-      <a href="https://www.bls.gov" target="_blank" rel="noopener">US Bureau of Labor Statistics</a>
-      <a href="https://www2.gov.bc.ca/gov/data" target="_blank" rel="noopener">BC Open Data</a>
-      <a href="https://data.wa.gov" target="_blank" rel="noopener">Washington Open Data</a>
-      <a href="https://www.bced.gov.bc.ca/doing/gazette.htm" target="_blank" rel="noopener">BC Gazette</a>
-      <a href="https://www.sr.wa.gov/register" target="_blank" rel="noopener">WA State Register</a>
-      <a href="https://secure.sos.state.or.us/oard/displayRules.action" target="_blank" rel="noopener">Oregon Bulletin</a>
-      <a href="https://www.bea.gov" target="_blank" rel="noopener">US Bureau of Econ Analysis</a>
-      <a href="https://www.federalregister.gov" target="_blank" rel="noopener">US Federal Register</a>
-    </div>
-    <div class="footer-col">
-      <h4>Legal</h4>
-      <a href="#">Privacy Policy</a>
-      <a href="#">GDPR Compliance</a>
-      <a href="#">Cookie Policy</a>
-      <a href="#">Terms of Service</a>
-      <a href="#">Data Processing Agreement</a>
-      <a href="#">Accessibility</a>
-      <a href="#">Disclaimer</a>
-    </div>
-    <div class="footer-col">
-      <h4>About</h4>
-      <a href="#">About AIBizVan360</a>
-      <a href="#">Cascadia Innovation Corridor</a>
-      <a href="#">Methodology</a>
-      <a href="#">AI Models Used</a>
-      <a href="#">Contact Us</a>
-      <a href="#">API Documentation</a>
-      <a href="#">Status Page</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <div class="footer-bottom-left">
-      <span>&copy; 2026 AIBizVan360. All rights reserved.</span>
-      <span class="footer-sep">|</span>
-      <a href="#">Privacy</a>
-      <span class="footer-sep">|</span>
-      <a href="#">Terms</a>
-      <span class="footer-sep">|</span>
-      <a href="#">Cookies</a>
-      <span class="footer-sep">|</span>
-      <a href="#">GDPR</a>
-    </div>
-    <div class="footer-bottom-right">
-      <span>Vancouver, BC &amp; Seattle, WA &mdash; The Cascadia Corridor</span>
-      <span class="footer-sep">|</span>
-      <span>Client Preview &mdash; No NDA Required</span>
-    </div>
-  </div>
-</div></footer>
+<div class='vban-wrap' id='vban-wrap'>
+  <a class='vban vban-left' href='MARKET_ASSESSMENT.md' target='_blank' title='Cascadia Intelligence Vision'>
+    <img src='images/banners/banner-left-cascadia-intelligence.png' alt='Cascadia Intelligence Vision' loading='lazy' />
+    <div class='vban-label'>Cascadia Intelligence</div>
+  </a>
+  <a class='vban vban-right' href='MARKET_ASSESSMENT.md' target='_blank' title='Cross-Border Economic Bridge'>
+    <img src='images/banners/banner-right-cross-border-intel.png' alt='Cross-Border Economic Bridge' loading='lazy' />
+    <div class='vban-label'>Cross-Border Bridge</div>
+  </a>
+</div>
+
 <script>
 (function(){
-  /* THEME TOGGLE */
   var saved = localStorage.getItem('aibv360-theme');
   if (saved === 'light') document.documentElement.setAttribute('data-theme', 'light');
-  function setIcon(){
-    var b = document.getElementById('ai-theme-btn');
+  function setIcon(b){
     if (!b) return;
     var isL = document.documentElement.getAttribute('data-theme') === 'light';
     b.innerHTML = isL
@@ -1927,42 +1438,13 @@ onSliderChange();
     var n = c === 'light' ? 'dark' : 'light';
     document.documentElement.setAttribute('data-theme', n);
     localStorage.setItem('aibv360-theme', n);
-    setIcon();
+    setIcon(document.getElementById('ai-theme-btn'));
   }
-  var tb = document.getElementById('ai-theme-btn');
-  if (tb) tb.addEventListener('click', toggleTheme);
-  setIcon();
-
-  /* MOBILE MENU */
-  var mb = document.getElementById('ai-mobile-btn');
-  var mm = document.getElementById('ai-mobile-menu');
-  if (mb && mm) mb.addEventListener('click', function(){ mm.classList.toggle('open'); });
-
-  /* AI CHAT PANEL */
-  var cBtn=document.getElementById('ai-chat-btn'),cPan=document.getElementById('ai-chat-panel'),cOvl=document.getElementById('ai-chat-overlay'),cCls=document.getElementById('ai-chat-close');
-  if(cBtn&&cPan){cBtn.addEventListener('click',function(e){e.preventDefault();cPan.classList.add('open');if(cOvl)cOvl.classList.add('open');document.body.style.overflow='hidden';});}
-  if(cCls&&cPan){cCls.addEventListener('click',function(){cPan.classList.remove('open');if(cOvl)cOvl.classList.remove('open');document.body.style.overflow='';});}
-  if(cOvl&&cPan){cOvl.addEventListener('click',function(){cPan.classList.remove('open');cOvl.classList.remove('open');document.body.style.overflow='';});}
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&cPan&&cPan.classList.contains('open')){cPan.classList.remove('open');if(cOvl)cOvl.classList.remove('open');document.body.style.overflow='';}});
-
-  /* AI CHAT SEND (placeholder responses) */
-  var sendBtn=document.getElementById('ai-chat-send'),input=document.getElementById('ai-chat-input'),messages=document.getElementById('ai-chat-messages');
-  if(sendBtn&&input&&messages){
-    function send(){
-      var txt=input.value.trim();if(!txt)return;
-      var userMsg=document.createElement('div');userMsg.className='ai-chat-msg user';userMsg.textContent=txt;
-      messages.appendChild(userMsg);input.value='';
-      messages.scrollTop=messages.scrollHeight;
-      setTimeout(function(){
-        var botMsg=document.createElement('div');botMsg.className='ai-chat-msg bot';
-        botMsg.innerHTML='<span class="model-tag">AI</span>I\'m a demo assistant. For detailed Cascadia business intelligence, browse the economics, dashboard, and city pages on this site. Full AI integration is on the roadmap.';
-        messages.appendChild(botMsg);messages.scrollTop=messages.scrollHeight;
-      },800);
-    }
-    sendBtn.addEventListener('click',send);
-    input.addEventListener('keydown',function(e){if(e.key==='Enter')send();});
-  }
+  var btn = document.getElementById('ai-theme-btn');
+  if (btn) btn.addEventListener('click', toggleTheme);
+  setIcon(btn);
 })();
 </script>
+
 </body>
 </html>

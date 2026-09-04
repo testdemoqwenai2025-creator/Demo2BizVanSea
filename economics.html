@@ -2753,6 +2753,8 @@ a:hover { text-decoration: underline; }
 <!-- CIRS scripts -->
 <script>
 </script>
+<!-- CIRS engine (must load before DD) -->
+<script src="investor-readiness-score.js"></script>
 <!-- DD scripts -->
 <script>
 /* DD SECTION SCRIPT */
@@ -3138,15 +3140,6 @@ a:hover { text-decoration: underline; }
   // INIT
   // ───────────────────────────────────────────────────────────────
 
-  document.getElementById('dd-generate-btn').addEventListener('click', function() {
-    var cityId = document.getElementById('dd-city-select').value;
-    var reportType = document.getElementById('dd-type-select').value;
-    var city = ALL_CITIES.find(function(c) { return c.id === cityId; });
-    if (!city) return;
-    var report = generateReport(city, reportType);
-    renderReport(report);
-  });
-
   // Auto-generate for first city on load (robust init)
   function init() {
     if (!window.CIRS) {
@@ -3161,13 +3154,34 @@ a:hover { text-decoration: underline; }
     }
     console.log('[DD] CIRS ready, loading data...');
     loadData().then(function() {
-      // Populate dropdown FIRST so user can interact even before report renders
+      // Populate dropdown FIRST so user can interact
       populateCitySelect();
+
+      // Wire up generate button AFTER data is loaded
+      var genBtn = document.getElementById('dd-generate-btn');
+      if (genBtn) {
+        genBtn.addEventListener('click', function() {
+          var sel = document.getElementById('dd-city-select');
+          var typeSel = document.getElementById('dd-type-select');
+          if (!sel || !typeSel) return;
+          var cityId = sel.value;
+          var reportType = typeSel.value;
+          var city = ALL_CITIES.find(function(c) { return c.id === cityId; });
+          if (!city) return;
+          var report = generateReport(city, reportType);
+          renderReport(report);
+        });
+      }
+
       // auto-generate full report for first city
       var city = ALL_CITIES[0];
       var report = generateReport(city, 'full');
       renderReport(report);
       console.log('[DD] Report generated for', city.name);
+
+      // Update badge
+      var badge = document.getElementById('dd-meta-badge');
+      if (badge) badge.textContent = 'Ready — select city above';
     }).catch(function(err) {
       console.error('[DD] Init failed:', err);
       var host = document.getElementById('dd-report-host');
@@ -3186,8 +3200,6 @@ a:hover { text-decoration: underline; }
 })();
 /* /DD */
 </script>
-<!-- CIRS scripts -->
-<script src="investor-readiness-score.js"></script>
 <script>
 /* CIRS SECTION SCRIPT */
 (function() {

@@ -2839,7 +2839,7 @@ a:hover { text-decoration: underline; }
       : topSector.location_quotient > 2
       ? 'a regional powerhouse with national-level concentration'
       : topSector.location_quotient > 1.5
-      : 'a meaningful local specialty, but not yet a defining cluster'
+      ? 'a meaningful local specialty, but not yet a defining cluster'
       : 'an emerging sector with room to grow';
 
     // Talent pipeline
@@ -2976,7 +2976,7 @@ a:hover { text-decoration: underline; }
     var csGradsText = totalCsGrads > 500 ? 'a deep technical talent pipeline' : totalCsGrads > 200 ? 'a moderate technical talent pipeline' : totalCsGrads > 50 ? 'a limited but present technical talent pipeline' : 'a thin technical talent pipeline requiring recruitment from outside the region';
     var researchText = topUni ? 'The leading research institution is <strong>' + topUni.name + '</strong> with $' + topUni.research_dollars_musd + 'M in annual research expenditure' : 'No major research university is headquartered in the metro area';
     return '<p>' + city.name + ' produces <span class="highlight">' + totalCsGrads + ' CS graduates annually</span> across ' + city.universities.length + ' institution' + (city.universities.length > 1 ? 's' : '') + ', representing ' + csGradsText + '.</p>' +
-      '<p>' + researchText + (topUni ? (' (' + topUni.enrollment.toLocaleString() + ' enrollment, ' + topUni.cs_grads_annual + ' CS grads/yr).' : '.')) + '</p>' +
+      '<p>' + researchText + (topUni ? (' (' + topUni.enrollment.toLocaleString() + ' enrollment, ' + topUni.cs_grads_annual + ' CS grads/yr).') : '.') + '</p>' +
       '<p>For startups hiring technical roles, expect ' + (totalCsGrads > 500 ? 'strong local supply but intense competition with established employers' : totalCsGrads > 200 ? 'adequate local supply for junior roles; senior talent often recruited remotely' : 'significant recruitment from Seattle, Portland, or Vancouver BC required') + '.</p>';
   }
 
